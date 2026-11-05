@@ -8,6 +8,7 @@ variables de entorno al evaluar otras condiciones). Nada de acá lee casos ni fi
 
 from pathlib import Path
 
+from agente.ciclo import Agente
 from agente.config import cargar_config
 from agente.modelo import construir_modelo
 from agente.prompts import cargar_prompt
@@ -21,11 +22,6 @@ def construir_buscador(ruta_normas):
 
 
 def construir_agente():
-    from admision.ejemplo import AgenteJSON
-
     config = cargar_config()
-    from admision.ejemplo import mensaje_de_sistema
-
-    if cargar_prompt(config["prompt"]["version"]) != mensaje_de_sistema():
-        raise NotImplementedError("el agente de ejemplo sólo acepta el prompt de la cátedra")
-    return AgenteJSON(construir_modelo(config["modelo"]))
+    sistema = cargar_prompt(config["prompt"]["version"])
+    return Agente(construir_modelo(config["modelo"]), sistema, **config["agente"])
