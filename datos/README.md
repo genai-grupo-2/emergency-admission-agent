@@ -82,3 +82,54 @@ Ejemplo: `H-0010` registró 10 minutos para un ECG cuando, por llegar en ambulan
 ## Coordinación pendiente
 
 El formato final de conversaciones, las particiones y el prompt deben revisarse con Juan y Juli antes de entrenar. La demo con los nueve controles depende del modelo final de Juli. Este trabajo de datos no cierra por sí solo el issue completo.
+
+## Regenerar todos los datos de entrenamiento
+
+```powershell
+uv run --locked python -X utf8 -m datos.preparar
+uv run --locked python -X utf8 -m datos.verificar
+```
+
+El primer comando repite inspección y clasificación, convierte las 1.600 trazas clasificadas como correctas y las 800 de referencia, y genera:
+
+- `datos/conversaciones/train.jsonl` y `validacion.jsonl`: conversaciones y metadatos de procedencia. Cada registro contiene `messages`, una lista de objetos `role,content`. Juli puede tomar esa columna para su cargador.
+- `datos/prompts/sistema-usado.txt`: texto exacto del mensaje de sistema usado.
+- `datos/manifiesto.json`: fuentes, código, prompt, selección, exclusiones, semilla, IDs de cada partición y huellas de los resultados.
+
+Cada conversación empieza con el sistema y el pedido del usuario. Después alterna una llamada JSON del asistente y el resultado de la herramienta como mensaje del usuario. Termina en la llamada a `registrar_decision`, sin agregar su resultado. Los valores normativos de cada traza se conservan tal como vienen; las 800 de referencia no se reinterpretan usando los parámetros originales del historial.
+
+La semilla por defecto es 42 y la fracción objetivo de validación es 10%. Se agrupan los identificadores de paciente repetidos y las conversaciones que sólo cambian ID/nombre, incluso si el vínculo es transitivo. Cada grupo queda entero en una partición. No se confunden documentos ni números normativos al calcular esa huella. La fracción real puede variar por el tamaño de los grupos: las fuentes actuales producen 2.176 conversaciones de entrenamiento y 224 de validación, sin identidades de paciente ni huellas compartidas entre ambas. No hay copias adicionales por huella en estas fuentes.
+
+El campo `id` de cada conversación tiene prefijo de fuente, por ejemplo `historial:H-0001` o `entrenamiento:E-001`. `traza_sha256` identifica la representación JSON canónica de la traza original. El registro incluye su paciente, origen y grupo; esos metadatos no se agregan a los mensajes enviados al modelo. La clasificación excluye 240 errores y 160 ruidos del historial, sin inventar respuestas corregidas. No se generaron ejemplos sintéticos para entrenamiento.
+
+El segundo comando comprueba las huellas de fuentes, código y entregables, la selección completa de conversaciones, cada mensaje contra su traza y la reproducción de las particiones. Se detiene si se altera una fuente, una etiqueta, un mensaje, el prompt o el reparto. Las pruebas de conversión también comprueban de forma explícita el protocolo y la conservación de argumentos y resultados.
+
+Para cambiar la semilla, la proporción o incorporar las instrucciones que entregue Juan:
+
+```powershell
+uv run --locked python -X utf8 -m datos.preparar --semilla 42 --fraccion-validacion 0.1 --prompt ruta/al/prompt-acordado.txt
+uv run --locked python -X utf8 -m datos.verificar
+```
+
+El archivo de prompt debe estar en UTF-8. Si no se pasa `--prompt`, se usa `mensaje_de_sistema()` del ejemplo de la cátedra, como borrador. Cambiarlo regenera las conversaciones y sus huellas. No guardar el prompt acordado en `datos/prompts/sistema-usado.txt` antes de regenerar: ese archivo es una salida del proceso; conservar una entrada aparte para el prompt de Juan.
+
+El manifiesto sigue marcado como provisional hasta que el grupo revise las instrucciones y particiones. El entrenamiento debe comenzar después de optimizar el prompt. La plantilla de chat, la tokenización y el ajuste de longitud se verifican con el modelo que elija Juli; los tamaños informados aquí son caracteres, no tokens.
+
+### Huellas y Windows/Linux
+
+El diagnóstico de inspección conserva SHA-256 y tamaños de los bytes de entrada. En el resumen de clasificación y el manifiesto, `fuentes_sha256_lf` y `codigo_sha256_lf` normalizan sólo los saltos CRLF a LF antes de calcular SHA-256: así un checkout en Windows o Linux no parece un cambio de contenido. Los hashes de entregables, conversaciones y prompt se calculan sobre sus bytes exactos. `.gitattributes` conserva los saltos LF de nuestros entregables y preserva los bytes del prompt. No cambia el código del kit.
+
+## Estado del issue
+
+- [x] Inspección reproducible, esquemas, IDs, vacíos y correspondencia CSV/trazas.
+- [x] Reglas escritas con precedencias y pruebas de límites.
+- [x] Costumbres documentadas con evidencia y contraejemplos.
+- [x] Clasificación de las 2.000 filas y justificación de etiquetas.
+- [x] Conversión de las trazas seleccionadas y las 800 de referencia.
+- [x] Particiones provisionales, semilla, manifiesto y verificación de reproducción.
+- [ ] Confirmar formato y particiones con Juan/Juli e incorporar el prompt optimizado.
+- [ ] Juli comprueba que se pueden entrenar con la plantilla y el modelo elegidos.
+- [ ] Ejecutar y documentar los dos casos de demo con el checkpoint final.
+- [ ] Integrar nuestra sección de datos en el informe grupal y grabar la parte propia del Loom.
+
+La sección para integrar en el informe está en [INFORME_DATOS.md](INFORME_DATOS.md). La guía de demo y sus dependencias está en [DEMO.md](DEMO.md).
