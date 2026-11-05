@@ -35,5 +35,21 @@ class EvaluarTest(unittest.TestCase):
         self.assertEqual(len(v | o), len(seleccionar_casos("todos")))
 
 
+class TablasTest(unittest.TestCase):
+    def test_reescribe_entre_marcadores_y_es_idempotente(self):
+        from evaluacion.tablas import escribir
+        texto = "a\n<!-- tabla:x -->\nvieja\n<!-- /tabla:x -->\nb"
+        una = escribir(texto, {"x": "| nueva |"})
+        self.assertEqual(una, "a\n<!-- tabla:x -->\n| nueva |\n<!-- /tabla:x -->\nb")
+        self.assertEqual(escribir(una, {"x": "| nueva |"}), una)
+        with self.assertRaises(KeyError):
+            escribir(texto, {"y": "z"})
+
+    def test_sin_corridas_no_hay_numeros_inventados(self):
+        from evaluacion.matriz import cargar_matriz, tabla
+        filas = tabla(cargar_matriz()).splitlines()[2:6]
+        self.assertTrue(all("pendiente" in f or "bloqueado" in f or "/50" in f for f in filas))
+
+
 if __name__ == "__main__":
     unittest.main()
