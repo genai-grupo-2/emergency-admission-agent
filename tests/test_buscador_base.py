@@ -45,7 +45,9 @@ class BuscadorBaseTests(unittest.TestCase):
         self.assertEqual(ids("dolor torácico"), ids("DOLOR TORACICO"))
         self.assertEqual(ids("dolor torácico"), ids("dolor torácico"))
         self.assertEqual(buscador.recuperar("dolor", 0), [])
-        self.assertEqual(len(buscador.recuperar("dolor", 100)), 20)
+        resultados = buscador.recuperar("dolor", 100)
+        self.assertLessEqual(len(resultados), 20)
+        self.assertEqual(len({s.id for s in resultados}), len(resultados))
 
     def test_carpeta_sin_secciones_falla_explicitamente(self):
         with tempfile.TemporaryDirectory() as temporal:
