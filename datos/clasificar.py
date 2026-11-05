@@ -29,6 +29,11 @@ def sha256(ruta: Path):
     return hashlib.sha256(ruta.read_bytes()).hexdigest()
 
 
+def sha256_lf(ruta: Path):
+    """Huella de texto independiente de los saltos de línea de Windows/Linux."""
+    return hashlib.sha256(ruta.read_bytes().replace(b"\r\n", b"\n")).hexdigest()
+
+
 def generar(raiz: Path):
     inspeccion = inspeccionar(raiz)
     if inspeccion["errores"]:
@@ -55,8 +60,8 @@ def generar(raiz: Path):
     resumen = {
         "version": 1, "metodo": "Norma escrita primero, costumbre después; sin etiquetas oficiales de clasificación.",
         "conteos": dict(sorted(Counter(r["tipo"] for r in resultados).items())),
-        "fuentes_sha256": {str(p.relative_to(raiz)).replace("\\", "/"): sha256(p) for p in fuentes},
-        "codigo_sha256": {str(p.relative_to(raiz)).replace("\\", "/"): sha256(p) for p in codigo},
+        "fuentes_sha256_lf": {str(p.relative_to(raiz)).replace("\\", "/"): sha256_lf(p) for p in fuentes},
+        "codigo_sha256_lf": {str(p.relative_to(raiz)).replace("\\", "/"): sha256_lf(p) for p in codigo},
         "salidas_sha256": {nombre: sha256(raiz / nombre) for nombre in ("historial_clasificado.csv", "costumbres.md", "datos/clasificacion_detalle.jsonl", "datos/evidencia_costumbres.json")},
         "casos_dudosos_sin_resolver": [],
         "limites": [

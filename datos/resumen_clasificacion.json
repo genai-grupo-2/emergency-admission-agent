@@ -1,7 +1,7 @@
 {
   "casos_dudosos_sin_resolver": [],
-  "codigo_sha256": {
-    "datos/clasificar.py": "ed7079d0fcc9ee544399d16070b03ab85855e21c51a4ba759d2832247c92bc09",
+  "codigo_sha256_lf": {
+    "datos/clasificar.py": "db1d1663b630316b60f2954bb42b9a192e0fa2de56354001e2877a64e2660ae2",
     "datos/costumbres.py": "6a841dea5379e53dc05ebb7391b91302906889762131f01653acc4f8a7c9487d",
     "datos/inspeccionar.py": "34adeabcc78246c8dc4a81fb98f1d58dcfebb8a4be10b8502a3f4f8fb7c0b25e",
     "datos/normas.py": "c6e41c4572a4eed4a94c8b19b8dcdc89f9a73c01aad00995c92624866efd49e4"
@@ -11,30 +11,30 @@
     "error": 240,
     "ruido": 160
   },
-  "fuentes_sha256": {
-    "historial/historial.csv": "94c1bcd64bb78872d37afe6c77fef675ab69be458fbfad719f8b1be27048036e",
+  "fuentes_sha256_lf": {
+    "historial/historial.csv": "bb3ed701bd4b1c6b35384ed8852011f29e7e499ca02bb3113b537daf064c232f",
     "historial/trazas.jsonl": "02a7a25bb73bfa199fe0a8a74d5a8332815b786e37056692a58167c9ec69cda8",
-    "normas/original/NOR-ADM-01.md": "ae7c021c9039203bc62e311d31e1f85108c92a53bd2ab442132b0dcfed561bbf",
-    "normas/original/NOR-ADM-02.md": "f0eb54b90c5728394ef0435a1662da9d909bc1e6e38e3f2a56faf1e04ef7ad3c",
-    "normas/original/NOR-ADM-03.md": "fd5b2ed23dc27386d238b177e99da2d93febe5cd8a7005bc585b844e02dcf24d",
-    "normas/original/NOR-COB-01.md": "53057151fb300bd33cc417a4a6696709ab7c311e230e633253aa81ec313a7b1f",
-    "normas/original/NOR-COB-02.md": "895d5f2988b12ac7f139636a45b56070197b76f89e86da275da3e9e0d480835c",
-    "normas/original/NOR-COB-03.md": "0c0dbcd736ce4d81632dfac0571e0844b20a86a64bc4ba01368438fc25d50eaf",
-    "normas/original/NOR-COB-04.md": "e38720795056434e32a58c1f32cd0b9b0b78af5f21eef5b0c600c6711ca831d8",
-    "normas/original/NOR-DER-01.md": "7c08eaf6f507e524b108d4b441bddc2b242d7532ba1d5faa3d6c97935da1fb7d",
-    "normas/original/NOR-GUA-01.md": "ab697a64c6f372c5917e77353d9dc15c028b470f0ae44657bdd7b24cbf4d72a0",
-    "normas/original/NOR-GUA-02.md": "cd8d86abd0dfa47106b4fc577d7b815c68a08af38e99451f54e553f365d66b53",
-    "normas/original/NOR-GUA-03.md": "91e2c6cc5758e8b2b99577fefaffe9c946baeb9385e2245b1c06f13928223b2a",
-    "normas/original/NOR-INT-01.md": "e74f8b22319a628eece9a317a7753c98a3ae42522234e51d9295f371c743e256",
-    "normas/original/NOR-INT-02.md": "affd4a0fa299651e123b35ff9cf131e6a6ee82656f5a48b07167a58e9ff83e0f",
-    "normas/original/NOR-INT-03.md": "a204fecd869457b683759117c41235d1c4a03d303f77b7331c1d0f1cd7d9d0be",
-    "normas/original/NOR-INT-04.md": "97f0bfff06da7b1c98d1a28a4b90e0010fe3c6ad38303727d71d417669d007a0",
-    "normas/original/NOR-INT-05.md": "764fa947c46a862f10ee99513871039e6614eccd257a7e1cf827c0c122b9a0ce",
-    "normas/original/NOR-TDE-01.md": "addc2251f0da760b2b0cffdfde6b7ab262599ff30eae115c590cb69983b6dc48",
-    "normas/original/NOR-TDE-02.md": "cf1c727bea075409416ab8b318c2c17c2ce0e90ea2086bee23f20231a01eb76c",
-    "normas/original/NOR-TDE-03.md": "af659f7c646ad304d8360bb49e7b0013e6524d6678523ee883a51c107988d6ee",
-    "normas/original/NOR-TDE-04.md": "1d53e4b55fc33eb1446478e426e914fffe2579829de51b773e06b622e10f632f",
-    "normas/original/parametros.yaml": "428fbcab56c11c03869898219e0a62f2713797c53820a5d1a99ae46e88777d2e"
+    "normas/original/NOR-ADM-01.md": "03bbeab6030af42aad7ca933651c7df1791c21db6d1852156c859becdaadf19f",
+    "normas/original/NOR-ADM-02.md": "7b1e3943b6aa4458acf2e3510b0dc8349e0278c9d76e501070d9a8901e104a9e",
+    "normas/original/NOR-ADM-03.md": "5950ed28b4f5b6e9cd64137864f65c3ff339d81e3d0ebf6b348a0bd0dbf89392",
+    "normas/original/NOR-COB-01.md": "f20632f4d54d6c6110ef4760543e05a133bcbbf90db81781199597f60f800a76",
+    "normas/original/NOR-COB-02.md": "532427b8391fc8da9d1d4af03d3648e5bc6b81642701fd4908c2c9e85fe9b83a",
+    "normas/original/NOR-COB-03.md": "abb0702c28d752014886d5745950fe8ad7b12b71bbdb7dc1f679ecf4b8efa9af",
+    "normas/original/NOR-COB-04.md": "4fdf755a60f421aa15ca855d56e5e39dfccb13b3005759450e0c1f3ec1e78407",
+    "normas/original/NOR-DER-01.md": "cda0005b01c74d01600f7095cf0a94e363a7303aebcb152f6373189d0db90e21",
+    "normas/original/NOR-GUA-01.md": "7ac1584da7eca5687eb2503e54890c2fc3e47ea7da1034e49c8116a8771c3825",
+    "normas/original/NOR-GUA-02.md": "d3fe66b6e3d7de64418e03ea10531377a73bec5fb821720590185d99a92f6254",
+    "normas/original/NOR-GUA-03.md": "a61659a2065a58cd1bbfb2269f7e2af4d0af70c1326303af3e8fead23df5d6cf",
+    "normas/original/NOR-INT-01.md": "363d7ad1526616805c603c928b2a371b800fd8472eba6b19fe15d5678e365a56",
+    "normas/original/NOR-INT-02.md": "1cc7d83839166416181fdd6dfe6209a78571b8726701e4a9daeb834f1354be2c",
+    "normas/original/NOR-INT-03.md": "d3bee5c8db58a18fd36ab7f7215fd85da3cc3b63718c64d5a5f301816fb7ea09",
+    "normas/original/NOR-INT-04.md": "a4b9028f021cc0589fce90deadda541c8bf687fb1f912f90ec17180d7877cbc5",
+    "normas/original/NOR-INT-05.md": "fc45f7cdbfdbfab270814584a4396bb4c96b32bdd10a02911cb81a8ffcb70287",
+    "normas/original/NOR-TDE-01.md": "3b797e5d473c507eec41cd23f6695df6fff1454c946d49b4f1a69dbc59f5508e",
+    "normas/original/NOR-TDE-02.md": "d28774bbd789d45c0b613c408839db97a9a2fe199bc9ab15b7d06044dfc517e5",
+    "normas/original/NOR-TDE-03.md": "b7a2bc69aac41d272097f9bfb267c7a019e7861acbe4419fadbd50df85272929",
+    "normas/original/NOR-TDE-04.md": "8bb96dc7a512ce45db04276446d076b2cc1b016587f2aac300637263f140ada7",
+    "normas/original/parametros.yaml": "ebe040bc692498c85877714d6adcaf1611da63c901f55e8b2fc4012e85873420"
   },
   "limites": [
     "La clasificación es derivada y auditable; no se conoce una etiqueta oficial para medir su exactitud.",
