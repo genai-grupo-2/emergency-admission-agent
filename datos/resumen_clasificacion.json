@@ -1,0 +1,53 @@
+{
+  "casos_dudosos_sin_resolver": [],
+  "codigo_sha256": {
+    "datos/clasificar.py": "ed7079d0fcc9ee544399d16070b03ab85855e21c51a4ba759d2832247c92bc09",
+    "datos/costumbres.py": "6a841dea5379e53dc05ebb7391b91302906889762131f01653acc4f8a7c9487d",
+    "datos/inspeccionar.py": "34adeabcc78246c8dc4a81fb98f1d58dcfebb8a4be10b8502a3f4f8fb7c0b25e",
+    "datos/normas.py": "c6e41c4572a4eed4a94c8b19b8dcdc89f9a73c01aad00995c92624866efd49e4"
+  },
+  "conteos": {
+    "correcta": 1600,
+    "error": 240,
+    "ruido": 160
+  },
+  "fuentes_sha256": {
+    "historial/historial.csv": "94c1bcd64bb78872d37afe6c77fef675ab69be458fbfad719f8b1be27048036e",
+    "historial/trazas.jsonl": "02a7a25bb73bfa199fe0a8a74d5a8332815b786e37056692a58167c9ec69cda8",
+    "normas/original/NOR-ADM-01.md": "ae7c021c9039203bc62e311d31e1f85108c92a53bd2ab442132b0dcfed561bbf",
+    "normas/original/NOR-ADM-02.md": "f0eb54b90c5728394ef0435a1662da9d909bc1e6e38e3f2a56faf1e04ef7ad3c",
+    "normas/original/NOR-ADM-03.md": "fd5b2ed23dc27386d238b177e99da2d93febe5cd8a7005bc585b844e02dcf24d",
+    "normas/original/NOR-COB-01.md": "53057151fb300bd33cc417a4a6696709ab7c311e230e633253aa81ec313a7b1f",
+    "normas/original/NOR-COB-02.md": "895d5f2988b12ac7f139636a45b56070197b76f89e86da275da3e9e0d480835c",
+    "normas/original/NOR-COB-03.md": "0c0dbcd736ce4d81632dfac0571e0844b20a86a64bc4ba01368438fc25d50eaf",
+    "normas/original/NOR-COB-04.md": "e38720795056434e32a58c1f32cd0b9b0b78af5f21eef5b0c600c6711ca831d8",
+    "normas/original/NOR-DER-01.md": "7c08eaf6f507e524b108d4b441bddc2b242d7532ba1d5faa3d6c97935da1fb7d",
+    "normas/original/NOR-GUA-01.md": "ab697a64c6f372c5917e77353d9dc15c028b470f0ae44657bdd7b24cbf4d72a0",
+    "normas/original/NOR-GUA-02.md": "cd8d86abd0dfa47106b4fc577d7b815c68a08af38e99451f54e553f365d66b53",
+    "normas/original/NOR-GUA-03.md": "91e2c6cc5758e8b2b99577fefaffe9c946baeb9385e2245b1c06f13928223b2a",
+    "normas/original/NOR-INT-01.md": "e74f8b22319a628eece9a317a7753c98a3ae42522234e51d9295f371c743e256",
+    "normas/original/NOR-INT-02.md": "affd4a0fa299651e123b35ff9cf131e6a6ee82656f5a48b07167a58e9ff83e0f",
+    "normas/original/NOR-INT-03.md": "a204fecd869457b683759117c41235d1c4a03d303f77b7331c1d0f1cd7d9d0be",
+    "normas/original/NOR-INT-04.md": "97f0bfff06da7b1c98d1a28a4b90e0010fe3c6ad38303727d71d417669d007a0",
+    "normas/original/NOR-INT-05.md": "764fa947c46a862f10ee99513871039e6614eccd257a7e1cf827c0c122b9a0ce",
+    "normas/original/NOR-TDE-01.md": "addc2251f0da760b2b0cffdfde6b7ab262599ff30eae115c590cb69983b6dc48",
+    "normas/original/NOR-TDE-02.md": "cf1c727bea075409416ab8b318c2c17c2ce0e90ea2086bee23f20231a01eb76c",
+    "normas/original/NOR-TDE-03.md": "af659f7c646ad304d8360bb49e7b0013e6524d6678523ee883a51c107988d6ee",
+    "normas/original/NOR-TDE-04.md": "1d53e4b55fc33eb1446478e426e914fffe2579829de51b773e06b622e10f632f",
+    "normas/original/parametros.yaml": "428fbcab56c11c03869898219e0a62f2713797c53820a5d1a99ae46e88777d2e"
+  },
+  "limites": [
+    "La clasificación es derivada y auditable; no se conoce una etiqueta oficial para medir su exactitud.",
+    "No se evalúan minutos o eventos posteriores ausentes de las fuentes.",
+    "Si hay circuitos simultáneos o hipótesis de costumbres ambiguas, se detiene y se pide revisión.",
+    "El reparto posterior de conversaciones no es un benchmark independiente de la inferencia de costumbres."
+  ],
+  "metodo": "Norma escrita primero, costumbre después; sin etiquetas oficiales de clasificación.",
+  "salidas_sha256": {
+    "costumbres.md": "b8a04fb7a8618a1e8183229932efbf45e6e8e048067f6bb774c87c11669193d2",
+    "datos/clasificacion_detalle.jsonl": "0a5c6746c468977251fd4680ca1fe81a3249edf15352812874eb7c4335ac256f",
+    "datos/evidencia_costumbres.json": "ee2e4b25f5cb44cbf579c941ddf598a88000e1c5a892e51acbf1cfbc7af628fc",
+    "historial_clasificado.csv": "f602f5d9c591c56db7e56d621cb21878e3d279a949c113e7455505b6e538e122"
+  },
+  "version": 1
+}

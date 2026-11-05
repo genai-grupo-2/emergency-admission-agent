@@ -53,12 +53,32 @@ uv run --locked python -X utf8 -m unittest discover -s tests -p "test_inspeccion
 
 Las pruebas introducen problemas deliberados: IDs duplicados, trazas reordenadas, JSON roto, columnas faltantes, fichas distintas, tipos inválidos y llamadas posteriores al cierre. También comprueban que los vacíos opcionales y los pacientes repetidos no se confundan con archivos corruptos.
 
-## Siguientes pasos del issue
+## Regenerar la clasificación y la evidencia
 
-1. Traducir las normas a comprobaciones, con sus excepciones y prioridades, para identificar `error`.
-2. Encontrar costumbres con evidencia e IDs; separar `ruido` de `correcta` en lo que las normas no cubren.
-3. Generar `historial_clasificado.csv` y convertir las trazas seleccionadas a conversaciones.
-4. Acordar con Juan y Juli el formato y las particiones, incorporar el prompt elegido y registrar la procedencia de los datos.
-5. Con el modelo final de Juli, preparar y comprobar los dos casos de demo.
+```powershell
+uv run --locked python -X utf8 -m datos.clasificar
+```
 
-Los resultados de inspección no completan por sí solos esos pasos ni cierran el issue.
+El comando comprueba primero la integridad y después genera:
+
+- `historial_clasificado.csv`: exactamente `id,tipo`, con 2.000 filas en el orden original.
+- `costumbres.md`: las dos costumbres inferidas, con evidencia y contraejemplos.
+- `datos/clasificacion_detalle.jsonl`: por cada admisión, las normas violadas o los desvíos de costumbres que explican su etiqueta.
+- `datos/evidencia_costumbres.json`: todos los IDs de apoyo y contraejemplos, y los umbrales de edad comparados.
+- `datos/resumen_clasificacion.json`: cantidades y huellas de fuentes, código y entregables.
+
+Las fuentes actuales producen 1.600 `correcta`, 240 `error` y 160 `ruido`. Son etiquetas derivadas de las reglas y la evidencia, no una exactitud medida contra etiquetas oficiales.
+
+### Cómo se decide
+
+Primero se comprueban las normas escritas de registro, ubicación antes del registro, circuito y plazo, cobertura, notificación y consulta/verificación. Los números se leen de `normas/original/parametros.yaml`. Se respetan las excepciones de documento extranjero urgente, mayores, ART, terminación reservada y llegada en ambulancia. Los demás documentos se conservan en las huellas de fuentes; no se inventan tiempos o eventos que el historial no registra.
+
+Si hay una violación escrita, el tipo es `error`. En las filas sin esas violaciones se estudian dos patrones: preferencia de prepaga ante doble credencial y aviso al voluntariado según edad y acompañante. Se exige al menos 80% de apoyo y 20 ejemplos en cada grupo. El umbral que mejor explica el voluntariado es 75 años; si dos umbrales empatan, el proceso se detiene para revisión.
+
+Una fila sin violaciones escritas que se aparta de esos patrones es `ruido`. Todas las restantes son `correcta`. Las costumbres se infieren del historial completo y sus porcentajes no son un benchmark independiente. Se revisan sólo admisiones estáticas: ante circuitos simultáneos, categorías desconocidas o evidencia insuficiente el proceso se detiene, en lugar de asignar una etiqueta dudosa.
+
+Ejemplo: `H-0010` registró 10 minutos para un ECG cuando, por llegar en ambulancia, correspondían 5 según NOR-TDE-01 y NOR-TDE-04. Su detalle registra ambas normas, el campo y los valores esperado y observado.
+
+## Coordinación pendiente
+
+El formato final de conversaciones, las particiones y el prompt deben revisarse con Juan y Juli antes de entrenar. La demo con los nueve controles depende del modelo final de Juli. Este trabajo de datos no cierra por sí solo el issue completo.
