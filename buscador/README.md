@@ -66,12 +66,32 @@ La llamada existente de Juan sigue funcionando con secciones completas y k=2.
 Las pruebas adicionales comprueban argumentos, ausencia de coincidencias,
 procedencia y conservación de párrafos/valores en las tres variantes.
 
-## Pendientes para el ítem 4 y la integración
+## Pendientes para la integración
 
-- Ejecutar la evaluación formal de las 60 consultas y documentar métricas
-  frente a la referencia, comparando fragmentación y cantidad de resultados.
-  Las pruebas de compatibilidad no demuestran una mejora de recall o precisión.
 - Coordinar con Juan la integración final y la configuración elegida a partir
   de las mediciones; no cambiar el valor por defecto antes de esa comparación.
 
 No se fijaron dependencias de inferencia ni se modificó `admision/`.
+
+## Evaluación realizada — ítem 4
+
+```powershell
+uv run --locked python -m buscador.evaluar --salida resultados/rag
+uv run --locked python -m admision.evaluar_rag --entrega buscador/entrega_rag.py --normas normas/original --consultas rag/consultas_dev.jsonl
+```
+
+El primer comando compara ocho configuraciones (sección/párrafo con k=1–4),
+usa las funciones del evaluador oficial y comprueba que la base sección/k=2
+coincida exactamente con el segundo comando. Genera resumen, ranking con texto,
+evidencia cubierta por fragmento, hashes de fuentes y tablas del informe.
+`entrega_rag.py` es un adaptador exclusivo de evaluación, no la entrega del agente.
+
+Resultados y análisis: [informe generado](../resultados/rag/INFORME.md) y
+[análisis para el grupo](../resultados/rag/ANALISIS.md).
+El ranking guarda hasta 20 fragmentos, que es el límite del evaluador con
+presupuestos de 256/512/1024 tokens estimados; no representa conversaciones del agente.
+
+La evidencia de algunas consultas numéricas solo coincide con `original`
+(por ejemplo, d033 espera 67 años). El script detecta esa incompatibilidad y
+registra las consultas afectadas de b/c sin puntuar ni cambiar sus esperadas.
+La carga dinámica de b/c sigue cubierta por las pruebas del buscador.
