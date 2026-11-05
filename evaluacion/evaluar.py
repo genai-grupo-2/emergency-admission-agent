@@ -117,10 +117,16 @@ def main(argv=None) -> int:
     ap.add_argument("--modelo-revision")
     ap.add_argument("--backend", choices=["hf", "falso"])
     ap.add_argument("--casos", choices=["todos", "validacion", "optimizacion"], default="todos")
+    ap.add_argument("--ids", nargs="+", help="sólo estos casos (por ejemplo, para una demo)")
     ap.add_argument("--normas", nargs="+", choices=NORMAS, default=NORMAS)
     a = ap.parse_args(argv)
+    casos = seleccionar_casos(a.casos)
+    if a.ids:
+        casos = [c for c in casos if c["id"] in set(a.ids)]
+        if len(casos) != len(set(a.ids)):
+            ap.error("algún id no está entre los casos elegidos")
     extra = entorno_de_la_condicion(a.prompt, a.modelo_repo, a.modelo_revision, a.backend)
-    condicion = evaluar(a.etiqueta, seleccionar_casos(a.casos), a.normas, extra, a.casos)
+    condicion = evaluar(a.etiqueta, casos, a.normas, extra, ",".join(a.ids) if a.ids else a.casos)
     resumen = resumen_de(a.etiqueta)
     print(json.dumps({n: (r and {"resueltos": r["resueltos"], "casos": r["casos"], "error": r.get("error")})
                       for n, r in resumen.items() if n in a.normas}, ensure_ascii=False, indent=2))
