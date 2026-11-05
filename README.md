@@ -1,3 +1,136 @@
+# Agente de admisión de guardia · grupo 2
+
+```text
+       .--.
+      |o_o |    El pingüino de guardia:
+      |:_/ |    lee el triage, pregunta,
+     //   \ \   verifica, busca la norma
+    (|     | )  y registra la ficha.
+   /'\_   _/`\
+   \___)=(___/
+```
+
+Este es el repositorio del grupo. Primero vienen cómo correr nuestro agente y de dónde sale cada archivo. Más abajo
+está el [manual del kit](#kit-del-tp-final-la-ficha-de-admisión-de-guardia) de la cátedra. El desarrollo y los
+resultados están en [INFORME.md](INFORME.md), y la preparación del entorno, en [SETUP.md](SETUP.md).
+
+> **Estado (5/11/2026).** El agente, la optimización del prompt y la evaluación están implementados y probados sin GPU.
+> Todavía no hay corridas con el modelo real, así que las tablas del informe dicen «pendiente de correr». El buscador es
+> provisorio hasta el de Pía (#2), y el checkpoint entrenado lo publica Juli (#4).
+
+## Cómo se conecta
+
+```mermaid
+flowchart LR
+    R["admision.correr<br/>(cátedra)"] -->|"VistaDelAgente: paciente_id + paso()"| A["agente/ciclo.py<br/>jugar_lote"]
+    A -->|"conversaciones del lote"| M["Modelo<br/>Gemma 4 E4B + checkpoint<br/>agente/modelo.py"]
+    M -->|"JSON herramienta + argumentos"| A
+    A -->|"paso(herramienta, argumentos)"| E["Entorno: 5 herramientas"]
+    E --- T1[leer_triage]
+    E --- T2[preguntar]
+    E --- T3[verificar_afiliacion]
+    E --- T4[buscar_normativa]
+    E --- T5[registrar_decision]
+    T4 -->|"recuperar(consulta, k_entorno)"| B["Buscador<br/>buscador/bm25.py (provisorio)"]
+    B --- N[("normas/&lt;versión&gt;")]
+    C["configuracion.json<br/>modelo · prompt · buscador"] -.-> A
+    P["prompts/&lt;versión&gt;.txt"] -.-> A
+```
+
+`entrega.py` es lo único que llama la cátedra:
+- `construir_buscador(ruta_normas)` arma el buscador con las normas que recibe.
+- `construir_agente()` carga el modelo una vez y devuelve el agente.
+
+Qué modelo, qué revisión, qué prompt y qué `k_entorno` se usan sale de [configuracion.json](configuracion.json). Para
+evaluar otras condiciones sin editarlo, se puede pisar con las variables `ADMISION_PROMPT`, `ADMISION_MODELO_REPO`,
+`ADMISION_MODELO_REVISION` y `ADMISION_BACKEND` (ver `agente/config.py`). `ADMISION_BACKEND=falso` usa un modelo de
+juguete para probar sin GPU. **No sirve para reportar números.**
+
+## Correr
+
+Todos los comandos se corren desde la raíz. En Windows, primero `$env:PYTHONUTF8 = '1'`. El modelo necesita GPU. En la
+A100 de 40 GB de Modal, cualquier comando de abajo se corre con
+`modal run modal_app.py --comando "<módulo> <argumentos>"`, que trae las corridas a `corridas/`. Para eso hace falta un
+secreto de Modal llamado `huggingface` con `HF_TOKEN`.
+
+**Un caso.** Juega un caso de práctica con las normas b y lo puntúa:
+
+```bash
+uv run python -m evaluacion.evaluar --etiqueta demo-pev-001 --ids pev-001 --normas b
+uv run python -m evaluacion.ver --corrida demo-pev-001 --norma b --caso pev-001
+```
+
+Se ven la conversación completa (cada llamada a herramienta y lo que devolvió, incluidas las secciones de las normas que
+trajo `buscar_normativa`), la ficha registrada y los 9 controles. La corrida queda en `corridas/eval/demo-pev-001/`.
+
+**El buscador:**
+
+```bash
+uv run python -m admision.evaluar_rag --entrega entrega.py --normas normas/original --consultas rag/consultas_dev.jsonl
+```
+
+**La evaluación completa, sin reentrenar.** Corre los 50 casos con las normas original, b y c y arma la tabla del
+informe:
+
+```bash
+uv run python -m evaluacion.matriz --correr          # las condiciones que ya tienen prompt y checkpoint
+uv run python -m evaluacion.tablas                   # reescribe las tablas de INFORME.md desde corridas/
+```
+
+`evaluacion.evaluar` juega cada versión de las normas en un proceso propio, con una carpeta que sólo tiene los casos y
+las normas, y puntúa después, en otro proceso. Así el agente nunca ve las fichas esperadas.
+
+**El prompt** (Parte 3, con el modelo sin entrenar):
+
+```bash
+uv run python -m optimizacion.particion --semilla 42 --validacion 20          # regenera optimizacion/particion.json
+uv run python -m optimizacion.optimizar --nombre busqueda-01                  # búsqueda; nunca usa validación ni test
+uv run python -m optimizacion.congelar --corrida busqueda-01                  # prompts/optimizado.txt + .json
+uv run python -m evaluacion.evaluar --etiqueta prompt-antes   --prompt catedra    --casos validacion
+uv run python -m evaluacion.evaluar --etiqueta prompt-despues --prompt optimizado --casos validacion
+uv run python -m optimizacion.comparar
+```
+
+**Pruebas** (sin GPU):
+
+```bash
+uv run python -m unittest discover -s tests -p "test_agente_*.py" -v
+```
+
+## De dónde sale cada archivo
+
+| Archivo | Lo genera | Semilla / configuración |
+|---|---|---|
+| `prompts/catedra.txt` | `mensaje_de_sistema()` de `admision/ejemplo.py`. Es igual al prompt que usa `datos.preparar` | — |
+| `prompts/optimizado.txt` y `.json` | `python -m optimizacion.congelar --corrida <nombre>` | la de la corrida |
+| `optimizacion/particion.json` | `python -m optimizacion.particion` | semilla 42, 20 casos de validación |
+| `corridas/prompt/<nombre>/` | `python -m optimizacion.optimizar` | `corrida.json`: commit, `uv.lock`, modelo, λ, partición |
+| `corridas/eval/<etiqueta>/` | `python -m evaluacion.evaluar` o `evaluacion.matriz` | `condicion.json`: prompt, checkpoint, commit, comandos |
+| Tablas de `INFORME.md` | `python -m evaluacion.tablas` | sólo lee `corridas/` |
+| `historial_clasificado.csv`, `costumbres.md` y conversaciones | `datos/` de Cande (#1, rama `cande/datos-historial`) | ver `datos/README.md` |
+| Checkpoints y corridas de W&B | entrenamiento de Juli (#4) | pendiente |
+
+## Loom: sección de Juan (agente y prompt, unos 4 minutos)
+
+1. **El agente.** El diagrama de arriba, el protocolo JSON y qué pasa con el JSON inválido, una herramienta que no
+   existe y el tope de 40 llamadas (con las pruebas de `tests/test_agente_ciclo.py`).
+2. **El prompt.** La búsqueda por bloques y la partición 30/20 por caso. La tabla antes/después muestra los casos
+   resueltos y los tokens, y los candidatos descartados están en `corridas/prompt/`.
+3. **La matriz.** Base, solo prompt, solo entrenamiento y ambos, contra la referencia de la cátedra (12/15/12 y
+   25/24/25), con las regresiones por control.
+
+## Checklist final de la entrega (con el grupo)
+
+- [ ] `prompts/optimizado.txt` congelado y entregado a Cande y Juli antes del entrenamiento.
+- [ ] `configuracion.json` apunta al checkpoint final de Hugging Face con su revisión exacta.
+- [ ] Dependencias de inferencia fijadas en `pyproject.toml`/`uv.lock` (hoy sólo están en la imagen de `modal_app.py`).
+- [ ] Las 12 evaluaciones de la matriz corridas y `python -m evaluacion.tablas` sin «pendiente».
+- [ ] Secciones de los cuatro integradas en `INFORME.md`.
+- [ ] Repositorio, Hugging Face y W&B compartidos con la cátedra, y el commit entregado anotado en el mail.
+- [ ] Loom de 15 a 20 minutos con la demo en normas b o c.
+
+---
+
 # Kit del TP final: la ficha de admisión de guardia
 
 El enunciado (qué hay que hacer, qué se entrega y cómo se corrige) está en [mission.md](mission.md), y el video que lo presenta en dos partes: [Parte 1](https://www.loom.com/share/2c56572757124aaf8e2a1e1398efe27d) y [Parte 2](https://www.loom.com/share/12f6cb81c76440cd8a86563dcc02b2f2). Esto explica qué trae el kit y cómo se usa.
