@@ -85,3 +85,52 @@ Las contraseñas y claves se ingresan en el servicio o en su comando de autentic
 El 28 de octubre de 2026 se instaló `uv` 0.13.6 y Python 3.12.16, se ejecutó `uv sync` y se comprobó la ejecución con `uv run --locked`. Se importaron correctamente los diez módulos de `admision`, PyYAML y los clientes de Modal, Hugging Face y W&B. También se comprobó la ayuda de `admision.correr` y, activando UTF-8, la de `admision.evaluar_rag`.
 
 Los inicios de sesión y permisos de las cuentas siguen pendientes de verificación.
+
+## Preparación de Pía — 5 de noviembre de 2026
+
+Rama de trabajo: `codex/pia-entorno` (issue #2).
+
+En esta sesión `uv` no estaba disponible en PATH. Se instaló uv 0.13.6
+localmente en `.tools/` y Python 3.12.16 en `.tools/python/`; ambas carpetas
+quedan excluidas de Git. Se creó `.venv` con `uv sync --locked`, sin cambiar
+las versiones de `pyproject.toml` ni `uv.lock`.
+
+En este equipo se puede ejecutar:
+
+```powershell
+$env:PYTHONUTF8 = '1'
+$env:UV_PYTHON_INSTALL_DIR = Join-Path $PWD '.tools/python'
+$env:UV_CACHE_DIR = Join-Path $PWD '.tools/cache'
+& ./.tools/bin/uv.exe sync --locked
+& ./.tools/bin/uv.exe run --locked python scripts/verificar_entorno.py
+& ./.tools/bin/uv.exe run --locked python -m admision.correr --help
+& ./.tools/bin/uv.exe run --locked python -m admision.evaluar_rag --help
+```
+
+En los demás equipos sigue siendo válido instalar `uv` normalmente y usar
+los comandos del comienzo de esta guía. No copiar `.venv` ni `.tools` entre equipos.
+
+Verificado: Python 3.12.16, instalación de las dependencias fijadas, importación
+de `admision`, PyYAML, Modal, Hugging Face y W&B, y ayuda de los dos evaluadores.
+Esto comprueba el entorno local; no prueba acceso a GPU ni permisos remotos.
+
+Pendiente para cerrar el primer punto del issue:
+
+- Iniciar sesión y verificar permisos de Modal, Hugging Face y W&B.
+- Acordar modelo base y revisión exacta con el grupo, y comprobar su acceso.
+- Acordar y fijar las versiones de `torch` y `transformers` compatibles con ese
+  modelo y con Modal; compartir las mismas versiones con quien integra el agente.
+- Acordar repositorio de modelos en Hugging Face y equipo/proyecto de W&B.
+- Verificar acceso a A100 de 40 GB y presupuesto antes de lanzar corridas.
+
+Los campos `ADMISION_MODELO_REPO` y `ADMISION_MODELO_REVISION` de `.env.example`
+reemplazan el modelo de `configuracion.json` en la entrega integrada.
+`HF_MODEL_REPO` es el destino futuro de checkpoints, todavía no consumido.
+No hay un modelo descargado ni entrenamiento iniciado.
+
+La comprobación local se puede repetir en cualquier equipo con
+`uv run --locked python scripts/verificar_entorno.py`. Comprueba la versión exacta
+de Python, las dependencias directas y de desarrollo y las importaciones del kit.
+No lee ni imprime credenciales y no valida sesiones remotas. Las dependencias de
+inferencia se agregarán tras acordar el modelo; el buscador se puede desarrollar
+y evaluar con el entorno actual.

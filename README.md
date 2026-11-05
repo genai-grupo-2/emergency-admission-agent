@@ -4,6 +4,11 @@ El enunciado (qué hay que hacer, qué se entrega y cómo se corrige) está en [
 
 La preparación del entorno del grupo está en [SETUP.md](SETUP.md).
 
+La integración local del agente de Juan con el buscador de Pía está en
+[buscador/INTEGRACION.md](buscador/INTEGRACION.md): configuración, procedencia
+del código y comprobación de las cinco herramientas sin GPU. La evaluación
+aislada del RAG está en [resultados/rag/ANALISIS.md](resultados/rag/ANALISIS.md).
+
 ## Qué trae
 
 | Carpeta | Contenido |
