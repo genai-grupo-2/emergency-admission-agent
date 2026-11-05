@@ -123,9 +123,10 @@ Pendiente para cerrar el primer punto del issue:
 - Acordar repositorio de modelos en Hugging Face y equipo/proyecto de W&B.
 - Verificar acceso a A100 de 40 GB y presupuesto antes de lanzar corridas.
 
-Los campos `MODEL_ID`, `MODEL_REVISION` y `HF_MODEL_REPO` de `.env.example`
-quedan vacíos hasta ese acuerdo; son configuración prevista para la entrega,
-todavía no consumida por el kit. No hay un modelo descargado ni entrenamiento iniciado.
+Los campos `ADMISION_MODELO_REPO` y `ADMISION_MODELO_REVISION` de `.env.example`
+reemplazan el modelo de `configuracion.json` en la entrega integrada.
+`HF_MODEL_REPO` es el destino futuro de checkpoints, todavía no consumido.
+No hay un modelo descargado ni entrenamiento iniciado.
 
 La comprobación local se puede repetir en cualquier equipo con
 `uv run --locked python scripts/verificar_entorno.py`. Comprueba la versión exacta

@@ -12,7 +12,7 @@ dependencies = [
 ]
 
 [tool.setuptools]
-packages = ["admision", "buscador"]
+packages = ["admision", "buscador", "agente"]
 
 [dependency-groups]
 dev = [

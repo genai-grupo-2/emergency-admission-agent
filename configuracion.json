@@ -1,0 +1,25 @@
+{
+  "modelo": {
+    "backend": "hf",
+    "repo": "google/gemma-4-E4B-it",
+    "revision": "4ecc2ba63bcac23ba4a767fc87025b1450f84c9c",
+    "dtype": "bfloat16",
+    "max_new_tokens": 384,
+    "lote": 50
+  },
+  "prompt": {
+    "version": "catedra"
+  },
+  "buscador": {
+    "k_entorno": 2,
+    "fragmentacion": "seccion",
+    "k1": 1.5,
+    "b": 0.75
+  },
+  "agente": {
+    "max_llamadas": 40,
+    "max_sin_json": 3,
+    "aviso_restantes": 5,
+    "max_turnos": 60
+  }
+}
