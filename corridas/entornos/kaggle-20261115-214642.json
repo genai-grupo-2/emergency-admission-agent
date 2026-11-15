@@ -1,0 +1,24 @@
+{
+  "comando": "python -m optimizacion.optimizar --nombre ensayo-kaggle-01 --limite-casos 3 --max-evaluaciones 1 --normas original",
+  "inicio": "2026-11-15T21:46:42+00:00",
+  "variables": {
+    "ADMISION_COMMIT": "9406fe6abb8856f7969c742ae3082ab524b14a43",
+    "ADMISION_CAMBIOS_SIN_COMMIT": "",
+    "ADMISION_DEVICE_MAP": "auto",
+    "PYTHONUTF8": "1"
+  },
+  "maquina": {
+    "gpus": [
+      "Tesla T4",
+      "Tesla T4"
+    ],
+    "nvidia_smi": "name, memory.total [MiB], driver_version\nTesla T4, 15360 MiB, 580.178.04\nTesla T4, 15360 MiB, 580.178.04",
+    "torch": "2.14.1+cu130",
+    "cuda_de_torch": "13.0",
+    "bf16_nativo": false,
+    "transformers": "5.20.2",
+    "python": "3.12.16"
+  },
+  "codigo_de_salida": 0,
+  "segundos": 335
+}
