@@ -8,7 +8,8 @@ import os
 
 
 class ModeloHF:
-    def __init__(self, repo: str, revision: str, dtype: str = "bfloat16", max_new_tokens: int = 384, lote: int = 50):
+    def __init__(self, repo: str, revision: str, dtype: str = "bfloat16", max_new_tokens: int = 384, lote: int = 50,
+                 device_map: str = "cuda"):
         import torch
         import transformers
 
@@ -18,7 +19,7 @@ class ModeloHF:
         self.tokenizer.padding_side = "left"
         if self.tokenizer.pad_token is None:
             self.tokenizer.pad_token = self.tokenizer.eos_token
-        argumentos = dict(revision=revision, token=token, dtype=getattr(torch, dtype), device_map="cuda")
+        argumentos = dict(revision=revision, token=token, dtype=getattr(torch, dtype), device_map=device_map)
         try:  # Gemma 4 se publica como modelo multimodal; para texto alcanza con la clase causal si existe.
             self.modelo = transformers.AutoModelForCausalLM.from_pretrained(repo, **argumentos)
         except ValueError:
@@ -51,7 +52,8 @@ def construir_modelo(config_modelo: dict):
     backend = config_modelo.get("backend", "hf")
     if backend == "hf":
         return ModeloHF(config_modelo["repo"], config_modelo["revision"], config_modelo.get("dtype", "bfloat16"),
-                        int(config_modelo.get("max_new_tokens", 384)), int(config_modelo.get("lote", 50)))
+                        int(config_modelo.get("max_new_tokens", 384)), int(config_modelo.get("lote", 50)),
+                        config_modelo.get("device_map", "cuda"))
     if backend == "falso":
         from agente.falso import ModeloFalso
         return ModeloFalso()

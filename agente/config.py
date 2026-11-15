@@ -7,6 +7,12 @@ archivo, cada parte se puede pisar con una variable de entorno:
 - `ADMISION_PROMPT`: versión del prompt (`prompts/<versión>.txt`) o ruta a un archivo de texto.
 - `ADMISION_MODELO_REPO` y `ADMISION_MODELO_REVISION`: el punto de control de Hugging Face.
 - `ADMISION_BACKEND`: `hf` (el modelo real) o `falso` (sólo para pruebas de humo sin GPU; no sirve para reportar).
+- `ADMISION_DEVICE_MAP`: dónde se cargan los pesos; `cuda` (una GPU, el valor por defecto) o `auto` (repartidos entre
+  varias GPU, por ejemplo 2×T4 de 16 GB, donde Gemma 4 E4B en bf16 no entra en una sola).
+- `ADMISION_LOTE`: cuántas conversaciones genera el modelo a la vez (bajarlo si la GPU se queda sin memoria).
+
+Lo que se pisa queda en la parte `modelo` de la configuración, y por eso en el `condicion.json` de cada evaluación y
+en los metadatos de cada optimización.
 """
 
 import copy
@@ -28,10 +34,13 @@ def cargar_config(ruta: Path | None = None, entorno: dict | None = None) -> dict
         "ADMISION_MODELO_REPO": ("modelo", "repo"),
         "ADMISION_MODELO_REVISION": ("modelo", "revision"),
         "ADMISION_BACKEND": ("modelo", "backend"),
+        "ADMISION_DEVICE_MAP": ("modelo", "device_map"),
+        "ADMISION_LOTE": ("modelo", "lote"),
     }
     for variable, (parte, clave) in pisar.items():
         if entorno.get(variable):
-            config.setdefault(parte, {})[clave] = entorno[variable]
+            valor = entorno[variable]
+            config.setdefault(parte, {})[clave] = int(valor) if clave == "lote" else valor
     for parte in ("modelo", "prompt", "buscador", "agente"):
         if parte not in config:
             raise KeyError(f"falta la parte {parte!r} en {ruta}")
