@@ -15,10 +15,10 @@ from agente.prompts import cargar_prompt
 
 
 def construir_buscador(ruta_normas):
-    from buscador.bm25 import BuscadorBM25  # provisorio hasta el buscador de Pía (#2)
+    from buscador.bm25 import BuscadorBM25
 
     config = cargar_config()
-    return BuscadorBM25(Path(ruta_normas), k_entorno=int(config["buscador"]["k_entorno"]))
+    return BuscadorBM25(Path(ruta_normas), **config["buscador"])
 
 
 def construir_agente():

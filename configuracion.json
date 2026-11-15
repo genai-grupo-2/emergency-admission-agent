@@ -11,7 +11,10 @@
     "version": "catedra"
   },
   "buscador": {
-    "k_entorno": 2
+    "k_entorno": 2,
+    "fragmentacion": "seccion",
+    "k1": 1.5,
+    "b": 0.75
   },
   "agente": {
     "max_llamadas": 40,

@@ -1,0 +1,4089 @@
+{
+  "algoritmo_particion": "Componentes conectadas por paciente_id o huella de conversación; SHA256(semilla:grupo) elige validación si el valor normalizado es menor que la fracción.",
+  "clasificacion": {
+    "correcta": 1600,
+    "error": 240,
+    "ruido": 160
+  },
+  "codigo_sha256_lf": {
+    "admision/ejemplo.py": "9a7720fab7feb8762117be314294c20357218d54140f73cd6a6fea3931649673",
+    "datos/__init__.py": "dcac0d9bd47b1a69cf6a3d05ec1c917678f1b8822c6d2305b12b171c500a40fe",
+    "datos/clasificar.py": "db1d1663b630316b60f2954bb42b9a192e0fa2de56354001e2877a64e2660ae2",
+    "datos/conversaciones.py": "271911df677e187665980ba940b4fc857b004b917270868ed14354904d2dc025",
+    "datos/costumbres.py": "6a841dea5379e53dc05ebb7391b91302906889762131f01653acc4f8a7c9487d",
+    "datos/inspeccionar.py": "34adeabcc78246c8dc4a81fb98f1d58dcfebb8a4be10b8502a3f4f8fb7c0b25e",
+    "datos/normas.py": "c6e41c4572a4eed4a94c8b19b8dcdc89f9a73c01aad00995c92624866efd49e4",
+    "datos/particiones.py": "d42158af6aef2fdb57fd32464296e4303d6db98dcf869dd9e1d83a177b3798d9",
+    "datos/preparar.py": "b3add2a153983f88b1cdbd95120c6fd9920d55f909e226a208d77c9d985d3c6d",
+    "datos/verificar.py": "a295d66639bbc73684d442d8294278cbb888db07615768009566cb5158b1cf96"
+  },
+  "conversaciones": 2400,
+  "copias_por_huella_adicionales": 0,
+  "criterio_seleccion": "Sólo historial clasificado correcta y las 800 trazas de referencia; se preservan sus herramientas y resultados sin corregirlos.",
+  "estado": "provisional: revisar prompt y particiones con Juan y Juli antes de entrenar",
+  "excluidos_historial": [
+    {
+      "id": "H-0005",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0006",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0009",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0010",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0014",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0031",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0035",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0040",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0052",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0053",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0056",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0059",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0067",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0071",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0077",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0085",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0093",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0098",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0103",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0108",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0109",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0110",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0115",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0117",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0126",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0127",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0128",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0130",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0131",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0140",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0142",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0150",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0156",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0163",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0168",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0180",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0182",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0188",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0190",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0192",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0194",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0196",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0210",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0212",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0217",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0227",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0231",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0241",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0245",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0247",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0254",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0255",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0265",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0275",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0288",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0298",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0306",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0316",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0320",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0322",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0331",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0334",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0340",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0347",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0349",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0351",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0353",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0356",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0357",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0362",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0369",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0378",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0386",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0388",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0392",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0398",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0399",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0400",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0404",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0408",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0416",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0426",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0427",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0437",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0443",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0444",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0445",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0449",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0450",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0452",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0460",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0462",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0463",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0480",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0486",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0489",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0497",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0501",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0508",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0511",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0512",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0515",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0522",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0524",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0525",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0530",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0536",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0537",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0542",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0545",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0553",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0555",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0562",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0563",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0567",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0568",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0569",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0572",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0575",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0581",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0582",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0583",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0586",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0591",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0595",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0597",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0604",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0607",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0610",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0611",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0612",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0613",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0617",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0619",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0620",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0622",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0626",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0627",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0630",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0644",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0651",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0652",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0653",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0658",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0662",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0680",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0682",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0684",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0686",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0694",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0706",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0710",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0717",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0718",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0720",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0728",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0739",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0741",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0748",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0749",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0756",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0761",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0770",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0777",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0778",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0779",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0780",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0784",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0786",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0792",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0795",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0808",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0809",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0814",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0818",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0825",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0827",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0834",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0839",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0855",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0856",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0857",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0863",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0867",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0873",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0875",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0881",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0883",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0898",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0901",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0904",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0907",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0911",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0912",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0916",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0919",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0922",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0925",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0928",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0929",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0933",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0936",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0950",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0952",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0954",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0958",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0961",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0964",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0966",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0970",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0972",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0977",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0980",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-0984",
+      "tipo": "error"
+    },
+    {
+      "id": "H-0998",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1009",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1010",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1017",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1020",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-1027",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1031",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-1032",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1035",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1040",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-1046",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-1047",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1052",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-1077",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1079",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1084",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1088",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-1091",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-1093",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-1102",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-1109",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1112",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1116",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-1126",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-1127",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1128",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1131",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1136",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1138",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1139",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1143",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-1150",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1154",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1166",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1171",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1173",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-1176",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1178",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1183",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1190",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-1194",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1200",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1204",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1211",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1227",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1229",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1231",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1234",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-1237",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1246",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1257",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-1258",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-1276",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-1283",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-1290",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1295",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-1297",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1308",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1310",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1311",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1313",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-1328",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1332",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1339",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1355",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1360",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1382",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-1384",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1391",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-1393",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1394",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1401",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1403",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1416",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-1427",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-1428",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-1430",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1434",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-1440",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1443",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-1452",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-1456",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1465",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1466",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-1467",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-1481",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1487",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1490",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1496",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-1520",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-1538",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1542",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1543",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1549",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-1554",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-1564",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-1568",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-1575",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1576",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1582",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-1584",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-1587",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1593",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1606",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1610",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1612",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1616",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1624",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1625",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1627",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1629",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1635",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1636",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1641",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-1643",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1644",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-1646",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1652",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1663",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1665",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-1666",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-1669",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-1678",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1679",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1682",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-1691",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1693",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1695",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1702",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-1708",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-1709",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-1711",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1721",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1722",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-1724",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-1729",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1731",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1741",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1742",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-1743",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1749",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1752",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-1758",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-1761",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1768",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1778",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-1794",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-1800",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-1802",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1812",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-1820",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1821",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-1827",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1829",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1830",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1831",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-1833",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1834",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-1835",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1843",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-1846",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1852",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1854",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1856",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-1860",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-1870",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1874",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1894",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1897",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1905",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-1908",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1909",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-1927",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1933",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1947",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-1951",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1953",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1958",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1964",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1967",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1973",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-1976",
+      "tipo": "ruido"
+    },
+    {
+      "id": "H-1986",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1987",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1989",
+      "tipo": "error"
+    },
+    {
+      "id": "H-1994",
+      "tipo": "error"
+    }
+  ],
+  "fraccion_validacion_objetivo": 0.1,
+  "fuentes_sha256_lf": {
+    "datos/resumen_clasificacion.json": "778ea4060bfcb250ce0eafc37923440162564eb652fd4fd8900595c0b7e4371e",
+    "entrenamiento/trazas.jsonl": "adc42d2769cdb90e8509ab4fc71daf02f8c8934137315d06e9f87bd402ff7290",
+    "historial/historial.csv": "bb3ed701bd4b1c6b35384ed8852011f29e7e499ca02bb3113b537daf064c232f",
+    "historial/trazas.jsonl": "02a7a25bb73bfa199fe0a8a74d5a8332815b786e37056692a58167c9ec69cda8",
+    "historial_clasificado.csv": "f602f5d9c591c56db7e56d621cb21878e3d279a949c113e7455505b6e538e122"
+  },
+  "longitudes_caracteres": {
+    "maxima": 15186,
+    "minima": 7474
+  },
+  "particiones": {
+    "train": {
+      "archivo": "datos/conversaciones/train.jsonl",
+      "grupos": 1893,
+      "ids": [
+        "entrenamiento:E-001",
+        "entrenamiento:E-002",
+        "entrenamiento:E-003",
+        "entrenamiento:E-004",
+        "entrenamiento:E-005",
+        "entrenamiento:E-006",
+        "entrenamiento:E-007",
+        "entrenamiento:E-008",
+        "entrenamiento:E-011",
+        "entrenamiento:E-012",
+        "entrenamiento:E-013",
+        "entrenamiento:E-014",
+        "entrenamiento:E-015",
+        "entrenamiento:E-016",
+        "entrenamiento:E-017",
+        "entrenamiento:E-018",
+        "entrenamiento:E-019",
+        "entrenamiento:E-022",
+        "entrenamiento:E-024",
+        "entrenamiento:E-025",
+        "entrenamiento:E-026",
+        "entrenamiento:E-028",
+        "entrenamiento:E-030",
+        "entrenamiento:E-031",
+        "entrenamiento:E-032",
+        "entrenamiento:E-033",
+        "entrenamiento:E-034",
+        "entrenamiento:E-035",
+        "entrenamiento:E-036",
+        "entrenamiento:E-037",
+        "entrenamiento:E-038",
+        "entrenamiento:E-039",
+        "entrenamiento:E-040",
+        "entrenamiento:E-041",
+        "entrenamiento:E-042",
+        "entrenamiento:E-043",
+        "entrenamiento:E-044",
+        "entrenamiento:E-046",
+        "entrenamiento:E-047",
+        "entrenamiento:E-048",
+        "entrenamiento:E-049",
+        "entrenamiento:E-050",
+        "entrenamiento:E-051",
+        "entrenamiento:E-052",
+        "entrenamiento:E-053",
+        "entrenamiento:E-054",
+        "entrenamiento:E-055",
+        "entrenamiento:E-056",
+        "entrenamiento:E-057",
+        "entrenamiento:E-058",
+        "entrenamiento:E-060",
+        "entrenamiento:E-061",
+        "entrenamiento:E-062",
+        "entrenamiento:E-063",
+        "entrenamiento:E-065",
+        "entrenamiento:E-066",
+        "entrenamiento:E-067",
+        "entrenamiento:E-068",
+        "entrenamiento:E-069",
+        "entrenamiento:E-070",
+        "entrenamiento:E-071",
+        "entrenamiento:E-072",
+        "entrenamiento:E-073",
+        "entrenamiento:E-074",
+        "entrenamiento:E-075",
+        "entrenamiento:E-076",
+        "entrenamiento:E-077",
+        "entrenamiento:E-078",
+        "entrenamiento:E-079",
+        "entrenamiento:E-080",
+        "entrenamiento:E-081",
+        "entrenamiento:E-082",
+        "entrenamiento:E-083",
+        "entrenamiento:E-084",
+        "entrenamiento:E-085",
+        "entrenamiento:E-086",
+        "entrenamiento:E-087",
+        "entrenamiento:E-088",
+        "entrenamiento:E-089",
+        "entrenamiento:E-090",
+        "entrenamiento:E-091",
+        "entrenamiento:E-092",
+        "entrenamiento:E-093",
+        "entrenamiento:E-094",
+        "entrenamiento:E-095",
+        "entrenamiento:E-097",
+        "entrenamiento:E-098",
+        "entrenamiento:E-099",
+        "entrenamiento:E-100",
+        "entrenamiento:E-101",
+        "entrenamiento:E-102",
+        "entrenamiento:E-103",
+        "entrenamiento:E-104",
+        "entrenamiento:E-105",
+        "entrenamiento:E-106",
+        "entrenamiento:E-107",
+        "entrenamiento:E-108",
+        "entrenamiento:E-109",
+        "entrenamiento:E-110",
+        "entrenamiento:E-111",
+        "entrenamiento:E-112",
+        "entrenamiento:E-113",
+        "entrenamiento:E-114",
+        "entrenamiento:E-115",
+        "entrenamiento:E-116",
+        "entrenamiento:E-117",
+        "entrenamiento:E-118",
+        "entrenamiento:E-120",
+        "entrenamiento:E-121",
+        "entrenamiento:E-122",
+        "entrenamiento:E-123",
+        "entrenamiento:E-124",
+        "entrenamiento:E-129",
+        "entrenamiento:E-130",
+        "entrenamiento:E-131",
+        "entrenamiento:E-132",
+        "entrenamiento:E-133",
+        "entrenamiento:E-134",
+        "entrenamiento:E-135",
+        "entrenamiento:E-136",
+        "entrenamiento:E-137",
+        "entrenamiento:E-138",
+        "entrenamiento:E-139",
+        "entrenamiento:E-140",
+        "entrenamiento:E-141",
+        "entrenamiento:E-142",
+        "entrenamiento:E-144",
+        "entrenamiento:E-145",
+        "entrenamiento:E-146",
+        "entrenamiento:E-147",
+        "entrenamiento:E-148",
+        "entrenamiento:E-149",
+        "entrenamiento:E-150",
+        "entrenamiento:E-151",
+        "entrenamiento:E-152",
+        "entrenamiento:E-153",
+        "entrenamiento:E-154",
+        "entrenamiento:E-156",
+        "entrenamiento:E-157",
+        "entrenamiento:E-158",
+        "entrenamiento:E-159",
+        "entrenamiento:E-160",
+        "entrenamiento:E-161",
+        "entrenamiento:E-162",
+        "entrenamiento:E-163",
+        "entrenamiento:E-164",
+        "entrenamiento:E-165",
+        "entrenamiento:E-166",
+        "entrenamiento:E-168",
+        "entrenamiento:E-169",
+        "entrenamiento:E-170",
+        "entrenamiento:E-171",
+        "entrenamiento:E-172",
+        "entrenamiento:E-173",
+        "entrenamiento:E-174",
+        "entrenamiento:E-175",
+        "entrenamiento:E-176",
+        "entrenamiento:E-177",
+        "entrenamiento:E-178",
+        "entrenamiento:E-179",
+        "entrenamiento:E-181",
+        "entrenamiento:E-183",
+        "entrenamiento:E-184",
+        "entrenamiento:E-185",
+        "entrenamiento:E-186",
+        "entrenamiento:E-188",
+        "entrenamiento:E-189",
+        "entrenamiento:E-190",
+        "entrenamiento:E-192",
+        "entrenamiento:E-193",
+        "entrenamiento:E-194",
+        "entrenamiento:E-195",
+        "entrenamiento:E-196",
+        "entrenamiento:E-197",
+        "entrenamiento:E-198",
+        "entrenamiento:E-199",
+        "entrenamiento:E-200",
+        "entrenamiento:E-201",
+        "entrenamiento:E-202",
+        "entrenamiento:E-203",
+        "entrenamiento:E-204",
+        "entrenamiento:E-205",
+        "entrenamiento:E-206",
+        "entrenamiento:E-207",
+        "entrenamiento:E-208",
+        "entrenamiento:E-209",
+        "entrenamiento:E-210",
+        "entrenamiento:E-211",
+        "entrenamiento:E-212",
+        "entrenamiento:E-213",
+        "entrenamiento:E-214",
+        "entrenamiento:E-215",
+        "entrenamiento:E-216",
+        "entrenamiento:E-217",
+        "entrenamiento:E-218",
+        "entrenamiento:E-219",
+        "entrenamiento:E-220",
+        "entrenamiento:E-221",
+        "entrenamiento:E-222",
+        "entrenamiento:E-223",
+        "entrenamiento:E-224",
+        "entrenamiento:E-225",
+        "entrenamiento:E-226",
+        "entrenamiento:E-227",
+        "entrenamiento:E-228",
+        "entrenamiento:E-229",
+        "entrenamiento:E-230",
+        "entrenamiento:E-231",
+        "entrenamiento:E-232",
+        "entrenamiento:E-233",
+        "entrenamiento:E-234",
+        "entrenamiento:E-235",
+        "entrenamiento:E-237",
+        "entrenamiento:E-238",
+        "entrenamiento:E-239",
+        "entrenamiento:E-240",
+        "entrenamiento:E-241",
+        "entrenamiento:E-242",
+        "entrenamiento:E-244",
+        "entrenamiento:E-245",
+        "entrenamiento:E-246",
+        "entrenamiento:E-247",
+        "entrenamiento:E-248",
+        "entrenamiento:E-249",
+        "entrenamiento:E-250",
+        "entrenamiento:E-251",
+        "entrenamiento:E-252",
+        "entrenamiento:E-253",
+        "entrenamiento:E-255",
+        "entrenamiento:E-256",
+        "entrenamiento:E-257",
+        "entrenamiento:E-258",
+        "entrenamiento:E-259",
+        "entrenamiento:E-260",
+        "entrenamiento:E-262",
+        "entrenamiento:E-263",
+        "entrenamiento:E-264",
+        "entrenamiento:E-266",
+        "entrenamiento:E-268",
+        "entrenamiento:E-269",
+        "entrenamiento:E-270",
+        "entrenamiento:E-271",
+        "entrenamiento:E-272",
+        "entrenamiento:E-273",
+        "entrenamiento:E-274",
+        "entrenamiento:E-275",
+        "entrenamiento:E-276",
+        "entrenamiento:E-277",
+        "entrenamiento:E-279",
+        "entrenamiento:E-280",
+        "entrenamiento:E-281",
+        "entrenamiento:E-282",
+        "entrenamiento:E-283",
+        "entrenamiento:E-284",
+        "entrenamiento:E-285",
+        "entrenamiento:E-287",
+        "entrenamiento:E-288",
+        "entrenamiento:E-289",
+        "entrenamiento:E-290",
+        "entrenamiento:E-291",
+        "entrenamiento:E-292",
+        "entrenamiento:E-293",
+        "entrenamiento:E-294",
+        "entrenamiento:E-295",
+        "entrenamiento:E-296",
+        "entrenamiento:E-297",
+        "entrenamiento:E-298",
+        "entrenamiento:E-299",
+        "entrenamiento:E-300",
+        "entrenamiento:E-301",
+        "entrenamiento:E-302",
+        "entrenamiento:E-303",
+        "entrenamiento:E-304",
+        "entrenamiento:E-305",
+        "entrenamiento:E-306",
+        "entrenamiento:E-307",
+        "entrenamiento:E-308",
+        "entrenamiento:E-309",
+        "entrenamiento:E-310",
+        "entrenamiento:E-311",
+        "entrenamiento:E-312",
+        "entrenamiento:E-313",
+        "entrenamiento:E-314",
+        "entrenamiento:E-315",
+        "entrenamiento:E-316",
+        "entrenamiento:E-317",
+        "entrenamiento:E-319",
+        "entrenamiento:E-320",
+        "entrenamiento:E-321",
+        "entrenamiento:E-322",
+        "entrenamiento:E-323",
+        "entrenamiento:E-324",
+        "entrenamiento:E-325",
+        "entrenamiento:E-326",
+        "entrenamiento:E-327",
+        "entrenamiento:E-328",
+        "entrenamiento:E-329",
+        "entrenamiento:E-330",
+        "entrenamiento:E-331",
+        "entrenamiento:E-332",
+        "entrenamiento:E-333",
+        "entrenamiento:E-334",
+        "entrenamiento:E-336",
+        "entrenamiento:E-337",
+        "entrenamiento:E-339",
+        "entrenamiento:E-340",
+        "entrenamiento:E-341",
+        "entrenamiento:E-342",
+        "entrenamiento:E-343",
+        "entrenamiento:E-344",
+        "entrenamiento:E-345",
+        "entrenamiento:E-346",
+        "entrenamiento:E-348",
+        "entrenamiento:E-349",
+        "entrenamiento:E-350",
+        "entrenamiento:E-351",
+        "entrenamiento:E-352",
+        "entrenamiento:E-353",
+        "entrenamiento:E-354",
+        "entrenamiento:E-355",
+        "entrenamiento:E-356",
+        "entrenamiento:E-357",
+        "entrenamiento:E-358",
+        "entrenamiento:E-359",
+        "entrenamiento:E-360",
+        "entrenamiento:E-361",
+        "entrenamiento:E-363",
+        "entrenamiento:E-364",
+        "entrenamiento:E-365",
+        "entrenamiento:E-367",
+        "entrenamiento:E-368",
+        "entrenamiento:E-369",
+        "entrenamiento:E-370",
+        "entrenamiento:E-371",
+        "entrenamiento:E-372",
+        "entrenamiento:E-373",
+        "entrenamiento:E-374",
+        "entrenamiento:E-375",
+        "entrenamiento:E-376",
+        "entrenamiento:E-377",
+        "entrenamiento:E-378",
+        "entrenamiento:E-379",
+        "entrenamiento:E-380",
+        "entrenamiento:E-381",
+        "entrenamiento:E-382",
+        "entrenamiento:E-384",
+        "entrenamiento:E-385",
+        "entrenamiento:E-386",
+        "entrenamiento:E-387",
+        "entrenamiento:E-388",
+        "entrenamiento:E-389",
+        "entrenamiento:E-391",
+        "entrenamiento:E-392",
+        "entrenamiento:E-393",
+        "entrenamiento:E-394",
+        "entrenamiento:E-395",
+        "entrenamiento:E-396",
+        "entrenamiento:E-397",
+        "entrenamiento:E-398",
+        "entrenamiento:E-399",
+        "entrenamiento:E-400",
+        "entrenamiento:E-401",
+        "entrenamiento:E-402",
+        "entrenamiento:E-403",
+        "entrenamiento:E-404",
+        "entrenamiento:E-405",
+        "entrenamiento:E-406",
+        "entrenamiento:E-407",
+        "entrenamiento:E-408",
+        "entrenamiento:E-409",
+        "entrenamiento:E-410",
+        "entrenamiento:E-411",
+        "entrenamiento:E-412",
+        "entrenamiento:E-413",
+        "entrenamiento:E-414",
+        "entrenamiento:E-415",
+        "entrenamiento:E-416",
+        "entrenamiento:E-417",
+        "entrenamiento:E-418",
+        "entrenamiento:E-419",
+        "entrenamiento:E-420",
+        "entrenamiento:E-421",
+        "entrenamiento:E-423",
+        "entrenamiento:E-424",
+        "entrenamiento:E-425",
+        "entrenamiento:E-426",
+        "entrenamiento:E-427",
+        "entrenamiento:E-428",
+        "entrenamiento:E-429",
+        "entrenamiento:E-430",
+        "entrenamiento:E-432",
+        "entrenamiento:E-433",
+        "entrenamiento:E-434",
+        "entrenamiento:E-435",
+        "entrenamiento:E-436",
+        "entrenamiento:E-437",
+        "entrenamiento:E-438",
+        "entrenamiento:E-439",
+        "entrenamiento:E-440",
+        "entrenamiento:E-442",
+        "entrenamiento:E-443",
+        "entrenamiento:E-444",
+        "entrenamiento:E-445",
+        "entrenamiento:E-446",
+        "entrenamiento:E-447",
+        "entrenamiento:E-448",
+        "entrenamiento:E-449",
+        "entrenamiento:E-450",
+        "entrenamiento:E-451",
+        "entrenamiento:E-452",
+        "entrenamiento:E-453",
+        "entrenamiento:E-454",
+        "entrenamiento:E-455",
+        "entrenamiento:E-456",
+        "entrenamiento:E-457",
+        "entrenamiento:E-458",
+        "entrenamiento:E-459",
+        "entrenamiento:E-460",
+        "entrenamiento:E-461",
+        "entrenamiento:E-462",
+        "entrenamiento:E-463",
+        "entrenamiento:E-464",
+        "entrenamiento:E-465",
+        "entrenamiento:E-466",
+        "entrenamiento:E-467",
+        "entrenamiento:E-468",
+        "entrenamiento:E-469",
+        "entrenamiento:E-470",
+        "entrenamiento:E-472",
+        "entrenamiento:E-473",
+        "entrenamiento:E-474",
+        "entrenamiento:E-475",
+        "entrenamiento:E-476",
+        "entrenamiento:E-477",
+        "entrenamiento:E-478",
+        "entrenamiento:E-479",
+        "entrenamiento:E-480",
+        "entrenamiento:E-481",
+        "entrenamiento:E-482",
+        "entrenamiento:E-483",
+        "entrenamiento:E-484",
+        "entrenamiento:E-485",
+        "entrenamiento:E-486",
+        "entrenamiento:E-487",
+        "entrenamiento:E-489",
+        "entrenamiento:E-490",
+        "entrenamiento:E-492",
+        "entrenamiento:E-493",
+        "entrenamiento:E-494",
+        "entrenamiento:E-496",
+        "entrenamiento:E-497",
+        "entrenamiento:E-498",
+        "entrenamiento:E-499",
+        "entrenamiento:E-500",
+        "entrenamiento:E-501",
+        "entrenamiento:E-502",
+        "entrenamiento:E-503",
+        "entrenamiento:E-504",
+        "entrenamiento:E-505",
+        "entrenamiento:E-506",
+        "entrenamiento:E-507",
+        "entrenamiento:E-508",
+        "entrenamiento:E-509",
+        "entrenamiento:E-510",
+        "entrenamiento:E-511",
+        "entrenamiento:E-512",
+        "entrenamiento:E-513",
+        "entrenamiento:E-514",
+        "entrenamiento:E-515",
+        "entrenamiento:E-517",
+        "entrenamiento:E-519",
+        "entrenamiento:E-520",
+        "entrenamiento:E-521",
+        "entrenamiento:E-522",
+        "entrenamiento:E-523",
+        "entrenamiento:E-524",
+        "entrenamiento:E-525",
+        "entrenamiento:E-527",
+        "entrenamiento:E-528",
+        "entrenamiento:E-529",
+        "entrenamiento:E-530",
+        "entrenamiento:E-531",
+        "entrenamiento:E-532",
+        "entrenamiento:E-533",
+        "entrenamiento:E-534",
+        "entrenamiento:E-535",
+        "entrenamiento:E-536",
+        "entrenamiento:E-537",
+        "entrenamiento:E-538",
+        "entrenamiento:E-539",
+        "entrenamiento:E-540",
+        "entrenamiento:E-541",
+        "entrenamiento:E-542",
+        "entrenamiento:E-543",
+        "entrenamiento:E-544",
+        "entrenamiento:E-545",
+        "entrenamiento:E-546",
+        "entrenamiento:E-547",
+        "entrenamiento:E-548",
+        "entrenamiento:E-549",
+        "entrenamiento:E-550",
+        "entrenamiento:E-551",
+        "entrenamiento:E-552",
+        "entrenamiento:E-553",
+        "entrenamiento:E-554",
+        "entrenamiento:E-555",
+        "entrenamiento:E-556",
+        "entrenamiento:E-557",
+        "entrenamiento:E-558",
+        "entrenamiento:E-559",
+        "entrenamiento:E-560",
+        "entrenamiento:E-561",
+        "entrenamiento:E-562",
+        "entrenamiento:E-563",
+        "entrenamiento:E-564",
+        "entrenamiento:E-565",
+        "entrenamiento:E-566",
+        "entrenamiento:E-567",
+        "entrenamiento:E-568",
+        "entrenamiento:E-569",
+        "entrenamiento:E-570",
+        "entrenamiento:E-571",
+        "entrenamiento:E-572",
+        "entrenamiento:E-573",
+        "entrenamiento:E-574",
+        "entrenamiento:E-575",
+        "entrenamiento:E-576",
+        "entrenamiento:E-577",
+        "entrenamiento:E-578",
+        "entrenamiento:E-579",
+        "entrenamiento:E-581",
+        "entrenamiento:E-582",
+        "entrenamiento:E-583",
+        "entrenamiento:E-584",
+        "entrenamiento:E-585",
+        "entrenamiento:E-586",
+        "entrenamiento:E-587",
+        "entrenamiento:E-588",
+        "entrenamiento:E-589",
+        "entrenamiento:E-590",
+        "entrenamiento:E-591",
+        "entrenamiento:E-592",
+        "entrenamiento:E-593",
+        "entrenamiento:E-594",
+        "entrenamiento:E-596",
+        "entrenamiento:E-597",
+        "entrenamiento:E-598",
+        "entrenamiento:E-599",
+        "entrenamiento:E-600",
+        "entrenamiento:E-601",
+        "entrenamiento:E-603",
+        "entrenamiento:E-604",
+        "entrenamiento:E-605",
+        "entrenamiento:E-606",
+        "entrenamiento:E-607",
+        "entrenamiento:E-609",
+        "entrenamiento:E-610",
+        "entrenamiento:E-611",
+        "entrenamiento:E-612",
+        "entrenamiento:E-613",
+        "entrenamiento:E-614",
+        "entrenamiento:E-615",
+        "entrenamiento:E-616",
+        "entrenamiento:E-617",
+        "entrenamiento:E-618",
+        "entrenamiento:E-620",
+        "entrenamiento:E-621",
+        "entrenamiento:E-622",
+        "entrenamiento:E-623",
+        "entrenamiento:E-624",
+        "entrenamiento:E-625",
+        "entrenamiento:E-626",
+        "entrenamiento:E-627",
+        "entrenamiento:E-628",
+        "entrenamiento:E-629",
+        "entrenamiento:E-630",
+        "entrenamiento:E-631",
+        "entrenamiento:E-632",
+        "entrenamiento:E-634",
+        "entrenamiento:E-635",
+        "entrenamiento:E-636",
+        "entrenamiento:E-637",
+        "entrenamiento:E-639",
+        "entrenamiento:E-640",
+        "entrenamiento:E-641",
+        "entrenamiento:E-642",
+        "entrenamiento:E-643",
+        "entrenamiento:E-644",
+        "entrenamiento:E-645",
+        "entrenamiento:E-646",
+        "entrenamiento:E-648",
+        "entrenamiento:E-649",
+        "entrenamiento:E-650",
+        "entrenamiento:E-651",
+        "entrenamiento:E-653",
+        "entrenamiento:E-654",
+        "entrenamiento:E-655",
+        "entrenamiento:E-656",
+        "entrenamiento:E-657",
+        "entrenamiento:E-658",
+        "entrenamiento:E-659",
+        "entrenamiento:E-660",
+        "entrenamiento:E-661",
+        "entrenamiento:E-662",
+        "entrenamiento:E-664",
+        "entrenamiento:E-665",
+        "entrenamiento:E-666",
+        "entrenamiento:E-667",
+        "entrenamiento:E-668",
+        "entrenamiento:E-669",
+        "entrenamiento:E-670",
+        "entrenamiento:E-671",
+        "entrenamiento:E-673",
+        "entrenamiento:E-674",
+        "entrenamiento:E-675",
+        "entrenamiento:E-676",
+        "entrenamiento:E-677",
+        "entrenamiento:E-678",
+        "entrenamiento:E-679",
+        "entrenamiento:E-680",
+        "entrenamiento:E-681",
+        "entrenamiento:E-682",
+        "entrenamiento:E-683",
+        "entrenamiento:E-684",
+        "entrenamiento:E-685",
+        "entrenamiento:E-686",
+        "entrenamiento:E-687",
+        "entrenamiento:E-688",
+        "entrenamiento:E-689",
+        "entrenamiento:E-691",
+        "entrenamiento:E-693",
+        "entrenamiento:E-694",
+        "entrenamiento:E-695",
+        "entrenamiento:E-696",
+        "entrenamiento:E-697",
+        "entrenamiento:E-698",
+        "entrenamiento:E-699",
+        "entrenamiento:E-700",
+        "entrenamiento:E-701",
+        "entrenamiento:E-702",
+        "entrenamiento:E-703",
+        "entrenamiento:E-704",
+        "entrenamiento:E-705",
+        "entrenamiento:E-706",
+        "entrenamiento:E-707",
+        "entrenamiento:E-708",
+        "entrenamiento:E-709",
+        "entrenamiento:E-710",
+        "entrenamiento:E-711",
+        "entrenamiento:E-712",
+        "entrenamiento:E-713",
+        "entrenamiento:E-714",
+        "entrenamiento:E-715",
+        "entrenamiento:E-716",
+        "entrenamiento:E-717",
+        "entrenamiento:E-718",
+        "entrenamiento:E-719",
+        "entrenamiento:E-720",
+        "entrenamiento:E-721",
+        "entrenamiento:E-722",
+        "entrenamiento:E-723",
+        "entrenamiento:E-725",
+        "entrenamiento:E-726",
+        "entrenamiento:E-727",
+        "entrenamiento:E-729",
+        "entrenamiento:E-730",
+        "entrenamiento:E-731",
+        "entrenamiento:E-732",
+        "entrenamiento:E-733",
+        "entrenamiento:E-734",
+        "entrenamiento:E-735",
+        "entrenamiento:E-737",
+        "entrenamiento:E-738",
+        "entrenamiento:E-739",
+        "entrenamiento:E-740",
+        "entrenamiento:E-741",
+        "entrenamiento:E-742",
+        "entrenamiento:E-743",
+        "entrenamiento:E-744",
+        "entrenamiento:E-745",
+        "entrenamiento:E-746",
+        "entrenamiento:E-747",
+        "entrenamiento:E-748",
+        "entrenamiento:E-749",
+        "entrenamiento:E-750",
+        "entrenamiento:E-751",
+        "entrenamiento:E-752",
+        "entrenamiento:E-753",
+        "entrenamiento:E-754",
+        "entrenamiento:E-755",
+        "entrenamiento:E-756",
+        "entrenamiento:E-757",
+        "entrenamiento:E-758",
+        "entrenamiento:E-759",
+        "entrenamiento:E-760",
+        "entrenamiento:E-761",
+        "entrenamiento:E-762",
+        "entrenamiento:E-763",
+        "entrenamiento:E-764",
+        "entrenamiento:E-765",
+        "entrenamiento:E-766",
+        "entrenamiento:E-767",
+        "entrenamiento:E-769",
+        "entrenamiento:E-770",
+        "entrenamiento:E-771",
+        "entrenamiento:E-772",
+        "entrenamiento:E-773",
+        "entrenamiento:E-774",
+        "entrenamiento:E-775",
+        "entrenamiento:E-777",
+        "entrenamiento:E-778",
+        "entrenamiento:E-779",
+        "entrenamiento:E-780",
+        "entrenamiento:E-781",
+        "entrenamiento:E-782",
+        "entrenamiento:E-783",
+        "entrenamiento:E-784",
+        "entrenamiento:E-786",
+        "entrenamiento:E-789",
+        "entrenamiento:E-791",
+        "entrenamiento:E-792",
+        "entrenamiento:E-793",
+        "entrenamiento:E-795",
+        "entrenamiento:E-796",
+        "entrenamiento:E-797",
+        "entrenamiento:E-798",
+        "entrenamiento:E-799",
+        "entrenamiento:E-800",
+        "historial:H-0002",
+        "historial:H-0003",
+        "historial:H-0004",
+        "historial:H-0007",
+        "historial:H-0008",
+        "historial:H-0011",
+        "historial:H-0012",
+        "historial:H-0013",
+        "historial:H-0015",
+        "historial:H-0016",
+        "historial:H-0017",
+        "historial:H-0018",
+        "historial:H-0019",
+        "historial:H-0020",
+        "historial:H-0021",
+        "historial:H-0022",
+        "historial:H-0023",
+        "historial:H-0024",
+        "historial:H-0025",
+        "historial:H-0026",
+        "historial:H-0028",
+        "historial:H-0029",
+        "historial:H-0030",
+        "historial:H-0032",
+        "historial:H-0033",
+        "historial:H-0034",
+        "historial:H-0036",
+        "historial:H-0037",
+        "historial:H-0038",
+        "historial:H-0039",
+        "historial:H-0041",
+        "historial:H-0042",
+        "historial:H-0043",
+        "historial:H-0044",
+        "historial:H-0045",
+        "historial:H-0046",
+        "historial:H-0047",
+        "historial:H-0048",
+        "historial:H-0049",
+        "historial:H-0050",
+        "historial:H-0051",
+        "historial:H-0054",
+        "historial:H-0055",
+        "historial:H-0057",
+        "historial:H-0058",
+        "historial:H-0060",
+        "historial:H-0062",
+        "historial:H-0063",
+        "historial:H-0064",
+        "historial:H-0065",
+        "historial:H-0066",
+        "historial:H-0068",
+        "historial:H-0070",
+        "historial:H-0072",
+        "historial:H-0073",
+        "historial:H-0074",
+        "historial:H-0075",
+        "historial:H-0076",
+        "historial:H-0078",
+        "historial:H-0079",
+        "historial:H-0081",
+        "historial:H-0082",
+        "historial:H-0083",
+        "historial:H-0084",
+        "historial:H-0086",
+        "historial:H-0087",
+        "historial:H-0089",
+        "historial:H-0090",
+        "historial:H-0091",
+        "historial:H-0092",
+        "historial:H-0094",
+        "historial:H-0095",
+        "historial:H-0096",
+        "historial:H-0097",
+        "historial:H-0099",
+        "historial:H-0100",
+        "historial:H-0102",
+        "historial:H-0104",
+        "historial:H-0105",
+        "historial:H-0107",
+        "historial:H-0111",
+        "historial:H-0112",
+        "historial:H-0113",
+        "historial:H-0114",
+        "historial:H-0116",
+        "historial:H-0118",
+        "historial:H-0119",
+        "historial:H-0120",
+        "historial:H-0121",
+        "historial:H-0122",
+        "historial:H-0123",
+        "historial:H-0124",
+        "historial:H-0125",
+        "historial:H-0129",
+        "historial:H-0133",
+        "historial:H-0134",
+        "historial:H-0135",
+        "historial:H-0137",
+        "historial:H-0138",
+        "historial:H-0139",
+        "historial:H-0141",
+        "historial:H-0144",
+        "historial:H-0145",
+        "historial:H-0146",
+        "historial:H-0148",
+        "historial:H-0149",
+        "historial:H-0151",
+        "historial:H-0152",
+        "historial:H-0153",
+        "historial:H-0154",
+        "historial:H-0155",
+        "historial:H-0157",
+        "historial:H-0158",
+        "historial:H-0159",
+        "historial:H-0161",
+        "historial:H-0162",
+        "historial:H-0164",
+        "historial:H-0166",
+        "historial:H-0167",
+        "historial:H-0169",
+        "historial:H-0170",
+        "historial:H-0171",
+        "historial:H-0172",
+        "historial:H-0173",
+        "historial:H-0174",
+        "historial:H-0176",
+        "historial:H-0177",
+        "historial:H-0178",
+        "historial:H-0179",
+        "historial:H-0181",
+        "historial:H-0183",
+        "historial:H-0184",
+        "historial:H-0185",
+        "historial:H-0186",
+        "historial:H-0187",
+        "historial:H-0191",
+        "historial:H-0193",
+        "historial:H-0195",
+        "historial:H-0197",
+        "historial:H-0198",
+        "historial:H-0199",
+        "historial:H-0200",
+        "historial:H-0201",
+        "historial:H-0202",
+        "historial:H-0203",
+        "historial:H-0205",
+        "historial:H-0206",
+        "historial:H-0207",
+        "historial:H-0208",
+        "historial:H-0209",
+        "historial:H-0211",
+        "historial:H-0213",
+        "historial:H-0214",
+        "historial:H-0215",
+        "historial:H-0216",
+        "historial:H-0218",
+        "historial:H-0219",
+        "historial:H-0220",
+        "historial:H-0222",
+        "historial:H-0223",
+        "historial:H-0224",
+        "historial:H-0225",
+        "historial:H-0226",
+        "historial:H-0228",
+        "historial:H-0229",
+        "historial:H-0230",
+        "historial:H-0232",
+        "historial:H-0233",
+        "historial:H-0234",
+        "historial:H-0235",
+        "historial:H-0236",
+        "historial:H-0237",
+        "historial:H-0238",
+        "historial:H-0239",
+        "historial:H-0240",
+        "historial:H-0242",
+        "historial:H-0243",
+        "historial:H-0244",
+        "historial:H-0246",
+        "historial:H-0248",
+        "historial:H-0249",
+        "historial:H-0250",
+        "historial:H-0251",
+        "historial:H-0252",
+        "historial:H-0253",
+        "historial:H-0257",
+        "historial:H-0261",
+        "historial:H-0262",
+        "historial:H-0264",
+        "historial:H-0266",
+        "historial:H-0267",
+        "historial:H-0268",
+        "historial:H-0269",
+        "historial:H-0270",
+        "historial:H-0271",
+        "historial:H-0272",
+        "historial:H-0273",
+        "historial:H-0274",
+        "historial:H-0276",
+        "historial:H-0277",
+        "historial:H-0278",
+        "historial:H-0279",
+        "historial:H-0280",
+        "historial:H-0282",
+        "historial:H-0283",
+        "historial:H-0284",
+        "historial:H-0285",
+        "historial:H-0286",
+        "historial:H-0287",
+        "historial:H-0289",
+        "historial:H-0290",
+        "historial:H-0292",
+        "historial:H-0293",
+        "historial:H-0294",
+        "historial:H-0295",
+        "historial:H-0296",
+        "historial:H-0297",
+        "historial:H-0299",
+        "historial:H-0300",
+        "historial:H-0301",
+        "historial:H-0302",
+        "historial:H-0303",
+        "historial:H-0304",
+        "historial:H-0305",
+        "historial:H-0307",
+        "historial:H-0308",
+        "historial:H-0309",
+        "historial:H-0310",
+        "historial:H-0312",
+        "historial:H-0314",
+        "historial:H-0315",
+        "historial:H-0317",
+        "historial:H-0319",
+        "historial:H-0321",
+        "historial:H-0323",
+        "historial:H-0324",
+        "historial:H-0325",
+        "historial:H-0326",
+        "historial:H-0327",
+        "historial:H-0328",
+        "historial:H-0329",
+        "historial:H-0330",
+        "historial:H-0332",
+        "historial:H-0333",
+        "historial:H-0335",
+        "historial:H-0336",
+        "historial:H-0337",
+        "historial:H-0338",
+        "historial:H-0339",
+        "historial:H-0341",
+        "historial:H-0342",
+        "historial:H-0343",
+        "historial:H-0344",
+        "historial:H-0345",
+        "historial:H-0346",
+        "historial:H-0348",
+        "historial:H-0350",
+        "historial:H-0352",
+        "historial:H-0354",
+        "historial:H-0355",
+        "historial:H-0358",
+        "historial:H-0359",
+        "historial:H-0360",
+        "historial:H-0361",
+        "historial:H-0363",
+        "historial:H-0364",
+        "historial:H-0365",
+        "historial:H-0366",
+        "historial:H-0367",
+        "historial:H-0368",
+        "historial:H-0370",
+        "historial:H-0371",
+        "historial:H-0372",
+        "historial:H-0373",
+        "historial:H-0374",
+        "historial:H-0375",
+        "historial:H-0376",
+        "historial:H-0377",
+        "historial:H-0379",
+        "historial:H-0380",
+        "historial:H-0381",
+        "historial:H-0383",
+        "historial:H-0384",
+        "historial:H-0385",
+        "historial:H-0387",
+        "historial:H-0389",
+        "historial:H-0390",
+        "historial:H-0391",
+        "historial:H-0393",
+        "historial:H-0394",
+        "historial:H-0395",
+        "historial:H-0396",
+        "historial:H-0397",
+        "historial:H-0401",
+        "historial:H-0402",
+        "historial:H-0403",
+        "historial:H-0405",
+        "historial:H-0406",
+        "historial:H-0407",
+        "historial:H-0409",
+        "historial:H-0410",
+        "historial:H-0411",
+        "historial:H-0412",
+        "historial:H-0414",
+        "historial:H-0415",
+        "historial:H-0417",
+        "historial:H-0418",
+        "historial:H-0419",
+        "historial:H-0420",
+        "historial:H-0421",
+        "historial:H-0422",
+        "historial:H-0424",
+        "historial:H-0425",
+        "historial:H-0428",
+        "historial:H-0429",
+        "historial:H-0430",
+        "historial:H-0432",
+        "historial:H-0433",
+        "historial:H-0434",
+        "historial:H-0435",
+        "historial:H-0436",
+        "historial:H-0438",
+        "historial:H-0439",
+        "historial:H-0440",
+        "historial:H-0441",
+        "historial:H-0442",
+        "historial:H-0446",
+        "historial:H-0447",
+        "historial:H-0448",
+        "historial:H-0451",
+        "historial:H-0453",
+        "historial:H-0454",
+        "historial:H-0455",
+        "historial:H-0456",
+        "historial:H-0457",
+        "historial:H-0459",
+        "historial:H-0461",
+        "historial:H-0464",
+        "historial:H-0465",
+        "historial:H-0467",
+        "historial:H-0468",
+        "historial:H-0470",
+        "historial:H-0471",
+        "historial:H-0472",
+        "historial:H-0473",
+        "historial:H-0474",
+        "historial:H-0475",
+        "historial:H-0476",
+        "historial:H-0477",
+        "historial:H-0478",
+        "historial:H-0479",
+        "historial:H-0481",
+        "historial:H-0482",
+        "historial:H-0483",
+        "historial:H-0484",
+        "historial:H-0485",
+        "historial:H-0487",
+        "historial:H-0488",
+        "historial:H-0490",
+        "historial:H-0491",
+        "historial:H-0492",
+        "historial:H-0493",
+        "historial:H-0494",
+        "historial:H-0495",
+        "historial:H-0496",
+        "historial:H-0498",
+        "historial:H-0499",
+        "historial:H-0500",
+        "historial:H-0502",
+        "historial:H-0503",
+        "historial:H-0504",
+        "historial:H-0506",
+        "historial:H-0507",
+        "historial:H-0509",
+        "historial:H-0510",
+        "historial:H-0513",
+        "historial:H-0514",
+        "historial:H-0516",
+        "historial:H-0518",
+        "historial:H-0519",
+        "historial:H-0520",
+        "historial:H-0521",
+        "historial:H-0523",
+        "historial:H-0526",
+        "historial:H-0527",
+        "historial:H-0528",
+        "historial:H-0529",
+        "historial:H-0531",
+        "historial:H-0532",
+        "historial:H-0533",
+        "historial:H-0534",
+        "historial:H-0538",
+        "historial:H-0539",
+        "historial:H-0541",
+        "historial:H-0543",
+        "historial:H-0544",
+        "historial:H-0546",
+        "historial:H-0547",
+        "historial:H-0548",
+        "historial:H-0549",
+        "historial:H-0550",
+        "historial:H-0551",
+        "historial:H-0552",
+        "historial:H-0554",
+        "historial:H-0556",
+        "historial:H-0557",
+        "historial:H-0558",
+        "historial:H-0559",
+        "historial:H-0560",
+        "historial:H-0561",
+        "historial:H-0564",
+        "historial:H-0565",
+        "historial:H-0566",
+        "historial:H-0570",
+        "historial:H-0571",
+        "historial:H-0573",
+        "historial:H-0574",
+        "historial:H-0576",
+        "historial:H-0577",
+        "historial:H-0578",
+        "historial:H-0579",
+        "historial:H-0580",
+        "historial:H-0584",
+        "historial:H-0585",
+        "historial:H-0587",
+        "historial:H-0588",
+        "historial:H-0589",
+        "historial:H-0592",
+        "historial:H-0593",
+        "historial:H-0594",
+        "historial:H-0596",
+        "historial:H-0598",
+        "historial:H-0599",
+        "historial:H-0600",
+        "historial:H-0601",
+        "historial:H-0602",
+        "historial:H-0603",
+        "historial:H-0605",
+        "historial:H-0606",
+        "historial:H-0609",
+        "historial:H-0614",
+        "historial:H-0615",
+        "historial:H-0616",
+        "historial:H-0618",
+        "historial:H-0623",
+        "historial:H-0624",
+        "historial:H-0625",
+        "historial:H-0628",
+        "historial:H-0629",
+        "historial:H-0631",
+        "historial:H-0632",
+        "historial:H-0633",
+        "historial:H-0634",
+        "historial:H-0635",
+        "historial:H-0636",
+        "historial:H-0637",
+        "historial:H-0638",
+        "historial:H-0639",
+        "historial:H-0640",
+        "historial:H-0641",
+        "historial:H-0642",
+        "historial:H-0645",
+        "historial:H-0648",
+        "historial:H-0649",
+        "historial:H-0650",
+        "historial:H-0654",
+        "historial:H-0655",
+        "historial:H-0656",
+        "historial:H-0657",
+        "historial:H-0659",
+        "historial:H-0660",
+        "historial:H-0661",
+        "historial:H-0663",
+        "historial:H-0664",
+        "historial:H-0665",
+        "historial:H-0666",
+        "historial:H-0667",
+        "historial:H-0668",
+        "historial:H-0669",
+        "historial:H-0670",
+        "historial:H-0671",
+        "historial:H-0672",
+        "historial:H-0673",
+        "historial:H-0674",
+        "historial:H-0675",
+        "historial:H-0676",
+        "historial:H-0677",
+        "historial:H-0678",
+        "historial:H-0679",
+        "historial:H-0681",
+        "historial:H-0683",
+        "historial:H-0685",
+        "historial:H-0687",
+        "historial:H-0688",
+        "historial:H-0689",
+        "historial:H-0690",
+        "historial:H-0691",
+        "historial:H-0693",
+        "historial:H-0695",
+        "historial:H-0697",
+        "historial:H-0698",
+        "historial:H-0699",
+        "historial:H-0700",
+        "historial:H-0701",
+        "historial:H-0702",
+        "historial:H-0703",
+        "historial:H-0704",
+        "historial:H-0705",
+        "historial:H-0707",
+        "historial:H-0708",
+        "historial:H-0709",
+        "historial:H-0711",
+        "historial:H-0712",
+        "historial:H-0713",
+        "historial:H-0714",
+        "historial:H-0715",
+        "historial:H-0716",
+        "historial:H-0719",
+        "historial:H-0721",
+        "historial:H-0722",
+        "historial:H-0723",
+        "historial:H-0724",
+        "historial:H-0726",
+        "historial:H-0727",
+        "historial:H-0729",
+        "historial:H-0730",
+        "historial:H-0731",
+        "historial:H-0733",
+        "historial:H-0734",
+        "historial:H-0735",
+        "historial:H-0736",
+        "historial:H-0737",
+        "historial:H-0738",
+        "historial:H-0740",
+        "historial:H-0742",
+        "historial:H-0743",
+        "historial:H-0744",
+        "historial:H-0745",
+        "historial:H-0746",
+        "historial:H-0752",
+        "historial:H-0753",
+        "historial:H-0754",
+        "historial:H-0755",
+        "historial:H-0759",
+        "historial:H-0760",
+        "historial:H-0762",
+        "historial:H-0763",
+        "historial:H-0764",
+        "historial:H-0765",
+        "historial:H-0766",
+        "historial:H-0767",
+        "historial:H-0768",
+        "historial:H-0769",
+        "historial:H-0771",
+        "historial:H-0772",
+        "historial:H-0773",
+        "historial:H-0774",
+        "historial:H-0776",
+        "historial:H-0781",
+        "historial:H-0782",
+        "historial:H-0783",
+        "historial:H-0785",
+        "historial:H-0787",
+        "historial:H-0788",
+        "historial:H-0789",
+        "historial:H-0790",
+        "historial:H-0791",
+        "historial:H-0793",
+        "historial:H-0794",
+        "historial:H-0796",
+        "historial:H-0797",
+        "historial:H-0798",
+        "historial:H-0799",
+        "historial:H-0800",
+        "historial:H-0801",
+        "historial:H-0802",
+        "historial:H-0803",
+        "historial:H-0804",
+        "historial:H-0805",
+        "historial:H-0806",
+        "historial:H-0807",
+        "historial:H-0811",
+        "historial:H-0812",
+        "historial:H-0813",
+        "historial:H-0815",
+        "historial:H-0816",
+        "historial:H-0819",
+        "historial:H-0822",
+        "historial:H-0823",
+        "historial:H-0824",
+        "historial:H-0826",
+        "historial:H-0828",
+        "historial:H-0830",
+        "historial:H-0831",
+        "historial:H-0832",
+        "historial:H-0833",
+        "historial:H-0835",
+        "historial:H-0836",
+        "historial:H-0837",
+        "historial:H-0838",
+        "historial:H-0840",
+        "historial:H-0841",
+        "historial:H-0842",
+        "historial:H-0843",
+        "historial:H-0844",
+        "historial:H-0845",
+        "historial:H-0846",
+        "historial:H-0847",
+        "historial:H-0848",
+        "historial:H-0849",
+        "historial:H-0850",
+        "historial:H-0851",
+        "historial:H-0852",
+        "historial:H-0853",
+        "historial:H-0854",
+        "historial:H-0858",
+        "historial:H-0859",
+        "historial:H-0860",
+        "historial:H-0861",
+        "historial:H-0862",
+        "historial:H-0864",
+        "historial:H-0865",
+        "historial:H-0866",
+        "historial:H-0868",
+        "historial:H-0869",
+        "historial:H-0870",
+        "historial:H-0871",
+        "historial:H-0872",
+        "historial:H-0874",
+        "historial:H-0876",
+        "historial:H-0877",
+        "historial:H-0878",
+        "historial:H-0879",
+        "historial:H-0880",
+        "historial:H-0882",
+        "historial:H-0884",
+        "historial:H-0885",
+        "historial:H-0886",
+        "historial:H-0887",
+        "historial:H-0888",
+        "historial:H-0889",
+        "historial:H-0890",
+        "historial:H-0891",
+        "historial:H-0892",
+        "historial:H-0893",
+        "historial:H-0894",
+        "historial:H-0895",
+        "historial:H-0896",
+        "historial:H-0897",
+        "historial:H-0899",
+        "historial:H-0900",
+        "historial:H-0902",
+        "historial:H-0903",
+        "historial:H-0905",
+        "historial:H-0906",
+        "historial:H-0908",
+        "historial:H-0909",
+        "historial:H-0910",
+        "historial:H-0913",
+        "historial:H-0914",
+        "historial:H-0915",
+        "historial:H-0917",
+        "historial:H-0918",
+        "historial:H-0920",
+        "historial:H-0921",
+        "historial:H-0923",
+        "historial:H-0924",
+        "historial:H-0926",
+        "historial:H-0927",
+        "historial:H-0930",
+        "historial:H-0931",
+        "historial:H-0932",
+        "historial:H-0934",
+        "historial:H-0935",
+        "historial:H-0937",
+        "historial:H-0938",
+        "historial:H-0939",
+        "historial:H-0940",
+        "historial:H-0941",
+        "historial:H-0943",
+        "historial:H-0944",
+        "historial:H-0945",
+        "historial:H-0946",
+        "historial:H-0947",
+        "historial:H-0948",
+        "historial:H-0949",
+        "historial:H-0951",
+        "historial:H-0953",
+        "historial:H-0955",
+        "historial:H-0956",
+        "historial:H-0957",
+        "historial:H-0960",
+        "historial:H-0962",
+        "historial:H-0963",
+        "historial:H-0965",
+        "historial:H-0967",
+        "historial:H-0968",
+        "historial:H-0969",
+        "historial:H-0971",
+        "historial:H-0973",
+        "historial:H-0974",
+        "historial:H-0975",
+        "historial:H-0976",
+        "historial:H-0978",
+        "historial:H-0979",
+        "historial:H-0981",
+        "historial:H-0982",
+        "historial:H-0983",
+        "historial:H-0985",
+        "historial:H-0986",
+        "historial:H-0987",
+        "historial:H-0988",
+        "historial:H-0989",
+        "historial:H-0990",
+        "historial:H-0991",
+        "historial:H-0992",
+        "historial:H-0993",
+        "historial:H-0994",
+        "historial:H-0995",
+        "historial:H-0996",
+        "historial:H-0997",
+        "historial:H-0999",
+        "historial:H-1000",
+        "historial:H-1001",
+        "historial:H-1002",
+        "historial:H-1003",
+        "historial:H-1004",
+        "historial:H-1005",
+        "historial:H-1006",
+        "historial:H-1007",
+        "historial:H-1008",
+        "historial:H-1011",
+        "historial:H-1012",
+        "historial:H-1013",
+        "historial:H-1014",
+        "historial:H-1015",
+        "historial:H-1016",
+        "historial:H-1018",
+        "historial:H-1019",
+        "historial:H-1021",
+        "historial:H-1022",
+        "historial:H-1023",
+        "historial:H-1024",
+        "historial:H-1025",
+        "historial:H-1026",
+        "historial:H-1028",
+        "historial:H-1029",
+        "historial:H-1030",
+        "historial:H-1033",
+        "historial:H-1034",
+        "historial:H-1036",
+        "historial:H-1037",
+        "historial:H-1038",
+        "historial:H-1039",
+        "historial:H-1041",
+        "historial:H-1043",
+        "historial:H-1045",
+        "historial:H-1048",
+        "historial:H-1049",
+        "historial:H-1050",
+        "historial:H-1051",
+        "historial:H-1053",
+        "historial:H-1054",
+        "historial:H-1055",
+        "historial:H-1056",
+        "historial:H-1057",
+        "historial:H-1058",
+        "historial:H-1059",
+        "historial:H-1060",
+        "historial:H-1061",
+        "historial:H-1062",
+        "historial:H-1063",
+        "historial:H-1064",
+        "historial:H-1066",
+        "historial:H-1067",
+        "historial:H-1068",
+        "historial:H-1069",
+        "historial:H-1070",
+        "historial:H-1072",
+        "historial:H-1073",
+        "historial:H-1074",
+        "historial:H-1075",
+        "historial:H-1076",
+        "historial:H-1078",
+        "historial:H-1080",
+        "historial:H-1081",
+        "historial:H-1082",
+        "historial:H-1083",
+        "historial:H-1085",
+        "historial:H-1086",
+        "historial:H-1087",
+        "historial:H-1089",
+        "historial:H-1090",
+        "historial:H-1092",
+        "historial:H-1095",
+        "historial:H-1096",
+        "historial:H-1097",
+        "historial:H-1098",
+        "historial:H-1099",
+        "historial:H-1101",
+        "historial:H-1103",
+        "historial:H-1105",
+        "historial:H-1106",
+        "historial:H-1107",
+        "historial:H-1108",
+        "historial:H-1110",
+        "historial:H-1111",
+        "historial:H-1114",
+        "historial:H-1115",
+        "historial:H-1117",
+        "historial:H-1120",
+        "historial:H-1121",
+        "historial:H-1122",
+        "historial:H-1123",
+        "historial:H-1124",
+        "historial:H-1125",
+        "historial:H-1129",
+        "historial:H-1130",
+        "historial:H-1132",
+        "historial:H-1133",
+        "historial:H-1134",
+        "historial:H-1135",
+        "historial:H-1137",
+        "historial:H-1140",
+        "historial:H-1141",
+        "historial:H-1144",
+        "historial:H-1145",
+        "historial:H-1146",
+        "historial:H-1147",
+        "historial:H-1148",
+        "historial:H-1149",
+        "historial:H-1151",
+        "historial:H-1152",
+        "historial:H-1153",
+        "historial:H-1155",
+        "historial:H-1156",
+        "historial:H-1157",
+        "historial:H-1158",
+        "historial:H-1159",
+        "historial:H-1161",
+        "historial:H-1162",
+        "historial:H-1163",
+        "historial:H-1164",
+        "historial:H-1165",
+        "historial:H-1167",
+        "historial:H-1168",
+        "historial:H-1170",
+        "historial:H-1172",
+        "historial:H-1174",
+        "historial:H-1175",
+        "historial:H-1177",
+        "historial:H-1179",
+        "historial:H-1180",
+        "historial:H-1181",
+        "historial:H-1182",
+        "historial:H-1184",
+        "historial:H-1185",
+        "historial:H-1186",
+        "historial:H-1187",
+        "historial:H-1188",
+        "historial:H-1189",
+        "historial:H-1191",
+        "historial:H-1192",
+        "historial:H-1193",
+        "historial:H-1195",
+        "historial:H-1196",
+        "historial:H-1197",
+        "historial:H-1199",
+        "historial:H-1201",
+        "historial:H-1202",
+        "historial:H-1203",
+        "historial:H-1205",
+        "historial:H-1206",
+        "historial:H-1207",
+        "historial:H-1208",
+        "historial:H-1209",
+        "historial:H-1210",
+        "historial:H-1212",
+        "historial:H-1213",
+        "historial:H-1214",
+        "historial:H-1215",
+        "historial:H-1216",
+        "historial:H-1217",
+        "historial:H-1219",
+        "historial:H-1220",
+        "historial:H-1221",
+        "historial:H-1222",
+        "historial:H-1223",
+        "historial:H-1224",
+        "historial:H-1225",
+        "historial:H-1226",
+        "historial:H-1228",
+        "historial:H-1230",
+        "historial:H-1232",
+        "historial:H-1233",
+        "historial:H-1235",
+        "historial:H-1236",
+        "historial:H-1238",
+        "historial:H-1240",
+        "historial:H-1241",
+        "historial:H-1242",
+        "historial:H-1243",
+        "historial:H-1244",
+        "historial:H-1245",
+        "historial:H-1248",
+        "historial:H-1250",
+        "historial:H-1251",
+        "historial:H-1252",
+        "historial:H-1253",
+        "historial:H-1254",
+        "historial:H-1255",
+        "historial:H-1256",
+        "historial:H-1260",
+        "historial:H-1261",
+        "historial:H-1262",
+        "historial:H-1264",
+        "historial:H-1265",
+        "historial:H-1267",
+        "historial:H-1268",
+        "historial:H-1269",
+        "historial:H-1270",
+        "historial:H-1271",
+        "historial:H-1272",
+        "historial:H-1273",
+        "historial:H-1274",
+        "historial:H-1275",
+        "historial:H-1277",
+        "historial:H-1278",
+        "historial:H-1279",
+        "historial:H-1280",
+        "historial:H-1281",
+        "historial:H-1282",
+        "historial:H-1284",
+        "historial:H-1285",
+        "historial:H-1286",
+        "historial:H-1291",
+        "historial:H-1292",
+        "historial:H-1293",
+        "historial:H-1296",
+        "historial:H-1298",
+        "historial:H-1299",
+        "historial:H-1300",
+        "historial:H-1302",
+        "historial:H-1303",
+        "historial:H-1305",
+        "historial:H-1306",
+        "historial:H-1307",
+        "historial:H-1309",
+        "historial:H-1312",
+        "historial:H-1314",
+        "historial:H-1315",
+        "historial:H-1316",
+        "historial:H-1318",
+        "historial:H-1319",
+        "historial:H-1321",
+        "historial:H-1322",
+        "historial:H-1324",
+        "historial:H-1325",
+        "historial:H-1326",
+        "historial:H-1327",
+        "historial:H-1329",
+        "historial:H-1330",
+        "historial:H-1331",
+        "historial:H-1333",
+        "historial:H-1334",
+        "historial:H-1335",
+        "historial:H-1336",
+        "historial:H-1337",
+        "historial:H-1338",
+        "historial:H-1340",
+        "historial:H-1341",
+        "historial:H-1342",
+        "historial:H-1343",
+        "historial:H-1344",
+        "historial:H-1345",
+        "historial:H-1346",
+        "historial:H-1347",
+        "historial:H-1348",
+        "historial:H-1349",
+        "historial:H-1350",
+        "historial:H-1351",
+        "historial:H-1352",
+        "historial:H-1353",
+        "historial:H-1354",
+        "historial:H-1356",
+        "historial:H-1357",
+        "historial:H-1358",
+        "historial:H-1359",
+        "historial:H-1361",
+        "historial:H-1362",
+        "historial:H-1363",
+        "historial:H-1364",
+        "historial:H-1365",
+        "historial:H-1366",
+        "historial:H-1367",
+        "historial:H-1368",
+        "historial:H-1369",
+        "historial:H-1370",
+        "historial:H-1371",
+        "historial:H-1372",
+        "historial:H-1373",
+        "historial:H-1374",
+        "historial:H-1377",
+        "historial:H-1379",
+        "historial:H-1380",
+        "historial:H-1381",
+        "historial:H-1383",
+        "historial:H-1385",
+        "historial:H-1386",
+        "historial:H-1387",
+        "historial:H-1389",
+        "historial:H-1390",
+        "historial:H-1392",
+        "historial:H-1395",
+        "historial:H-1396",
+        "historial:H-1397",
+        "historial:H-1399",
+        "historial:H-1400",
+        "historial:H-1402",
+        "historial:H-1405",
+        "historial:H-1406",
+        "historial:H-1407",
+        "historial:H-1408",
+        "historial:H-1409",
+        "historial:H-1410",
+        "historial:H-1411",
+        "historial:H-1412",
+        "historial:H-1413",
+        "historial:H-1414",
+        "historial:H-1415",
+        "historial:H-1417",
+        "historial:H-1419",
+        "historial:H-1420",
+        "historial:H-1421",
+        "historial:H-1422",
+        "historial:H-1423",
+        "historial:H-1424",
+        "historial:H-1425",
+        "historial:H-1426",
+        "historial:H-1429",
+        "historial:H-1431",
+        "historial:H-1432",
+        "historial:H-1433",
+        "historial:H-1435",
+        "historial:H-1437",
+        "historial:H-1438",
+        "historial:H-1439",
+        "historial:H-1441",
+        "historial:H-1444",
+        "historial:H-1445",
+        "historial:H-1446",
+        "historial:H-1447",
+        "historial:H-1448",
+        "historial:H-1449",
+        "historial:H-1450",
+        "historial:H-1451",
+        "historial:H-1454",
+        "historial:H-1455",
+        "historial:H-1457",
+        "historial:H-1458",
+        "historial:H-1459",
+        "historial:H-1460",
+        "historial:H-1461",
+        "historial:H-1462",
+        "historial:H-1463",
+        "historial:H-1464",
+        "historial:H-1468",
+        "historial:H-1469",
+        "historial:H-1470",
+        "historial:H-1471",
+        "historial:H-1472",
+        "historial:H-1473",
+        "historial:H-1474",
+        "historial:H-1476",
+        "historial:H-1477",
+        "historial:H-1478",
+        "historial:H-1480",
+        "historial:H-1482",
+        "historial:H-1483",
+        "historial:H-1484",
+        "historial:H-1485",
+        "historial:H-1486",
+        "historial:H-1488",
+        "historial:H-1489",
+        "historial:H-1491",
+        "historial:H-1492",
+        "historial:H-1494",
+        "historial:H-1495",
+        "historial:H-1497",
+        "historial:H-1498",
+        "historial:H-1499",
+        "historial:H-1500",
+        "historial:H-1501",
+        "historial:H-1502",
+        "historial:H-1503",
+        "historial:H-1504",
+        "historial:H-1505",
+        "historial:H-1506",
+        "historial:H-1507",
+        "historial:H-1508",
+        "historial:H-1509",
+        "historial:H-1510",
+        "historial:H-1512",
+        "historial:H-1513",
+        "historial:H-1514",
+        "historial:H-1515",
+        "historial:H-1516",
+        "historial:H-1517",
+        "historial:H-1518",
+        "historial:H-1519",
+        "historial:H-1521",
+        "historial:H-1522",
+        "historial:H-1523",
+        "historial:H-1524",
+        "historial:H-1525",
+        "historial:H-1527",
+        "historial:H-1528",
+        "historial:H-1529",
+        "historial:H-1530",
+        "historial:H-1531",
+        "historial:H-1532",
+        "historial:H-1534",
+        "historial:H-1535",
+        "historial:H-1536",
+        "historial:H-1539",
+        "historial:H-1540",
+        "historial:H-1545",
+        "historial:H-1546",
+        "historial:H-1547",
+        "historial:H-1548",
+        "historial:H-1550",
+        "historial:H-1551",
+        "historial:H-1552",
+        "historial:H-1553",
+        "historial:H-1555",
+        "historial:H-1557",
+        "historial:H-1558",
+        "historial:H-1559",
+        "historial:H-1560",
+        "historial:H-1561",
+        "historial:H-1562",
+        "historial:H-1563",
+        "historial:H-1565",
+        "historial:H-1566",
+        "historial:H-1567",
+        "historial:H-1569",
+        "historial:H-1570",
+        "historial:H-1571",
+        "historial:H-1572",
+        "historial:H-1573",
+        "historial:H-1574",
+        "historial:H-1577",
+        "historial:H-1579",
+        "historial:H-1580",
+        "historial:H-1581",
+        "historial:H-1583",
+        "historial:H-1585",
+        "historial:H-1586",
+        "historial:H-1588",
+        "historial:H-1589",
+        "historial:H-1590",
+        "historial:H-1591",
+        "historial:H-1592",
+        "historial:H-1595",
+        "historial:H-1596",
+        "historial:H-1597",
+        "historial:H-1598",
+        "historial:H-1599",
+        "historial:H-1600",
+        "historial:H-1601",
+        "historial:H-1602",
+        "historial:H-1603",
+        "historial:H-1604",
+        "historial:H-1605",
+        "historial:H-1608",
+        "historial:H-1609",
+        "historial:H-1611",
+        "historial:H-1613",
+        "historial:H-1614",
+        "historial:H-1615",
+        "historial:H-1617",
+        "historial:H-1618",
+        "historial:H-1619",
+        "historial:H-1620",
+        "historial:H-1621",
+        "historial:H-1622",
+        "historial:H-1623",
+        "historial:H-1626",
+        "historial:H-1628",
+        "historial:H-1630",
+        "historial:H-1632",
+        "historial:H-1633",
+        "historial:H-1634",
+        "historial:H-1638",
+        "historial:H-1639",
+        "historial:H-1640",
+        "historial:H-1642",
+        "historial:H-1645",
+        "historial:H-1647",
+        "historial:H-1648",
+        "historial:H-1650",
+        "historial:H-1654",
+        "historial:H-1655",
+        "historial:H-1656",
+        "historial:H-1657",
+        "historial:H-1658",
+        "historial:H-1659",
+        "historial:H-1660",
+        "historial:H-1661",
+        "historial:H-1662",
+        "historial:H-1664",
+        "historial:H-1670",
+        "historial:H-1671",
+        "historial:H-1672",
+        "historial:H-1673",
+        "historial:H-1675",
+        "historial:H-1677",
+        "historial:H-1680",
+        "historial:H-1681",
+        "historial:H-1683",
+        "historial:H-1684",
+        "historial:H-1685",
+        "historial:H-1686",
+        "historial:H-1688",
+        "historial:H-1689",
+        "historial:H-1690",
+        "historial:H-1692",
+        "historial:H-1694",
+        "historial:H-1696",
+        "historial:H-1697",
+        "historial:H-1698",
+        "historial:H-1699",
+        "historial:H-1700",
+        "historial:H-1701",
+        "historial:H-1704",
+        "historial:H-1705",
+        "historial:H-1706",
+        "historial:H-1707",
+        "historial:H-1710",
+        "historial:H-1712",
+        "historial:H-1713",
+        "historial:H-1716",
+        "historial:H-1717",
+        "historial:H-1718",
+        "historial:H-1720",
+        "historial:H-1723",
+        "historial:H-1725",
+        "historial:H-1726",
+        "historial:H-1727",
+        "historial:H-1728",
+        "historial:H-1730",
+        "historial:H-1732",
+        "historial:H-1733",
+        "historial:H-1734",
+        "historial:H-1735",
+        "historial:H-1736",
+        "historial:H-1737",
+        "historial:H-1739",
+        "historial:H-1740",
+        "historial:H-1744",
+        "historial:H-1745",
+        "historial:H-1746",
+        "historial:H-1747",
+        "historial:H-1748",
+        "historial:H-1750",
+        "historial:H-1751",
+        "historial:H-1753",
+        "historial:H-1754",
+        "historial:H-1755",
+        "historial:H-1756",
+        "historial:H-1757",
+        "historial:H-1759",
+        "historial:H-1760",
+        "historial:H-1762",
+        "historial:H-1763",
+        "historial:H-1765",
+        "historial:H-1766",
+        "historial:H-1769",
+        "historial:H-1770",
+        "historial:H-1771",
+        "historial:H-1773",
+        "historial:H-1774",
+        "historial:H-1775",
+        "historial:H-1776",
+        "historial:H-1777",
+        "historial:H-1779",
+        "historial:H-1780",
+        "historial:H-1782",
+        "historial:H-1783",
+        "historial:H-1784",
+        "historial:H-1785",
+        "historial:H-1786",
+        "historial:H-1787",
+        "historial:H-1788",
+        "historial:H-1789",
+        "historial:H-1790",
+        "historial:H-1792",
+        "historial:H-1793",
+        "historial:H-1795",
+        "historial:H-1797",
+        "historial:H-1798",
+        "historial:H-1799",
+        "historial:H-1801",
+        "historial:H-1804",
+        "historial:H-1805",
+        "historial:H-1806",
+        "historial:H-1808",
+        "historial:H-1809",
+        "historial:H-1810",
+        "historial:H-1811",
+        "historial:H-1813",
+        "historial:H-1814",
+        "historial:H-1815",
+        "historial:H-1816",
+        "historial:H-1817",
+        "historial:H-1818",
+        "historial:H-1819",
+        "historial:H-1822",
+        "historial:H-1823",
+        "historial:H-1824",
+        "historial:H-1825",
+        "historial:H-1826",
+        "historial:H-1828",
+        "historial:H-1832",
+        "historial:H-1836",
+        "historial:H-1837",
+        "historial:H-1838",
+        "historial:H-1839",
+        "historial:H-1840",
+        "historial:H-1841",
+        "historial:H-1842",
+        "historial:H-1844",
+        "historial:H-1845",
+        "historial:H-1847",
+        "historial:H-1848",
+        "historial:H-1849",
+        "historial:H-1850",
+        "historial:H-1851",
+        "historial:H-1853",
+        "historial:H-1855",
+        "historial:H-1857",
+        "historial:H-1858",
+        "historial:H-1859",
+        "historial:H-1861",
+        "historial:H-1862",
+        "historial:H-1863",
+        "historial:H-1864",
+        "historial:H-1866",
+        "historial:H-1867",
+        "historial:H-1868",
+        "historial:H-1869",
+        "historial:H-1871",
+        "historial:H-1872",
+        "historial:H-1873",
+        "historial:H-1875",
+        "historial:H-1877",
+        "historial:H-1878",
+        "historial:H-1879",
+        "historial:H-1881",
+        "historial:H-1883",
+        "historial:H-1884",
+        "historial:H-1885",
+        "historial:H-1886",
+        "historial:H-1887",
+        "historial:H-1890",
+        "historial:H-1891",
+        "historial:H-1892",
+        "historial:H-1893",
+        "historial:H-1895",
+        "historial:H-1896",
+        "historial:H-1898",
+        "historial:H-1899",
+        "historial:H-1900",
+        "historial:H-1901",
+        "historial:H-1902",
+        "historial:H-1903",
+        "historial:H-1904",
+        "historial:H-1906",
+        "historial:H-1907",
+        "historial:H-1910",
+        "historial:H-1911",
+        "historial:H-1912",
+        "historial:H-1913",
+        "historial:H-1915",
+        "historial:H-1917",
+        "historial:H-1918",
+        "historial:H-1919",
+        "historial:H-1920",
+        "historial:H-1921",
+        "historial:H-1922",
+        "historial:H-1923",
+        "historial:H-1924",
+        "historial:H-1926",
+        "historial:H-1928",
+        "historial:H-1929",
+        "historial:H-1930",
+        "historial:H-1931",
+        "historial:H-1932",
+        "historial:H-1934",
+        "historial:H-1935",
+        "historial:H-1936",
+        "historial:H-1937",
+        "historial:H-1938",
+        "historial:H-1939",
+        "historial:H-1940",
+        "historial:H-1941",
+        "historial:H-1942",
+        "historial:H-1944",
+        "historial:H-1946",
+        "historial:H-1948",
+        "historial:H-1949",
+        "historial:H-1952",
+        "historial:H-1954",
+        "historial:H-1955",
+        "historial:H-1956",
+        "historial:H-1957",
+        "historial:H-1959",
+        "historial:H-1961",
+        "historial:H-1962",
+        "historial:H-1965",
+        "historial:H-1966",
+        "historial:H-1968",
+        "historial:H-1969",
+        "historial:H-1970",
+        "historial:H-1971",
+        "historial:H-1972",
+        "historial:H-1974",
+        "historial:H-1975",
+        "historial:H-1977",
+        "historial:H-1978",
+        "historial:H-1979",
+        "historial:H-1980",
+        "historial:H-1981",
+        "historial:H-1982",
+        "historial:H-1983",
+        "historial:H-1984",
+        "historial:H-1985",
+        "historial:H-1988",
+        "historial:H-1990",
+        "historial:H-1991",
+        "historial:H-1992",
+        "historial:H-1993",
+        "historial:H-1995",
+        "historial:H-1996",
+        "historial:H-1997",
+        "historial:H-1998",
+        "historial:H-1999",
+        "historial:H-2000"
+      ],
+      "por_fuente": {
+        "entrenamiento": 728,
+        "historial": 1448
+      },
+      "registros": 2176,
+      "sha256": "75a438fa384f69c73cb1dd1a1dc2b1c83b482672673687ba5d65f3a575402fd7"
+    },
+    "validacion": {
+      "archivo": "datos/conversaciones/validacion.jsonl",
+      "grupos": 198,
+      "ids": [
+        "entrenamiento:E-009",
+        "entrenamiento:E-010",
+        "entrenamiento:E-020",
+        "entrenamiento:E-021",
+        "entrenamiento:E-023",
+        "entrenamiento:E-027",
+        "entrenamiento:E-029",
+        "entrenamiento:E-045",
+        "entrenamiento:E-059",
+        "entrenamiento:E-064",
+        "entrenamiento:E-096",
+        "entrenamiento:E-119",
+        "entrenamiento:E-125",
+        "entrenamiento:E-126",
+        "entrenamiento:E-127",
+        "entrenamiento:E-128",
+        "entrenamiento:E-143",
+        "entrenamiento:E-155",
+        "entrenamiento:E-167",
+        "entrenamiento:E-180",
+        "entrenamiento:E-182",
+        "entrenamiento:E-187",
+        "entrenamiento:E-191",
+        "entrenamiento:E-236",
+        "entrenamiento:E-243",
+        "entrenamiento:E-254",
+        "entrenamiento:E-261",
+        "entrenamiento:E-265",
+        "entrenamiento:E-267",
+        "entrenamiento:E-278",
+        "entrenamiento:E-286",
+        "entrenamiento:E-318",
+        "entrenamiento:E-335",
+        "entrenamiento:E-338",
+        "entrenamiento:E-347",
+        "entrenamiento:E-362",
+        "entrenamiento:E-366",
+        "entrenamiento:E-383",
+        "entrenamiento:E-390",
+        "entrenamiento:E-422",
+        "entrenamiento:E-431",
+        "entrenamiento:E-441",
+        "entrenamiento:E-471",
+        "entrenamiento:E-488",
+        "entrenamiento:E-491",
+        "entrenamiento:E-495",
+        "entrenamiento:E-516",
+        "entrenamiento:E-518",
+        "entrenamiento:E-526",
+        "entrenamiento:E-580",
+        "entrenamiento:E-595",
+        "entrenamiento:E-602",
+        "entrenamiento:E-608",
+        "entrenamiento:E-619",
+        "entrenamiento:E-633",
+        "entrenamiento:E-638",
+        "entrenamiento:E-647",
+        "entrenamiento:E-652",
+        "entrenamiento:E-663",
+        "entrenamiento:E-672",
+        "entrenamiento:E-690",
+        "entrenamiento:E-692",
+        "entrenamiento:E-724",
+        "entrenamiento:E-728",
+        "entrenamiento:E-736",
+        "entrenamiento:E-768",
+        "entrenamiento:E-776",
+        "entrenamiento:E-785",
+        "entrenamiento:E-787",
+        "entrenamiento:E-788",
+        "entrenamiento:E-790",
+        "entrenamiento:E-794",
+        "historial:H-0001",
+        "historial:H-0027",
+        "historial:H-0061",
+        "historial:H-0069",
+        "historial:H-0080",
+        "historial:H-0088",
+        "historial:H-0101",
+        "historial:H-0106",
+        "historial:H-0132",
+        "historial:H-0136",
+        "historial:H-0143",
+        "historial:H-0147",
+        "historial:H-0160",
+        "historial:H-0165",
+        "historial:H-0175",
+        "historial:H-0189",
+        "historial:H-0204",
+        "historial:H-0221",
+        "historial:H-0256",
+        "historial:H-0258",
+        "historial:H-0259",
+        "historial:H-0260",
+        "historial:H-0263",
+        "historial:H-0281",
+        "historial:H-0291",
+        "historial:H-0311",
+        "historial:H-0313",
+        "historial:H-0318",
+        "historial:H-0382",
+        "historial:H-0413",
+        "historial:H-0423",
+        "historial:H-0431",
+        "historial:H-0458",
+        "historial:H-0466",
+        "historial:H-0469",
+        "historial:H-0505",
+        "historial:H-0517",
+        "historial:H-0535",
+        "historial:H-0540",
+        "historial:H-0590",
+        "historial:H-0608",
+        "historial:H-0621",
+        "historial:H-0643",
+        "historial:H-0646",
+        "historial:H-0647",
+        "historial:H-0692",
+        "historial:H-0696",
+        "historial:H-0725",
+        "historial:H-0732",
+        "historial:H-0747",
+        "historial:H-0750",
+        "historial:H-0751",
+        "historial:H-0757",
+        "historial:H-0758",
+        "historial:H-0775",
+        "historial:H-0810",
+        "historial:H-0817",
+        "historial:H-0820",
+        "historial:H-0821",
+        "historial:H-0829",
+        "historial:H-0942",
+        "historial:H-0959",
+        "historial:H-1042",
+        "historial:H-1044",
+        "historial:H-1065",
+        "historial:H-1071",
+        "historial:H-1094",
+        "historial:H-1100",
+        "historial:H-1104",
+        "historial:H-1113",
+        "historial:H-1118",
+        "historial:H-1119",
+        "historial:H-1142",
+        "historial:H-1160",
+        "historial:H-1169",
+        "historial:H-1198",
+        "historial:H-1218",
+        "historial:H-1239",
+        "historial:H-1247",
+        "historial:H-1249",
+        "historial:H-1259",
+        "historial:H-1263",
+        "historial:H-1266",
+        "historial:H-1287",
+        "historial:H-1288",
+        "historial:H-1289",
+        "historial:H-1294",
+        "historial:H-1301",
+        "historial:H-1304",
+        "historial:H-1317",
+        "historial:H-1320",
+        "historial:H-1323",
+        "historial:H-1375",
+        "historial:H-1376",
+        "historial:H-1378",
+        "historial:H-1388",
+        "historial:H-1398",
+        "historial:H-1404",
+        "historial:H-1418",
+        "historial:H-1436",
+        "historial:H-1442",
+        "historial:H-1453",
+        "historial:H-1475",
+        "historial:H-1479",
+        "historial:H-1493",
+        "historial:H-1511",
+        "historial:H-1526",
+        "historial:H-1533",
+        "historial:H-1537",
+        "historial:H-1541",
+        "historial:H-1544",
+        "historial:H-1556",
+        "historial:H-1578",
+        "historial:H-1594",
+        "historial:H-1607",
+        "historial:H-1631",
+        "historial:H-1637",
+        "historial:H-1649",
+        "historial:H-1651",
+        "historial:H-1653",
+        "historial:H-1667",
+        "historial:H-1668",
+        "historial:H-1674",
+        "historial:H-1676",
+        "historial:H-1687",
+        "historial:H-1703",
+        "historial:H-1714",
+        "historial:H-1715",
+        "historial:H-1719",
+        "historial:H-1738",
+        "historial:H-1764",
+        "historial:H-1767",
+        "historial:H-1772",
+        "historial:H-1781",
+        "historial:H-1791",
+        "historial:H-1796",
+        "historial:H-1803",
+        "historial:H-1807",
+        "historial:H-1865",
+        "historial:H-1876",
+        "historial:H-1880",
+        "historial:H-1882",
+        "historial:H-1888",
+        "historial:H-1889",
+        "historial:H-1914",
+        "historial:H-1916",
+        "historial:H-1925",
+        "historial:H-1943",
+        "historial:H-1945",
+        "historial:H-1950",
+        "historial:H-1960",
+        "historial:H-1963"
+      ],
+      "por_fuente": {
+        "entrenamiento": 72,
+        "historial": 152
+      },
+      "registros": 224,
+      "sha256": "bf8a4c743a7af146908a39b0f567323f0993b92ac8f5b5b84f2501cd43715c3e"
+    }
+  },
+  "pendientes": [
+    "Juan entrega y congela el prompt optimizado antes del entrenamiento.",
+    "Acordar con Juan y Juli estas particiones y el esquema messages/metadatos; la fracción real puede diferir del objetivo por los grupos.",
+    "Juli comprueba plantilla de chat, tokenización y longitudes con el modelo elegido; aquí se miden caracteres, no tokens.",
+    "La validación interna no es el test secreto ni una evaluación independiente del descubrimiento de costumbres.",
+    "La demo y sus nueve controles requieren el checkpoint final de Juli y la entrega de Juan/Pía."
+  ],
+  "por_fuente": {
+    "entrenamiento": 800,
+    "historial": 1600
+  },
+  "prompt": {
+    "archivo": "datos/prompts/sistema-usado.txt",
+    "origen": "admision.ejemplo.mensaje_de_sistema",
+    "origen_sha256_lf": "9a7720fab7feb8762117be314294c20357218d54140f73cd6a6fea3931649673",
+    "sha256": "f23f5921894f8843408ad46ddf1a0538ed8dd96ac9546dfd0aff80b8a4cba659"
+  },
+  "semilla": 42,
+  "separacion_comprobada": {
+    "grupo": true,
+    "huella_conversacion": true,
+    "id": true,
+    "paciente_id": true
+  },
+  "version": 1
+}

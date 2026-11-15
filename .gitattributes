@@ -1,0 +1,6 @@
+# Conservar los bytes de los entregables de datos y sus huellas entre Windows y Linux.
+datos/** text eol=lf
+datos/prompts/** -text
+historial_clasificado.csv text eol=lf
+costumbres.md text eol=lf
+tests/test_*_datos.py text eol=lf
