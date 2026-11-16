@@ -78,10 +78,14 @@ def tabla_trazabilidad() -> str:
     for e in _corridas():
         c = json.loads((RAIZ / "corridas" / "eval" / e / "condicion.json").read_text(encoding="utf-8"))
         args = " ".join(f"{k}={v}" for k, v in c["variables"].items())
+        if c.get("compuesta"):  # juntada de corridas ya hechas: el comando es el de evaluacion.componer
+            comando = f"`{c['comandos']['componer']}` (partes: " + "; ".join(
+                f"`{p['ruta']}` @ `{(p['commit'] or '?')[:7]}`, lote {p['modelo'].get('lote')}" for p in c["partes"]) + ")"
+        else:
+            comando = f"`{args} python -m evaluacion.evaluar --etiqueta {e} --casos {c['casos']}`"
         filas.append([f"`{e}`", c["casos"], f"{c['prompt']['version']} · `{c['prompt']['sha256'][:12]}`",
                       f"{c['modelo']['repo']} · `{str(c['modelo']['revision'])[:12]}`", f"`{(c['commit'] or '?')[:7]}`"
-                      + (" (con cambios sin commit)" if c["cambios_sin_commit"] else ""),
-                      f"`{args} python -m evaluacion.evaluar --etiqueta {e} --casos {c['casos']}`"])
+                      + (" (con cambios sin commit)" if c["cambios_sin_commit"] else ""), comando])
     return _md(filas) if len(filas) > 1 else "Todavía no hay corridas de evaluación en `corridas/eval/`."
 
 
