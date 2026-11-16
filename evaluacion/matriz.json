@@ -1,0 +1,37 @@
+{
+  "casos": "todos",
+  "referencia_catedra": {
+    "sin entrenar": {"original": 12, "b": 15, "c": 12},
+    "fine-tuning supervisado": {"original": 25, "b": 24, "c": 25}
+  },
+  "condiciones": [
+    {
+      "nombre": "base",
+      "descripcion": "modelo sin entrenar, prompt de la cátedra",
+      "prompt": "catedra",
+      "modelo_repo": "google/gemma-4-E4B-it",
+      "modelo_revision": "4ecc2ba63bcac23ba4a767fc87025b1450f84c9c"
+    },
+    {
+      "nombre": "solo prompt",
+      "descripcion": "modelo sin entrenar, prompt optimizado",
+      "prompt": "optimizado",
+      "modelo_repo": "google/gemma-4-E4B-it",
+      "modelo_revision": "4ecc2ba63bcac23ba4a767fc87025b1450f84c9c"
+    },
+    {
+      "nombre": "solo entrenamiento",
+      "descripcion": "checkpoint entrenado con conversaciones armadas con el prompt de la cátedra, evaluado con ese prompt",
+      "prompt": "catedra",
+      "modelo_repo": null,
+      "modelo_revision": null
+    },
+    {
+      "nombre": "ambos",
+      "descripcion": "checkpoint entrenado con conversaciones armadas con el prompt optimizado, evaluado con ese prompt",
+      "prompt": "optimizado",
+      "modelo_repo": null,
+      "modelo_revision": null
+    }
+  ]
+}

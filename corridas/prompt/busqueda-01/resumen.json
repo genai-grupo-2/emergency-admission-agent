@@ -1,0 +1,59 @@
+{
+  "mejor": {
+    "n": 5,
+    "sha256": "f7e6674cd484b615731ee854cf54bfb0b7795140ce5aac8c16a60657b1c29087",
+    "padre": "6696bd3230e3567c71831362991f84129e1315412e57fe7bbb7fc74b91276210",
+    "mutacion": "identidad=-",
+    "bloques": {
+      "identidad": "-",
+      "procedimiento": "pasos",
+      "herramientas": "compacta",
+      "formato": "corto",
+      "normas": "consultas",
+      "costumbres": "historial"
+    },
+    "tokens": 485,
+    "tokens_aprox": 430,
+    "caracteres": 1721,
+    "episodios": 90,
+    "resueltos": 18,
+    "parcial_medio": 0.799,
+    "por_norma": {
+      "original": {
+        "resueltos": 6,
+        "parcial_medio": 0.8,
+        "sin_decision": 0,
+        "caracteres_de_contexto_por_caso": 19498
+      },
+      "b": {
+        "resueltos": 7,
+        "parcial_medio": 0.796,
+        "sin_decision": 0,
+        "caracteres_de_contexto_por_caso": 19750
+      },
+      "c": {
+        "resueltos": 5,
+        "parcial_medio": 0.8,
+        "sin_decision": 0,
+        "caracteres_de_contexto_por_caso": 19726
+      }
+    },
+    "error": null,
+    "segundos": 4704.2,
+    "puntaje": 0.17575
+  },
+  "motivo_fin": "presupuesto agotado",
+  "evaluados": 8,
+  "frontera": [
+    {
+      "sha256": "bbdeed4668fea378df8c3a72f122e6141ba013d7cda2b0b15b98a7da7c4e0712",
+      "resueltos": 9,
+      "tokens": 415
+    },
+    {
+      "sha256": "f7e6674cd484b615731ee854cf54bfb0b7795140ce5aac8c16a60657b1c29087",
+      "resueltos": 18,
+      "tokens": 485
+    }
+  ]
+}

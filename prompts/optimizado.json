@@ -1,0 +1,18 @@
+{
+  "version": "optimizado",
+  "sha256": "f7e6674cd484b615731ee854cf54bfb0b7795140ce5aac8c16a60657b1c29087",
+  "corrida": "corridas/prompt/busqueda-01",
+  "commit_de_la_corrida": "03743a81b23f8905549aa46100814db0700853a4",
+  "bloques": {
+    "identidad": "-",
+    "procedimiento": "pasos",
+    "herramientas": "compacta",
+    "formato": "corto",
+    "normas": "consultas",
+    "costumbres": "historial"
+  },
+  "tokens": 485,
+  "resueltos_en_optimizacion": 18,
+  "episodios_en_optimizacion": 90,
+  "puntaje": 0.17575
+}
