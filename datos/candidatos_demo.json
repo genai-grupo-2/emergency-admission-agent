@@ -1,0 +1,689 @@
+{
+  "criterio": {
+    "fuente": "practica/casos.jsonl; no se leen respuestas esperadas ni corridas de modelos",
+    "tiempo_dependiente": "dolor torácico, signos neurológicos focales de inicio súbito o sospecha de sepsis",
+    "ambulancia": "llegada en ambulancia: permite mostrar la reducción del plazo",
+    "costumbre_voluntariado": "edad de al menos 75 años y sin acompañante",
+    "costumbre_doble_credencial": "obra social y prepaga presentadas, sin accidente laboral"
+  },
+  "casos_revisados": 50,
+  "tiempo_dependiente": [
+    {
+      "id": "pev-007",
+      "edad": 82,
+      "nivel": 1,
+      "motivo": "signos neurológicos focales de inicio súbito",
+      "llegada": "en ambulancia",
+      "acompanante": "su hija Andrea",
+      "credenciales": [
+        "obra_social"
+      ],
+      "circuito_probable": "codigo_acv",
+      "costumbre_voluntariado": false,
+      "costumbre_doble_credencial": false
+    },
+    {
+      "id": "pev-008",
+      "edad": 84,
+      "nivel": 2,
+      "motivo": "sospecha de sepsis",
+      "llegada": "en ambulancia",
+      "acompanante": null,
+      "credenciales": [
+        "obra_social"
+      ],
+      "circuito_probable": "codigo_sepsis",
+      "costumbre_voluntariado": true,
+      "costumbre_doble_credencial": false
+    },
+    {
+      "id": "pev-011",
+      "edad": 74,
+      "nivel": 3,
+      "motivo": "dolor torácico",
+      "llegada": "en ambulancia",
+      "acompanante": "su esposa Laura",
+      "credenciales": [],
+      "circuito_probable": "ecg",
+      "costumbre_voluntariado": false,
+      "costumbre_doble_credencial": false
+    },
+    {
+      "id": "pev-013",
+      "edad": 65,
+      "nivel": 2,
+      "motivo": "sospecha de sepsis",
+      "llegada": "en ambulancia",
+      "acompanante": "su hija Laura",
+      "credenciales": [],
+      "circuito_probable": "codigo_sepsis",
+      "costumbre_voluntariado": false,
+      "costumbre_doble_credencial": false
+    },
+    {
+      "id": "pev-016",
+      "edad": 85,
+      "nivel": 2,
+      "motivo": "dolor torácico",
+      "llegada": "en ambulancia",
+      "acompanante": "su hijo Daniel",
+      "credenciales": [],
+      "circuito_probable": "ecg",
+      "costumbre_voluntariado": false,
+      "costumbre_doble_credencial": false
+    },
+    {
+      "id": "pev-021",
+      "edad": 75,
+      "nivel": 2,
+      "motivo": "dolor torácico",
+      "llegada": "en ambulancia",
+      "acompanante": "su hermana Mariana",
+      "credenciales": [],
+      "circuito_probable": "ecg",
+      "costumbre_voluntariado": false,
+      "costumbre_doble_credencial": false
+    },
+    {
+      "id": "pev-026",
+      "edad": 67,
+      "nivel": 2,
+      "motivo": "dolor torácico",
+      "llegada": "en ambulancia",
+      "acompanante": "su hijo Pablo",
+      "credenciales": [],
+      "circuito_probable": "ecg",
+      "costumbre_voluntariado": false,
+      "costumbre_doble_credencial": false
+    },
+    {
+      "id": "pev-028",
+      "edad": 72,
+      "nivel": 2,
+      "motivo": "sospecha de sepsis",
+      "llegada": "en ambulancia",
+      "acompanante": "su hijo Pablo",
+      "credenciales": [],
+      "circuito_probable": "codigo_sepsis",
+      "costumbre_voluntariado": false,
+      "costumbre_doble_credencial": false
+    },
+    {
+      "id": "pev-001",
+      "edad": 53,
+      "nivel": 3,
+      "motivo": "dolor torácico",
+      "llegada": "por sus propios medios",
+      "acompanante": "su esposo Pablo",
+      "credenciales": [
+        "prepaga"
+      ],
+      "circuito_probable": "ecg",
+      "costumbre_voluntariado": false,
+      "costumbre_doble_credencial": false
+    },
+    {
+      "id": "pev-002",
+      "edad": 60,
+      "nivel": 1,
+      "motivo": "signos neurológicos focales de inicio súbito",
+      "llegada": "por sus propios medios",
+      "acompanante": "su esposo Pablo",
+      "credenciales": [
+        "prepaga"
+      ],
+      "circuito_probable": "codigo_acv",
+      "costumbre_voluntariado": false,
+      "costumbre_doble_credencial": false
+    },
+    {
+      "id": "pev-003",
+      "edad": 69,
+      "nivel": 1,
+      "motivo": "sospecha de sepsis",
+      "llegada": "por sus propios medios",
+      "acompanante": null,
+      "credenciales": [
+        "obra_social"
+      ],
+      "circuito_probable": "codigo_sepsis",
+      "costumbre_voluntariado": false,
+      "costumbre_doble_credencial": false
+    },
+    {
+      "id": "pev-004",
+      "edad": 88,
+      "nivel": 3,
+      "motivo": "sospecha de sepsis",
+      "llegada": "por sus propios medios",
+      "acompanante": null,
+      "credenciales": [
+        "prepaga"
+      ],
+      "circuito_probable": "codigo_sepsis",
+      "costumbre_voluntariado": true,
+      "costumbre_doble_credencial": false
+    },
+    {
+      "id": "pev-006",
+      "edad": 75,
+      "nivel": 2,
+      "motivo": "dolor torácico",
+      "llegada": "por sus propios medios",
+      "acompanante": null,
+      "credenciales": [
+        "prepaga"
+      ],
+      "circuito_probable": "ecg",
+      "costumbre_voluntariado": true,
+      "costumbre_doble_credencial": false
+    },
+    {
+      "id": "pev-009",
+      "edad": 82,
+      "nivel": 3,
+      "motivo": "sospecha de sepsis",
+      "llegada": "por sus propios medios",
+      "acompanante": "su hijo Pablo",
+      "credenciales": [
+        "prepaga"
+      ],
+      "circuito_probable": "codigo_sepsis",
+      "costumbre_voluntariado": false,
+      "costumbre_doble_credencial": false
+    },
+    {
+      "id": "pev-012",
+      "edad": 60,
+      "nivel": 2,
+      "motivo": "signos neurológicos focales de inicio súbito",
+      "llegada": "por sus propios medios",
+      "acompanante": null,
+      "credenciales": [],
+      "circuito_probable": "codigo_acv",
+      "costumbre_voluntariado": false,
+      "costumbre_doble_credencial": false
+    },
+    {
+      "id": "pev-014",
+      "edad": 70,
+      "nivel": 3,
+      "motivo": "sospecha de sepsis",
+      "llegada": "por sus propios medios",
+      "acompanante": "su hija Andrea",
+      "credenciales": [],
+      "circuito_probable": "codigo_sepsis",
+      "costumbre_voluntariado": false,
+      "costumbre_doble_credencial": false
+    },
+    {
+      "id": "pev-017",
+      "edad": 76,
+      "nivel": 2,
+      "motivo": "signos neurológicos focales de inicio súbito",
+      "llegada": "por sus propios medios",
+      "acompanante": "su esposa Mariana",
+      "credenciales": [],
+      "circuito_probable": "codigo_acv",
+      "costumbre_voluntariado": false,
+      "costumbre_doble_credencial": false
+    },
+    {
+      "id": "pev-018",
+      "edad": 73,
+      "nivel": 1,
+      "motivo": "sospecha de sepsis",
+      "llegada": "por sus propios medios",
+      "acompanante": "su esposa Laura",
+      "credenciales": [],
+      "circuito_probable": "codigo_sepsis",
+      "costumbre_voluntariado": false,
+      "costumbre_doble_credencial": false
+    },
+    {
+      "id": "pev-019",
+      "edad": 72,
+      "nivel": 3,
+      "motivo": "sospecha de sepsis",
+      "llegada": "por sus propios medios",
+      "acompanante": "su hija Paula",
+      "credenciales": [],
+      "circuito_probable": "codigo_sepsis",
+      "costumbre_voluntariado": false,
+      "costumbre_doble_credencial": false
+    },
+    {
+      "id": "pev-022",
+      "edad": 79,
+      "nivel": 1,
+      "motivo": "signos neurológicos focales de inicio súbito",
+      "llegada": "por sus propios medios",
+      "acompanante": "su hija Andrea",
+      "credenciales": [],
+      "circuito_probable": "codigo_acv",
+      "costumbre_voluntariado": false,
+      "costumbre_doble_credencial": false
+    },
+    {
+      "id": "pev-023",
+      "edad": 83,
+      "nivel": 2,
+      "motivo": "sospecha de sepsis",
+      "llegada": "por sus propios medios",
+      "acompanante": null,
+      "credenciales": [],
+      "circuito_probable": "codigo_sepsis",
+      "costumbre_voluntariado": true,
+      "costumbre_doble_credencial": false
+    },
+    {
+      "id": "pev-024",
+      "edad": 65,
+      "nivel": 3,
+      "motivo": "sospecha de sepsis",
+      "llegada": "por sus propios medios",
+      "acompanante": "su hermana Mariana",
+      "credenciales": [],
+      "circuito_probable": "codigo_sepsis",
+      "costumbre_voluntariado": false,
+      "costumbre_doble_credencial": false
+    },
+    {
+      "id": "pev-027",
+      "edad": 82,
+      "nivel": 2,
+      "motivo": "signos neurológicos focales de inicio súbito",
+      "llegada": "por sus propios medios",
+      "acompanante": "su hermana Laura",
+      "credenciales": [],
+      "circuito_probable": "codigo_acv",
+      "costumbre_voluntariado": false,
+      "costumbre_doble_credencial": false
+    },
+    {
+      "id": "pev-029",
+      "edad": 79,
+      "nivel": 1,
+      "motivo": "sospecha de sepsis",
+      "llegada": "por sus propios medios",
+      "acompanante": "su esposa Paula",
+      "credenciales": [],
+      "circuito_probable": "codigo_sepsis",
+      "costumbre_voluntariado": false,
+      "costumbre_doble_credencial": false
+    },
+    {
+      "id": "pev-031",
+      "edad": 85,
+      "nivel": 2,
+      "motivo": "dolor torácico",
+      "llegada": "por sus propios medios",
+      "acompanante": null,
+      "credenciales": [],
+      "circuito_probable": "ecg",
+      "costumbre_voluntariado": true,
+      "costumbre_doble_credencial": false
+    },
+    {
+      "id": "pev-032",
+      "edad": 79,
+      "nivel": 1,
+      "motivo": "signos neurológicos focales de inicio súbito",
+      "llegada": "por sus propios medios",
+      "acompanante": null,
+      "credenciales": [],
+      "circuito_probable": "codigo_acv",
+      "costumbre_voluntariado": true,
+      "costumbre_doble_credencial": false
+    },
+    {
+      "id": "pev-033",
+      "edad": 81,
+      "nivel": 2,
+      "motivo": "sospecha de sepsis",
+      "llegada": "por sus propios medios",
+      "acompanante": null,
+      "credenciales": [],
+      "circuito_probable": "codigo_sepsis",
+      "costumbre_voluntariado": true,
+      "costumbre_doble_credencial": false
+    },
+    {
+      "id": "pev-034",
+      "edad": 64,
+      "nivel": 1,
+      "motivo": "sospecha de sepsis",
+      "llegada": "por sus propios medios",
+      "acompanante": null,
+      "credenciales": [],
+      "circuito_probable": "codigo_sepsis",
+      "costumbre_voluntariado": false,
+      "costumbre_doble_credencial": false
+    },
+    {
+      "id": "pev-039",
+      "edad": 69,
+      "nivel": 3,
+      "motivo": "dolor torácico",
+      "llegada": "por sus propios medios",
+      "acompanante": "su esposo Gabriel",
+      "credenciales": [
+        "prepaga"
+      ],
+      "circuito_probable": "ecg",
+      "costumbre_voluntariado": false,
+      "costumbre_doble_credencial": false
+    },
+    {
+      "id": "pev-044",
+      "edad": 82,
+      "nivel": 3,
+      "motivo": "dolor torácico",
+      "llegada": "por sus propios medios",
+      "acompanante": "su hermana Andrea",
+      "credenciales": [],
+      "circuito_probable": "ecg",
+      "costumbre_voluntariado": false,
+      "costumbre_doble_credencial": false
+    },
+    {
+      "id": "pev-045",
+      "edad": 87,
+      "nivel": 2,
+      "motivo": "dolor torácico",
+      "llegada": "por sus propios medios",
+      "acompanante": "su hermana Laura",
+      "credenciales": [],
+      "circuito_probable": "ecg",
+      "costumbre_voluntariado": false,
+      "costumbre_doble_credencial": false
+    },
+    {
+      "id": "pev-046",
+      "edad": 76,
+      "nivel": 2,
+      "motivo": "dolor torácico",
+      "llegada": "por sus propios medios",
+      "acompanante": null,
+      "credenciales": [
+        "prepaga",
+        "obra_social"
+      ],
+      "circuito_probable": "ecg",
+      "costumbre_voluntariado": true,
+      "costumbre_doble_credencial": true
+    },
+    {
+      "id": "pev-047",
+      "edad": 81,
+      "nivel": 2,
+      "motivo": "signos neurológicos focales de inicio súbito",
+      "llegada": "por sus propios medios",
+      "acompanante": null,
+      "credenciales": [
+        "obra_social",
+        "prepaga"
+      ],
+      "circuito_probable": "codigo_acv",
+      "costumbre_voluntariado": true,
+      "costumbre_doble_credencial": true
+    },
+    {
+      "id": "pev-048",
+      "edad": 54,
+      "nivel": 2,
+      "motivo": "sospecha de sepsis",
+      "llegada": "por sus propios medios",
+      "acompanante": null,
+      "credenciales": [
+        "prepaga",
+        "obra_social"
+      ],
+      "circuito_probable": "codigo_sepsis",
+      "costumbre_voluntariado": false,
+      "costumbre_doble_credencial": true
+    },
+    {
+      "id": "pev-049",
+      "edad": 71,
+      "nivel": 3,
+      "motivo": "sospecha de sepsis",
+      "llegada": "por sus propios medios",
+      "acompanante": null,
+      "credenciales": [
+        "obra_social",
+        "prepaga"
+      ],
+      "circuito_probable": "codigo_sepsis",
+      "costumbre_voluntariado": false,
+      "costumbre_doble_credencial": true
+    }
+  ],
+  "costumbre": [
+    {
+      "id": "pev-015",
+      "edad": 82,
+      "nivel": 2,
+      "motivo": "dolor abdominal",
+      "llegada": "en ambulancia",
+      "acompanante": null,
+      "credenciales": [],
+      "circuito_probable": null,
+      "costumbre_voluntariado": true,
+      "costumbre_doble_credencial": false
+    },
+    {
+      "id": "pev-025",
+      "edad": 81,
+      "nivel": 3,
+      "motivo": "cefalea",
+      "llegada": "en ambulancia",
+      "acompanante": null,
+      "credenciales": [],
+      "circuito_probable": null,
+      "costumbre_voluntariado": true,
+      "costumbre_doble_credencial": false
+    },
+    {
+      "id": "pev-041",
+      "edad": 82,
+      "nivel": 3,
+      "motivo": "herida cortante",
+      "llegada": "por sus propios medios",
+      "acompanante": null,
+      "credenciales": [],
+      "circuito_probable": null,
+      "costumbre_voluntariado": true,
+      "costumbre_doble_credencial": false
+    },
+    {
+      "id": "pev-042",
+      "edad": 85,
+      "nivel": 4,
+      "motivo": "herida cortante",
+      "llegada": "en ambulancia",
+      "acompanante": null,
+      "credenciales": [],
+      "circuito_probable": null,
+      "costumbre_voluntariado": true,
+      "costumbre_doble_credencial": false
+    },
+    {
+      "id": "pev-043",
+      "edad": 83,
+      "nivel": 4,
+      "motivo": "traumatismo de miembro",
+      "llegada": "por sus propios medios",
+      "acompanante": null,
+      "credenciales": [],
+      "circuito_probable": null,
+      "costumbre_voluntariado": true,
+      "costumbre_doble_credencial": false
+    },
+    {
+      "id": "pev-050",
+      "edad": 62,
+      "nivel": 2,
+      "motivo": "palpitaciones",
+      "llegada": "en ambulancia",
+      "acompanante": "su hijo Pablo",
+      "credenciales": [
+        "obra_social",
+        "prepaga"
+      ],
+      "circuito_probable": null,
+      "costumbre_voluntariado": false,
+      "costumbre_doble_credencial": true
+    },
+    {
+      "id": "pev-004",
+      "edad": 88,
+      "nivel": 3,
+      "motivo": "sospecha de sepsis",
+      "llegada": "por sus propios medios",
+      "acompanante": null,
+      "credenciales": [
+        "prepaga"
+      ],
+      "circuito_probable": "codigo_sepsis",
+      "costumbre_voluntariado": true,
+      "costumbre_doble_credencial": false
+    },
+    {
+      "id": "pev-006",
+      "edad": 75,
+      "nivel": 2,
+      "motivo": "dolor torácico",
+      "llegada": "por sus propios medios",
+      "acompanante": null,
+      "credenciales": [
+        "prepaga"
+      ],
+      "circuito_probable": "ecg",
+      "costumbre_voluntariado": true,
+      "costumbre_doble_credencial": false
+    },
+    {
+      "id": "pev-008",
+      "edad": 84,
+      "nivel": 2,
+      "motivo": "sospecha de sepsis",
+      "llegada": "en ambulancia",
+      "acompanante": null,
+      "credenciales": [
+        "obra_social"
+      ],
+      "circuito_probable": "codigo_sepsis",
+      "costumbre_voluntariado": true,
+      "costumbre_doble_credencial": false
+    },
+    {
+      "id": "pev-023",
+      "edad": 83,
+      "nivel": 2,
+      "motivo": "sospecha de sepsis",
+      "llegada": "por sus propios medios",
+      "acompanante": null,
+      "credenciales": [],
+      "circuito_probable": "codigo_sepsis",
+      "costumbre_voluntariado": true,
+      "costumbre_doble_credencial": false
+    },
+    {
+      "id": "pev-031",
+      "edad": 85,
+      "nivel": 2,
+      "motivo": "dolor torácico",
+      "llegada": "por sus propios medios",
+      "acompanante": null,
+      "credenciales": [],
+      "circuito_probable": "ecg",
+      "costumbre_voluntariado": true,
+      "costumbre_doble_credencial": false
+    },
+    {
+      "id": "pev-032",
+      "edad": 79,
+      "nivel": 1,
+      "motivo": "signos neurológicos focales de inicio súbito",
+      "llegada": "por sus propios medios",
+      "acompanante": null,
+      "credenciales": [],
+      "circuito_probable": "codigo_acv",
+      "costumbre_voluntariado": true,
+      "costumbre_doble_credencial": false
+    },
+    {
+      "id": "pev-033",
+      "edad": 81,
+      "nivel": 2,
+      "motivo": "sospecha de sepsis",
+      "llegada": "por sus propios medios",
+      "acompanante": null,
+      "credenciales": [],
+      "circuito_probable": "codigo_sepsis",
+      "costumbre_voluntariado": true,
+      "costumbre_doble_credencial": false
+    },
+    {
+      "id": "pev-046",
+      "edad": 76,
+      "nivel": 2,
+      "motivo": "dolor torácico",
+      "llegada": "por sus propios medios",
+      "acompanante": null,
+      "credenciales": [
+        "prepaga",
+        "obra_social"
+      ],
+      "circuito_probable": "ecg",
+      "costumbre_voluntariado": true,
+      "costumbre_doble_credencial": true
+    },
+    {
+      "id": "pev-047",
+      "edad": 81,
+      "nivel": 2,
+      "motivo": "signos neurológicos focales de inicio súbito",
+      "llegada": "por sus propios medios",
+      "acompanante": null,
+      "credenciales": [
+        "obra_social",
+        "prepaga"
+      ],
+      "circuito_probable": "codigo_acv",
+      "costumbre_voluntariado": true,
+      "costumbre_doble_credencial": true
+    },
+    {
+      "id": "pev-048",
+      "edad": 54,
+      "nivel": 2,
+      "motivo": "sospecha de sepsis",
+      "llegada": "por sus propios medios",
+      "acompanante": null,
+      "credenciales": [
+        "prepaga",
+        "obra_social"
+      ],
+      "circuito_probable": "codigo_sepsis",
+      "costumbre_voluntariado": false,
+      "costumbre_doble_credencial": true
+    },
+    {
+      "id": "pev-049",
+      "edad": 71,
+      "nivel": 3,
+      "motivo": "sospecha de sepsis",
+      "llegada": "por sus propios medios",
+      "acompanante": null,
+      "credenciales": [
+        "obra_social",
+        "prepaga"
+      ],
+      "circuito_probable": "codigo_sepsis",
+      "costumbre_voluntariado": false,
+      "costumbre_doble_credencial": true
+    }
+  ]
+}

@@ -127,9 +127,11 @@ El diagnóstico de inspección conserva SHA-256 y tamaños de los bytes de entra
 - [x] Clasificación de las 2.000 filas y justificación de etiquetas.
 - [x] Conversión de las trazas seleccionadas y las 800 de referencia.
 - [x] Particiones provisionales, semilla, manifiesto y verificación de reproducción.
-- [ ] Confirmar formato y particiones con Juan/Juli e incorporar el prompt optimizado.
+- [x] Prompt definido: el de la cátedra (huella `f23f5921894f`). El optimizado no se adoptó, así que no se regeneró nada.
+- [x] Candidatos de la demo elegidos sin mirar respuestas esperadas: `python -m datos.candidatos_demo`.
+- [x] Sección de datos integrada en la Parte 1 de `INFORME.md`.
 - [ ] Juli comprueba que se pueden entrenar con la plantilla y el modelo elegidos.
 - [ ] Ejecutar y documentar los dos casos de demo con el checkpoint final.
-- [ ] Integrar nuestra sección de datos en el informe grupal y grabar la parte propia del Loom.
+- [ ] Grabar la parte propia del Loom (guion en `DEMO.md`).
 
 La sección para integrar en el informe está en [INFORME_DATOS.md](INFORME_DATOS.md). La guía de demo y sus dependencias está en [DEMO.md](DEMO.md).
