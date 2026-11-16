@@ -1,0 +1,92 @@
+{
+  "etiqueta": "prompt-despues",
+  "casos": "validacion",
+  "ids": [
+    "pev-001",
+    "pev-004",
+    "pev-005",
+    "pev-010",
+    "pev-011",
+    "pev-012",
+    "pev-013",
+    "pev-017",
+    "pev-020",
+    "pev-022",
+    "pev-024",
+    "pev-025",
+    "pev-026",
+    "pev-027",
+    "pev-030",
+    "pev-032",
+    "pev-036",
+    "pev-039",
+    "pev-040",
+    "pev-046"
+  ],
+  "normas": [
+    "original",
+    "b",
+    "c"
+  ],
+  "prompt": {
+    "version": "optimizado",
+    "archivo": "prompts/optimizado.txt",
+    "sha256": "f7e6674cd484b615731ee854cf54bfb0b7795140ce5aac8c16a60657b1c29087",
+    "tokens_aprox": 430
+  },
+  "modelo": {
+    "backend": "hf",
+    "repo": "google/gemma-4-E4B-it",
+    "revision": "4ecc2ba63bcac23ba4a767fc87025b1450f84c9c",
+    "dtype": "bfloat16",
+    "max_new_tokens": 384,
+    "lote": 50,
+    "device_map": "auto"
+  },
+  "agente": {
+    "max_llamadas": 40,
+    "max_sin_json": 3,
+    "aviso_restantes": 5,
+    "max_turnos": 60
+  },
+  "buscador": {
+    "k_entorno": 2,
+    "fragmentacion": "seccion",
+    "k1": 1.5,
+    "b": 0.75
+  },
+  "commit": "2d0b182a4c34897cf7c3433f4de4d0b5facf720a",
+  "cambios_sin_commit": false,
+  "variables": {
+    "ADMISION_PROMPT": "optimizado"
+  },
+  "comandos": {
+    "original": {
+      "jugar": "python -m admision.correr jugar --entrega entrega.py --casos entradas/casos.jsonl --normas entradas/normas/original --salida corridas/eval/prompt-despues/original",
+      "puntuar": "python -m admision.correr puntuar --trazas corridas/eval/prompt-despues/original/trazas.jsonl --esperadas practica/esperadas-original.jsonl --salida corridas/eval/prompt-despues/original"
+    },
+    "b": {
+      "jugar": "python -m admision.correr jugar --entrega entrega.py --casos entradas/casos.jsonl --normas entradas/normas/b --salida corridas/eval/prompt-despues/b",
+      "puntuar": "python -m admision.correr puntuar --trazas corridas/eval/prompt-despues/b/trazas.jsonl --esperadas practica/esperadas-b.jsonl --salida corridas/eval/prompt-despues/b"
+    },
+    "c": {
+      "jugar": "python -m admision.correr jugar --entrega entrega.py --casos entradas/casos.jsonl --normas entradas/normas/c --salida corridas/eval/prompt-despues/c",
+      "puntuar": "python -m admision.correr puntuar --trazas corridas/eval/prompt-despues/c/trazas.jsonl --esperadas practica/esperadas-c.jsonl --salida corridas/eval/prompt-despues/c"
+    }
+  },
+  "codigos_de_salida": {
+    "original": {
+      "jugar": 0,
+      "puntuar": 0
+    },
+    "b": {
+      "jugar": 0,
+      "puntuar": 0
+    },
+    "c": {
+      "jugar": 0,
+      "puntuar": 0
+    }
+  },
+  "casos_sha256": "607059331373ac81bc7bc2361b7dc5554d6d4e01fc22aaca81f27c1624df132e"
+}
