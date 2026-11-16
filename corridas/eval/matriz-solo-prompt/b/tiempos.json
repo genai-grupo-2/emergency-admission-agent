@@ -1,0 +1,28 @@
+{
+  "casos": 50,
+  "construir_buscador": 0.045,
+  "construir_agente": 13.498,
+  "error": null,
+  "jugar_lote": 2536.439,
+  "jugar_lote_por_caso": 50.729,
+  "partes": [
+    {
+      "ruta": "corridas/prompt/busqueda-01/f7e6674cd484",
+      "casos": 30,
+      "construir_buscador": 0.011,
+      "construir_agente": 0.0,
+      "error": null,
+      "jugar_lote": 1572.716,
+      "jugar_lote_por_caso": 52.424
+    },
+    {
+      "ruta": "corridas/eval/prompt-despues",
+      "casos": 20,
+      "construir_buscador": 0.034,
+      "construir_agente": 13.498,
+      "error": null,
+      "jugar_lote": 963.723,
+      "jugar_lote_por_caso": 48.186
+    }
+  ]
+}
