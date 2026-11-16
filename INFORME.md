@@ -10,8 +10,75 @@ un modelo falso. **Todavía no hay ninguna corrida con el modelo real**, así qu
 
 ## Parte 1 · Curado del historial
 
-*A cargo de Cande (#1).* Su borrador está en `datos/INFORME_DATOS.md`, en la rama `cande/datos-historial`. Se integra
-acá cuando esa rama entre a `main`.
+*A cargo de Cande (#1).* Código en `datos/`, comandos y formatos en [datos/README.md](datos/README.md). Todo lo que
+sigue sale de scripts del repositorio y se comprueba con `python -m datos.verificar`.
+
+**Fuentes e integridad** (`python -m datos.inspeccionar`, salida en `datos/diagnostico.json`):
+- Se usaron las 2.000 admisiones de `historial/historial.csv`, sus 2.000 trazas y las 800 trazas de referencia de
+  `entrenamiento/trazas.jsonl`. No se cargan las respuestas de los casos de práctica ni el test.
+- Los 2.000 IDs son únicos y coinciden en orden, fecha, operador y ficha entre el CSV y las trazas. No hay filas ni
+  trazas duplicadas por contenido.
+- Hay identificadores de paciente repetidos (191 grupos en el historial y 34 en la referencia). No son admisiones
+  duplicadas, pero las particiones los mantienen juntos.
+
+**Clasificación** (`python -m datos.clasificar`):
+- **Norma escrita primero.** Las normas se implementaron como comprobaciones sin modelo (`datos/normas.py`), con los
+  valores leídos de `normas/original/parametros.yaml` y las precedencias de documento extranjero urgente, edad para el
+  box antes del registro, ART, afiliación con terminación reservada y reducción del plazo por ambulancia. Una fila que
+  viola una norma es `error`, aunque también se aparte de una costumbre.
+- **Costumbre después.** En las 1.760 filas sin violaciones escritas se buscan las costumbres. La que se aparta de una
+  costumbre es `ruido`, y el resto es `correcta`.
+- **Sin etiquetas dudosas.** Ante circuitos simultáneos, categorías desconocidas o umbrales empatados, el proceso se
+  detiene y pide revisión. No quedó ningún caso sin resolver.
+
+| Tipo | Filas |
+| --- | --- |
+| correcta | 1.600 |
+| error | 240 |
+| ruido | 160 |
+
+`historial_clasificado.csv` tiene las columnas `id,tipo` y los 2.000 IDs en el orden original. El motivo de cada
+etiqueta (norma, campo, valor esperado y observado) está en `datos/clasificacion_detalle.jsonl`. Ejemplo: `H-0010`
+consignó 10 minutos para el ECG, y por llegar en ambulancia correspondían 5 (NOR-TDE-01 y NOR-TDE-04).
+
+**Costumbres** ([costumbres.md](costumbres.md); todos los IDs de apoyo y los contraejemplos en
+`datos/evidencia_costumbres.json`). Se pidió como mínimo 20 ejemplos y 80 % de coincidencia en cada grupo.
+
+| Costumbre | Coincidencia | Comparación |
+| --- | --- | --- |
+| Avisar al voluntariado si el paciente tiene al menos 75 años y llega sin acompañante | 1.609 de 1.760 (167 de 186 donde corresponde avisar; 1.442 de 1.574 en el resto) | No avisar nunca: 1.461. Umbral de 76 años: 1.599 |
+| Con obra social y prepaga a la vez, verificar la prepaga (fuera de accidentes laborales, donde va la ART por norma) | 163 de 172 | Las normas no fijan prioridad entre las dos |
+
+El umbral de 75 años se obtuvo comparando todas las edades observadas; no es un parámetro de las normas. La segunda
+costumbre se mira en la entidad verificada y no en la cobertura final, que puede quedar en `sin_cobertura` por una
+afiliación inactiva o reservada.
+
+**Conversaciones de entrenamiento** (`python -m datos.preparar`, salidas en `datos/conversaciones/` y
+`datos/manifiesto.json`):
+- **Selección.** Las 1.600 trazas `correcta` más las 800 de referencia: 2.400 conversaciones. Se excluyeron los 240
+  errores y los 160 ruidos, sin reemplazarlos por respuestas corregidas. No se agregaron datos sintéticos.
+- **Formato.** El del agente (Parte 3): mensaje de sistema, pedido inicial, llamadas JSON del asistente y resultados
+  como mensajes del usuario. Termina en `registrar_decision`, sin observación posterior. Los valores de las normas de
+  cada traza se conservan, así el modelo aprende a buscarlos y no a memorizarlos.
+- **Prompt.** El de la cátedra, huella `f23f5921894f`: la misma de las corridas `prompt-antes` y `matriz-base`. Como el
+  prompt optimizado no se adoptó (Parte 3), no hubo que regenerar las conversaciones.
+- **Particiones.** Semilla 42 y 10 % de validación como objetivo. Se agrupa por paciente y por huella de conversación,
+  y cada grupo queda entero de un lado: 2.176 de entrenamiento (1.448 del historial y 728 de referencia) y 224 de
+  validación (152 y 72), sin IDs, pacientes ni huellas compartidas. Esta validación es para seguir el entrenamiento; no
+  es la partición de 20 casos de práctica de la Parte 3.
+- **Tamaño.** Entre 7.474 y 15.186 caracteres por conversación. Los tokens con el tokenizador del modelo los mide Juli
+  al entrenar (#4).
+
+**Límites.** Las etiquetas son derivadas: no hay etiquetas oficiales contra las que medir su exactitud. Las costumbres
+se eligieron explorando el mismo historial, así que sus porcentajes no son una evaluación independiente. El CSV no
+registra minutos de atención ni eventos posteriores, y no se deducen incumplimientos de lo que no está.
+
+**Reproducción.** `python -m datos.preparar` regenera todo y `python -m datos.verificar` contrasta las huellas de
+fuentes, código y salidas, cada mensaje contra su traza y el reparto contra la semilla. Lo cubren 42 pruebas
+(`tests/test_*_datos.py`). Verificado sobre `main` en `eef6cc9`.
+
+**Demo.** Pendiente del checkpoint de Juli (#4). Los candidatos ya están elegidos por las características del caso, sin
+mirar las respuestas esperadas (`python -m datos.candidatos_demo`, plan en [datos/DEMO.md](datos/DEMO.md)).
 
 ## Parte 2 · Buscador (RAG)
 

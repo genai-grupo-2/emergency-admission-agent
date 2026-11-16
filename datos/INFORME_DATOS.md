@@ -2,7 +2,7 @@
 
 Responsable: Cande. Issue [#1](https://github.com/genai-grupo-2/emergency-admission-agent/issues/1).
 
-Esta sección está preparada para que Juan la integre en `INFORME.md`. Los comandos y formatos se explican en [README.md](README.md). El prompt y las particiones siguen pendientes de acuerdo con Juan y Juli; la demo depende del checkpoint final.
+Esta es la versión larga de la Parte 1 de [INFORME.md](../INFORME.md), que ya la resume. Los comandos y formatos se explican en [README.md](README.md). El prompt quedó definido: es el de la cátedra, porque el optimizado no se adoptó (Parte 3 del informe). La demo depende del checkpoint final.
 
 ## Fuentes y controles de integridad
 
@@ -61,4 +61,4 @@ Las pruebas cubren corrupción de fuentes, campos opcionales, órdenes, preceden
 
 ## Trabajo que depende del grupo
 
-Falta incorporar el prompt que Juan optimice, confirmar formato y particiones con Juan/Juli, y verificar carga/tokenización con el modelo de Juli. Con el checkpoint final y `entrega.py`, se ejecutarán dos casos de demo sobre normas `b` o `c`, mostrando herramientas, búsquedas, ficha y los nueve controles. Los resultados de esa demo y la intervención en Loom se agregarán cuando se realicen; no se presentan como completados.
+El prompt ya está resuelto: Juan midió el optimizado en validación, rindió peor y no se adoptó. Las conversaciones usan el de la cátedra (`datos/prompts/sistema-usado.txt`, huella `f23f5921894f`, la misma que `prompts/catedra.txt`), así que no se regeneraron. El campo `estado` del manifiesto sigue diciendo «provisional» porque sale de `datos/preparar.py`: cambiarlo altera las huellas de código que Juli puede estar citando, y se deja para cuando termine el entrenamiento. Falta que Juli verifique carga y tokenización con su modelo. Los candidatos de la demo ya están elegidos (`python -m datos.candidatos_demo`, ver [DEMO.md](DEMO.md)). Con el checkpoint final y `entrega.py`, se ejecutarán dos casos de demo sobre normas `b` o `c`, mostrando herramientas, búsquedas, ficha y los nueve controles. Los resultados de esa demo y la intervención en Loom se agregarán cuando se realicen; no se presentan como completados.
