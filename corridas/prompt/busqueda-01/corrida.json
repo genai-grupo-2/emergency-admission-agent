@@ -1,0 +1,72 @@
+{
+  "commit": "03743a81b23f8905549aa46100814db0700853a4",
+  "cambios_sin_commit": false,
+  "uv_lock_sha256": "ed668054fe364479569476e9acd0159264e1aca9d8165b405b287ad7e912b804",
+  "modelo": {
+    "backend": "hf",
+    "repo": "google/gemma-4-E4B-it",
+    "revision": "4ecc2ba63bcac23ba4a767fc87025b1450f84c9c",
+    "dtype": "bfloat16",
+    "max_new_tokens": 384,
+    "lote": 15,
+    "device_map": "auto"
+  },
+  "agente": {
+    "max_llamadas": 40,
+    "max_sin_json": 3,
+    "aviso_restantes": 5,
+    "max_turnos": 60
+  },
+  "buscador": {
+    "k_entorno": 2,
+    "fragmentacion": "seccion",
+    "k1": 1.5,
+    "b": 0.75
+  },
+  "normas": [
+    "original",
+    "b",
+    "c"
+  ],
+  "lambda": 0.05,
+  "decodificacion": "greedy",
+  "particion": {
+    "nombre": "optimizacion",
+    "semilla": 42,
+    "casos_sha256": "959cb88edbdd6d40b7a979ac99dcf601593587fd8e9c8469ec1f3f02c25b80ca",
+    "ids": [
+      "pev-002",
+      "pev-003",
+      "pev-006",
+      "pev-007",
+      "pev-008",
+      "pev-009",
+      "pev-014",
+      "pev-015",
+      "pev-016",
+      "pev-018",
+      "pev-019",
+      "pev-021",
+      "pev-023",
+      "pev-028",
+      "pev-029",
+      "pev-031",
+      "pev-033",
+      "pev-034",
+      "pev-035",
+      "pev-037",
+      "pev-038",
+      "pev-041",
+      "pev-042",
+      "pev-043",
+      "pev-044",
+      "pev-045",
+      "pev-047",
+      "pev-048",
+      "pev-049",
+      "pev-050"
+    ]
+  },
+  "limite_casos": null,
+  "max_evaluaciones": 8
+}
