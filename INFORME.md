@@ -175,6 +175,21 @@ sin otra búsqueda. Una segunda búsqueda armada mirando los errores de validaci
 
 *Estrategia, corridas y checkpoints: a cargo de Juli (#4). Matriz comparativa: Juan (#3).*
 
+**Estrategia (Juli, #4).** Fine-tuning supervisado con LoRA sobre las conversaciones de Cande, con el prompt de la cátedra
+(no el optimizado, por la decisión de la Parte 3). Se calcula la pérdida sólo sobre las respuestas del asistente, es decir,
+la herramienta y sus argumentos, y no sobre el prompt ni sobre los resultados de las herramientas, que vienen del entorno. El
+modelo base es el mismo Gemma 4 E4B con la misma revisión que usa el agente; los adaptadores se fusionan en bf16 y esos pesos
+son los que se publican y los que evalúa Juan, para que cada número corresponda a lo que carga la cátedra. El checkpoint se
+elige por la pérdida en la partición de validación de Cande; el test secreto y los 50 casos de práctica no intervienen. Antes
+de entrenar se comprueba que el mensaje de sistema de cada conversación coincide byte a byte con el prompt, que
+entrenamiento y validación no comparten ids, grupos ni huellas, y que ninguna conversación reproduce un caso de práctica.
+
+Se entrena en Kaggle 2×T4, no en la A100 de 40 GB de la consigna, porque Modal no habilita GPU sin tarjeta. Por eso los tiempos,
+la VRAM y el costo de estas corridas no se usan en la Parte 5. Comandos, reanudación y qué queda registrado:
+[`entrenar/README.md`](entrenar/README.md). **Estado: el código está listo y probado en CPU con un Gemma 4 diminuto de pesos al azar
+(arquitectura y tokenizador reales); todavía no hay corridas con el modelo real ni checkpoints**, así que las dos filas de
+entrenamiento de la matriz siguen bloqueadas.
+
 Los 50 casos de práctica, resueltos por los 9 controles. «base» y «solo prompt» no se volvieron a jugar: se armaron
 con `python -m evaluacion.componer`, juntando los 30 casos de optimización que ya había jugado la búsqueda con los 20
 de validación de `prompt-antes` y `prompt-despues`, y puntuando de nuevo. El mismo prompt y el mismo modelo en las dos
