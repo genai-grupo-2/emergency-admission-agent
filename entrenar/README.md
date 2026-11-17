@@ -50,9 +50,11 @@ que retomar da los mismos lotes que seguir de largo (lo único que no es idénti
 ## Accesos del grupo
 
 - Hugging Face (privado): `genai-grupo-2/emergency-admission-agent` (`subir_checkpoints_a` en la configuración).
-- W&B: entidad `gen-ai-grupo-2`, proyecto `emergency-admission-agent`, en el servidor del grupo
-  `https://forge.coreweave.com/wandb/gen-ai-grupo-2/emergency-admission-agent`, **no** en wandb.ai: el notebook
-  fija `WANDB_BASE_URL=https://forge.coreweave.com/wandb` y la clave se saca de ese mismo servidor.
+- W&B: entidad `gen-ai-grupo-2`, proyecto `emergency-admission-agent` (la interfaz está en
+  `https://forge.coreweave.com/wandb/gen-ai-grupo-2/emergency-admission-agent`). El ejemplo de la página de claves usa
+  `wandb login` / `WANDB_API_KEY` sin servidor propio, así que el notebook usa el servidor estándar. **Esto no está
+  verificado**: la celda de login del notebook lo comprueba antes de cargar el modelo; si falla, completar
+  `WANDB_BASE_URL` con el servidor que indique la documentación de CoreWeave.
 
 ## Qué queda registrado
 
