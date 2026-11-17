@@ -25,6 +25,6 @@
   "guardar_cada": 34,
   "evaluar_cada": 68,
   "max_horas": 10.5,
-  "wandb": {"proyecto": "emergency-admission-agent", "entidad": null},
-  "subir_checkpoints_a": null
+  "wandb": {"proyecto": "emergency-admission-agent", "entidad": "gen-ai-grupo-2"},
+  "subir_checkpoints_a": "genai-grupo-2/emergency-admission-agent"
 }

@@ -47,6 +47,13 @@ después de la sesión anterior) y poner `subir_checkpoints_a` en la configuraci
 de Hugging Face y `--reanudar` baja el último. El orden de las conversaciones sale de la semilla y del número de paso, así
 que retomar da los mismos lotes que seguir de largo (lo único que no es idéntico bit a bit es el dropout de LoRA).
 
+## Accesos del grupo
+
+- Hugging Face (privado): `genai-grupo-2/emergency-admission-agent` (`subir_checkpoints_a` en la configuración).
+- W&B: entidad `gen-ai-grupo-2`, proyecto `emergency-admission-agent`, en el servidor del grupo
+  `https://forge.coreweave.com/wandb/gen-ai-grupo-2/emergency-admission-agent`, **no** en wandb.ai: el notebook
+  fija `WANDB_BASE_URL=https://forge.coreweave.com/wandb` y la clave se saca de ese mismo servidor.
+
 ## Qué queda registrado
 
 - `corridas/entrenamiento/<nombre>/manifiesto.json`: datos (archivo y sha256), prompt (sha256), configuración completa,
