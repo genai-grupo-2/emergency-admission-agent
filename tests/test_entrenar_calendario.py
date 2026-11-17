@@ -57,6 +57,19 @@ class TestCheckpoints(unittest.TestCase):
             self.assertIsNone(e.ultimo_checkpoint(carpeta / "no-existe"))
 
 
+class TestEnsayoRepetido(unittest.TestCase):
+    def test_el_ensayo_anterior_se_conserva_con_otro_nombre(self):
+        with tempfile.TemporaryDirectory() as t:
+            carpeta = Path(t) / "x-ensayo"
+            self.assertIsNone(e.apartar_anterior(carpeta))
+            carpeta.mkdir()
+            (carpeta / "manifiesto.json").write_text("{}", encoding="utf-8")
+            destino = e.apartar_anterior(carpeta)
+            self.assertFalse(carpeta.exists())
+            self.assertTrue((destino / "manifiesto.json").exists())
+            self.assertIn("x-ensayo.anterior-", destino.name)
+
+
 class TestArgumentos(unittest.TestCase):
     def test_sin_wandb_solo_se_permite_en_ensayos(self):
         with self.assertRaises(SystemExit):

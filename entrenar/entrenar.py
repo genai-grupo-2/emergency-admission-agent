@@ -54,6 +54,16 @@ def pasos_por_epoca(n_ejemplos: int, acumulacion: int) -> int:
     return max(1, n_ejemplos // acumulacion)
 
 
+def apartar_anterior(carpeta: Path) -> Path | None:
+    """Un ensayo se puede repetir (típicamente después de arreglar algo): el anterior, fallido o no, se conserva con otro
+    nombre en vez de abortar o pisarse. Las corridas reales nunca pasan por acá."""
+    if not carpeta.exists():
+        return None
+    destino = carpeta.with_name(f"{carpeta.name}.anterior-{time.strftime('%Y%m%d-%H%M%S')}")
+    os.replace(carpeta, destino)
+    return destino
+
+
 def lote_del_paso(orden_por_epoca: dict, n: int, semilla: int, acumulacion: int, paso: int) -> list[int]:
     """Índices de las conversaciones del paso `paso` (0 = el primero); determinista, así reanudar es exacto."""
     por_epoca = pasos_por_epoca(n, acumulacion)
@@ -158,7 +168,9 @@ class Entrenamiento:
         torch = self.torch
         n = len(ejemplo.ids)
         objetivos = [t for t in range(1, n) if ejemplo.mascara[t]]
-        posiciones = torch.tensor([t - 1 for t in objetivos], device=self.dispositivo)
+        # En CPU: con device_map="auto" las últimas capas (y lm_head) están en otra GPU que los embeddings, y un índice
+        # en cuda:0 no puede indexar un tensor de cuda:1. Un índice en CPU lo acepta cualquier dispositivo.
+        posiciones = torch.tensor([t - 1 for t in objetivos])
         entrada = torch.tensor([ejemplo.ids], device=self.dispositivo)
         kwargs = {"input_ids": entrada, "attention_mask": torch.ones_like(entrada), "use_cache": False}
         for nombre in self.extras_ceros:  # Gemma exige estos campos al entrenar aunque no haya imágenes
@@ -175,7 +187,7 @@ class Entrenamiento:
             kwargs.pop("logits_to_keep")
             logits = self.modelo(**kwargs).logits[0]
         if logits.shape[0] == n:  # el modelo devolvió todas las posiciones
-            logits = logits[posiciones]
+            logits = logits[posiciones.to(logits.device)]
         objetivo = entrada[0, torch.tensor(objetivos, device=self.dispositivo)].to(logits.device)
         suma = torch.nn.functional.cross_entropy(logits.float(), objetivo, reduction="sum")
         return suma, len(objetivos)
@@ -380,6 +392,8 @@ def principal(argv=None) -> int:
     carpeta_corrida = CARPETA_CORRIDAS / nombre
     ruta_manifiesto = carpeta_corrida / "manifiesto.json"
     carpeta_ckpt = ruta_checkpoints(nombre, args.checkpoints)
+    if "ensayo" in config and ruta_manifiesto.exists() and not args.reanudar and not args.solo_datos:
+        print("había un ensayo anterior; se conserva en", apartar_anterior(carpeta_corrida), flush=True)
     if ruta_manifiesto.exists() and not args.reanudar and not args.solo_datos:
         p.error(f"ya existe {ruta_manifiesto}: las corridas no se pisan; usar otro nombre o --reanudar")
     if args.reanudar and not ruta_manifiesto.exists():
