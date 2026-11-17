@@ -176,14 +176,19 @@ class Entrenamiento:
         for nombre in self.extras_ceros:  # Gemma exige estos campos al entrenar aunque no haya imágenes
             kwargs[nombre] = torch.zeros_like(entrada)
         if self.logits_to_keep_ok:
-            kwargs["logits_to_keep"] = posiciones
+            # Lista de enteros, no tensor: con device_map="auto" los hooks de accelerate mueven todo tensor que reciben el
+            # modelo a cuda:0, y lm_head indexa hidden_states, que está en cuda:1 (error visto en Kaggle). Gemma 4 usa el
+            # valor como índice, y una lista de enteros indexa igual sin pasar por ningún dispositivo.
+            kwargs["logits_to_keep"] = posiciones.tolist()
         try:
             logits = self.modelo(**kwargs).logits[0]
-        except TypeError as error:
-            if "logits_to_keep" not in str(error):
+        except (TypeError, RuntimeError) as error:
+            # Red de seguridad: si logits_to_keep falla (no lo acepta el modelo, o un índice cae en otra GPU), se siguen
+            # calculando los logits completos: usa más memoria pero no corta la corrida.
+            if "logits_to_keep" not in str(error) and "indices should be" not in str(error):
                 raise
             self.logits_to_keep_ok = False
-            print("el modelo no acepta logits_to_keep: se calculan los logits completos (más memoria)", flush=True)
+            print(f"logits_to_keep falló ({str(error)[:80]}): se calculan los logits completos (más memoria)", flush=True)
             kwargs.pop("logits_to_keep")
             logits = self.modelo(**kwargs).logits[0]
         if logits.shape[0] == n:  # el modelo devolvió todas las posiciones
