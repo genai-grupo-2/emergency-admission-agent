@@ -1,0 +1,30 @@
+{
+  "nombre": "sft-catedra-01",
+  "modelo": {
+    "repo": "google/gemma-4-E4B-it",
+    "revision": "4ecc2ba63bcac23ba4a767fc87025b1450f84c9c",
+    "dtype": "bfloat16",
+    "device_map": "auto",
+    "cuantizacion": "ninguna"
+  },
+  "prompt": {"version": "catedra"},
+  "datos": {
+    "train": "datos/conversaciones/train.jsonl",
+    "validacion": "datos/conversaciones/validacion.jsonl",
+    "max_tokens": 8192
+  },
+  "lora": {
+    "r": 16,
+    "alpha": 32,
+    "dropout": 0.05,
+    "modulos": ".*language_model.*\\.(q_proj|k_proj|v_proj|o_proj|gate_proj|up_proj|down_proj)"
+  },
+  "optimizador": {"lr": 0.0002, "weight_decay": 0.0, "warmup_pasos": 10, "acumulacion": 16, "max_norma_grad": 1.0},
+  "epocas": 2,
+  "semilla": 42,
+  "guardar_cada": 34,
+  "evaluar_cada": 68,
+  "max_horas": 10.5,
+  "wandb": {"proyecto": "emergency-admission-agent", "entidad": null},
+  "subir_checkpoints_a": null
+}
