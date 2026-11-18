@@ -7,8 +7,13 @@ name = "kit-tp-admision"
 version = "1.1.0"
 description = "Kit del TP final de IA Generativa: la ficha de admisión de guardia"
 requires-python = ">=3.12"
+# Inferencia: las mismas versiones que la imagen de `modal_app.py` y que la corrida de Kaggle de sft-catedra-01
+# (`corridas/entornos/kaggle-20261118-005300.json`).
 dependencies = [
+    "accelerate==1.15.0",
     "pyyaml==6.0.3",
+    "torch==2.14.1",
+    "transformers==5.20.2",
 ]
 
 [tool.setuptools]
