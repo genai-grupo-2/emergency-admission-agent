@@ -30,12 +30,12 @@ ADMISION_MODELO_REVISION=292c8137984283d426de735309d108459b5e51f9
 | # | Qué | Quién | Notas |
 |---|---|---|---|
 | 1 | Avisar al grupo con el repo, la revisión y el run de W&B (texto arriba) | Juli | Juan, Pía y Cande dependen de esto. Hecho cuando respondan. |
-| 2 | Matriz: correr la fila «solo entrenamiento» con esta revisión y regenerar `INFORME.md` con `python -m evaluacion.tablas` | Juan | No tocar a mano lo que está entre `<!-- tabla:... -->`. |
-| 3 | Revisar `entrega.py` y `configuracion.json` con la revisión publicada y corregir incompatibilidades | Juli + Juan | Tarea 7 del issue. |
-| 4 | Fila «ambos» (checkpoint con el prompt optimizado) | Juan, a definir | Se descartó el prompt optimizado (Parte 3); sin segundo checkpoint la fila queda «no hecho», dicho en el informe. |
+| 2 | Matriz: correr la fila «solo entrenamiento» con esta revisión y regenerar `INFORME.md` con `python -m evaluacion.tablas` | Juan | **En curso.** La revisión ya está en `evaluacion/matriz.json`; se corre en Kaggle con `evaluacion.matriz --correr 'solo entrenamiento'` (rama `juan/cierre-matriz`), que escribe `corridas/eval/matriz-solo-entrenamiento`. |
+| 3 | Revisar `entrega.py` y `configuracion.json` con la revisión publicada y corregir incompatibilidades | Juli + Juan | **Hecho** (rama `juan/cierre-matriz`): `configuracion.json` apunta a esta revisión; `entrega.py` no necesitó cambios (la verificación de carga ya usa `construir_agente()`). Las condiciones de la matriz fijan su modelo, así que base y solo prompt siguen usando Gemma sin entrenar. |
+| 4 | Fila «ambos» (checkpoint con el prompt optimizado) | Juan | **Hecho:** queda «no hecho» en la matriz (`no_hecho` en `evaluacion/matriz.json`) y en la Parte 4, con el motivo. |
 | 5 | Confirmar que las particiones de datos son las finales (`datos/manifiesto.json` dice «provisional») | Cande | Si cambian, el entrenamiento habría que repetirlo. |
 | 6 | Parte 5: medir VRAM, tiempo y costo en **A100 de 40 GB** | Pía | Las medidas de Kaggle T4 no sirven. Si no hay A100, decir la limitación en el informe. |
-| 7 | Llevar `juli/entrenamiento` a `main` (PR con revisión de Juan) | Juli + Juan | Sólo toca `entrenar/`, `kaggle/`, `corridas/`, `tests/` y `INFORME.md`/`README.md`/`.gitignore`; nada de `admision/`. |
+| 7 | Llevar `juli/entrenamiento` a `main` (PR con revisión de Juan) | Juli + Juan | PR #10 revisado (28 pruebas sin GPU, sin credenciales, no toca `admision/`); falta el merge. |
 | 8 | Sección del Loom (15–20 min en total, ~3–4 min de Juli) | Juli | Guion en `DECISIONES.md`: prompt, Kaggle/T4, submuestra, selección por validación, fallas. |
 | 9 | Cerrar el issue #4 con el resumen (revisión, W&B, límites) | Juli | Después de 1 y 3. |
 
