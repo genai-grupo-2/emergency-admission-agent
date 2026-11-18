@@ -1,4 +1,4 @@
-"""Regenera la inspección, clasificación y conversaciones con particiones provisionales."""
+"""Regenera la inspección, clasificación y conversaciones con las particiones finales."""
 
 import argparse
 import json
@@ -56,7 +56,8 @@ def generar(raiz: Path, *, semilla=42, fraccion_validacion=0.1, prompt: Path | N
     codigo = sorted((raiz / "datos").glob("*.py")) + [raiz / "admision/ejemplo.py"]
     manifiesto = {
         "version": 1,
-        "estado": "provisional: revisar prompt y particiones con Juan y Juli antes de entrenar",
+        "estado": ("final: particiones confirmadas el 18/11/2026 (PR #10); sft-catedra-01 entrenó con ellas, con el "
+                   "manifiesto anterior (sha256 f948927287c1…), que sólo difería en estado, pendientes y las huellas de datos/preparar.py y datos/candidatos_demo.py"),
         "semilla": semilla,
         "fraccion_validacion_objetivo": fraccion_validacion,
         "algoritmo_particion": "Componentes conectadas por paciente_id o huella de conversación; SHA256(semilla:grupo) elige validación si el valor normalizado es menor que la fracción.",
@@ -78,11 +79,8 @@ def generar(raiz: Path, *, semilla=42, fraccion_validacion=0.1, prompt: Path | N
             "maxima": max(sum(len(m["content"]) for m in r["messages"]) for r in registros),
         },
         "pendientes": [
-            "Juan entrega y congela el prompt optimizado antes del entrenamiento.",
-            "Acordar con Juan y Juli estas particiones y el esquema messages/metadatos; la fracción real puede diferir del objetivo por los grupos.",
-            "Juli comprueba plantilla de chat, tokenización y longitudes con el modelo elegido; aquí se miden caracteres, no tokens.",
             "La validación interna no es el test secreto ni una evaluación independiente del descubrimiento de costumbres.",
-            "La demo y sus nueve controles requieren el checkpoint final de Juli y la entrega de Juan/Pía.",
+            "La demo y sus nueve controles se corren con el checkpoint sft-catedra-01 (datos/DEMO.md).",
         ],
     }
     escribir_json(raiz / "datos/manifiesto.json", manifiesto)

@@ -8,19 +8,20 @@
   "codigo_sha256_lf": {
     "admision/ejemplo.py": "9a7720fab7feb8762117be314294c20357218d54140f73cd6a6fea3931649673",
     "datos/__init__.py": "dcac0d9bd47b1a69cf6a3d05ec1c917678f1b8822c6d2305b12b171c500a40fe",
+    "datos/candidatos_demo.py": "e1b8ebd19ea3e18ac1530ccebc0806a6cb241d32183e10a81230aee830056044",
     "datos/clasificar.py": "db1d1663b630316b60f2954bb42b9a192e0fa2de56354001e2877a64e2660ae2",
     "datos/conversaciones.py": "271911df677e187665980ba940b4fc857b004b917270868ed14354904d2dc025",
     "datos/costumbres.py": "6a841dea5379e53dc05ebb7391b91302906889762131f01653acc4f8a7c9487d",
     "datos/inspeccionar.py": "34adeabcc78246c8dc4a81fb98f1d58dcfebb8a4be10b8502a3f4f8fb7c0b25e",
     "datos/normas.py": "c6e41c4572a4eed4a94c8b19b8dcdc89f9a73c01aad00995c92624866efd49e4",
     "datos/particiones.py": "d42158af6aef2fdb57fd32464296e4303d6db98dcf869dd9e1d83a177b3798d9",
-    "datos/preparar.py": "b3add2a153983f88b1cdbd95120c6fd9920d55f909e226a208d77c9d985d3c6d",
+    "datos/preparar.py": "8d759507d52df12504188aae053a74aa5b35e5e8ad07c17bd19a96488f38fdde",
     "datos/verificar.py": "a295d66639bbc73684d442d8294278cbb888db07615768009566cb5158b1cf96"
   },
   "conversaciones": 2400,
   "copias_por_huella_adicionales": 0,
   "criterio_seleccion": "Sólo historial clasificado correcta y las 800 trazas de referencia; se preservan sus herramientas y resultados sin corregirlos.",
-  "estado": "provisional: revisar prompt y particiones con Juan y Juli antes de entrenar",
+  "estado": "final: particiones confirmadas el 18/11/2026 (PR #10); sft-catedra-01 entrenó con ellas, con el manifiesto anterior (sha256 f948927287c1…), que sólo difería en estado, pendientes y las huellas de datos/preparar.py y datos/candidatos_demo.py",
   "excluidos_historial": [
     {
       "id": "H-0005",
@@ -4062,11 +4063,8 @@
     }
   },
   "pendientes": [
-    "Juan entrega y congela el prompt optimizado antes del entrenamiento.",
-    "Acordar con Juan y Juli estas particiones y el esquema messages/metadatos; la fracción real puede diferir del objetivo por los grupos.",
-    "Juli comprueba plantilla de chat, tokenización y longitudes con el modelo elegido; aquí se miden caracteres, no tokens.",
     "La validación interna no es el test secreto ni una evaluación independiente del descubrimiento de costumbres.",
-    "La demo y sus nueve controles requieren el checkpoint final de Juli y la entrega de Juan/Pía."
+    "La demo y sus nueve controles se corren con el checkpoint sft-catedra-01 (datos/DEMO.md)."
   ],
   "por_fuente": {
     "entrenamiento": 800,

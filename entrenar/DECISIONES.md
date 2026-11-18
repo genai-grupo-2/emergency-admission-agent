@@ -59,7 +59,7 @@ Los manifiestos de los ensayos fallidos estaban en la sesión de Kaggle y no se 
 este texto. Las corridas de la entrega son sólo `sft-catedra-01`.
 
 ## 8. Cosas pendientes o a vigilar
-- **Particiones de Cande:** `datos/manifiesto.json` las llama «provisionales». Hay que confirmarlas con ella.
+- **Particiones de Cande:** confirmadas como finales (PR #10); `datos/manifiesto.json` dice «final» desde el 18/11/2026.
 - **Repositorio público:** `mission.md` pide GitHub privado con acceso para la cátedra; se decidió dejarlo público. En él
   no hay credenciales ni pesos (los checkpoints están en `.gitignore`); Hugging Face y W&B sí son privados.
 - **Verificación de carga limpia:** hecha en 2×T4 (una sola carga, JSON válido; `corridas/entrenamiento/verificacion-292c8137984.json`).

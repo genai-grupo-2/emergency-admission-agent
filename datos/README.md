@@ -113,7 +113,7 @@ uv run --locked python -X utf8 -m datos.verificar
 
 El archivo de prompt debe estar en UTF-8. Si no se pasa `--prompt`, se usa `mensaje_de_sistema()` del ejemplo de la cátedra, como borrador. Cambiarlo regenera las conversaciones y sus huellas. No guardar el prompt acordado en `datos/prompts/sistema-usado.txt` antes de regenerar: ese archivo es una salida del proceso; conservar una entrada aparte para el prompt de Juan.
 
-El manifiesto sigue marcado como provisional hasta que el grupo revise las instrucciones y particiones. El entrenamiento debe comenzar después de optimizar el prompt. La plantilla de chat, la tokenización y el ajuste de longitud se verifican con el modelo que elija Juli; los tamaños informados aquí son caracteres, no tokens.
+Las particiones son finales desde el 18/11/2026: `sft-catedra-01` (PR #10) entrenó con estos mismos `train.jsonl` y `validacion.jsonl`, con el prompt de la cátedra. Su manifiesto cita la huella del manifiesto anterior (`f948927287c1…`), que sólo difería en `estado`, `pendientes` y las huellas de `datos/preparar.py` y `datos/candidatos_demo.py`. Los tamaños informados aquí son caracteres, no tokens.
 
 ### Huellas y Windows/Linux
 
@@ -126,7 +126,8 @@ El diagnóstico de inspección conserva SHA-256 y tamaños de los bytes de entra
 - [x] Costumbres documentadas con evidencia y contraejemplos.
 - [x] Clasificación de las 2.000 filas y justificación de etiquetas.
 - [x] Conversión de las trazas seleccionadas y las 800 de referencia.
-- [x] Particiones provisionales, semilla, manifiesto y verificación de reproducción.
+- [x] Particiones, semilla, manifiesto y verificación de reproducción.
+- [x] Particiones confirmadas como finales tras el entrenamiento de Juli (PR #10).
 - [x] Prompt definido: el de la cátedra (huella `f23f5921894f`). El optimizado no se adoptó, así que no se regeneró nada.
 - [x] Candidatos de la demo elegidos sin mirar respuestas esperadas: `python -m datos.candidatos_demo`.
 - [x] Sección de datos integrada en la Parte 1 de `INFORME.md`.
