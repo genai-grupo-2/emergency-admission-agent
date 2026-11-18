@@ -65,7 +65,8 @@ afiliación inactiva o reservada.
 - **Particiones.** Semilla 42 y 10 % de validación como objetivo. Se agrupa por paciente y por huella de conversación,
   y cada grupo queda entero de un lado: 2.176 de entrenamiento (1.448 del historial y 728 de referencia) y 224 de
   validación (152 y 72), sin IDs, pacientes ni huellas compartidas. Esta validación es para seguir el entrenamiento; no
-  es la partición de 20 casos de práctica de la Parte 3.
+  es la partición de 20 casos de práctica de la Parte 3. Son las finales: `sft-catedra-01` entrenó con estos mismos
+  archivos (#4) y el manifiesto dice «final» desde el 18/11/2026.
 - **Tamaño.** Entre 7.474 y 15.186 caracteres por conversación. Los tokens con el tokenizador del modelo los mide Juli
   al entrenar (#4).
 
@@ -74,11 +75,21 @@ se eligieron explorando el mismo historial, así que sus porcentajes no son una 
 registra minutos de atención ni eventos posteriores, y no se deducen incumplimientos de lo que no está.
 
 **Reproducción.** `python -m datos.preparar` regenera todo y `python -m datos.verificar` contrasta las huellas de
-fuentes, código y salidas, cada mensaje contra su traza y el reparto contra la semilla. Lo cubren 42 pruebas
-(`tests/test_*_datos.py`). Verificado sobre `main` en `eef6cc9`.
+fuentes, código y salidas, cada mensaje contra su traza y el reparto contra la semilla. Lo cubren 49 pruebas
+(`tests/test_*_datos.py` sin las de entrenamiento, y `tests/test_casos_demo.py`). Verificado sobre `main` en `1ddc245`.
 
-**Demo.** Pendiente del checkpoint de Juli (#4). Los candidatos ya están elegidos por las características del caso, sin
-mirar las respuestas esperadas (`python -m datos.candidatos_demo`, plan en [datos/DEMO.md](datos/DEMO.md)).
+**Demo.** Con el checkpoint final `sft-catedra-01` (`292c8137`) sobre normas `b`, en 14 casos de práctica elegidos por
+la nota de triage, sin mirar las respuestas esperadas (`python -m datos.candidatos_demo` y `python -m datos.casos_demo`):
+8 tiempo-dependientes que llegan en ambulancia y 6 donde decide una costumbre. Corrida `corridas/demo/b-sft-catedra-01/`
+en Kaggle 2×T4, commit `dfa9e78`. **6 de 14 aprueban los 9 controles.** El circuito es correcto en los 8
+tiempo-dependientes y 5 quedan completos: el modelo busca la sección del circuito y la de ambulancia y calcula el plazo
+con los valores de `b` (en `pev-026` no restó la reducción por ambulancia). La costumbre de la doble credencial se
+aplicó (`pev-050`). **La del voluntariado no se aplicó en ninguno de los 6 casos que la requieren**: el modelo nunca
+marcó el aviso. Es un ejemplo poco frecuente: sólo 53 de las 640 conversaciones con que se entrenó (8,3 %) terminan
+con el aviso, y 209 de las 2.176 del conjunto completo (9,6 %). Puede que no haya alcanzado para aprenderlo, pero no se
+probó. Para el Loom se muestran `pev-011` (dolor torácico en ambulancia: 15
+− 3 = 12 minutos en `b`) y `pev-050` (doble credencial: verifica la prepaga). Detalle por caso en
+[datos/DEMO.md](datos/DEMO.md). Son 14 casos elegidos, no una evaluación: la evaluación es la matriz de la Parte 4.
 
 ## Parte 2 · Buscador (RAG)
 
