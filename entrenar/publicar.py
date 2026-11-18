@@ -54,12 +54,25 @@ def publicar(nombre: str, paso: int, repo: str, carpeta_checkpoints: Path | None
         pasos = [c["paso"] for c in manifiesto.datos["checkpoints"]]
         raise SystemExit(f"la corrida {nombre} no tiene el paso {paso}; tiene {pasos}")
     adaptador = Path(checkpoint["ruta"]) if carpeta_checkpoints is None else carpeta_checkpoints / f"paso-{paso:05d}"
-    if not (adaptador / "adapter_model.safetensors").exists():
-        raise SystemExit(f"no está el adaptador en {adaptador}")
     modelo_base = manifiesto.datos["config"]["modelo"]
     token = os.environ.get("HF_TOKEN")
     if not token:
         raise SystemExit("falta HF_TOKEN (con permiso de escritura sobre el repositorio del grupo)")
+    if not (adaptador / "adapter_model.safetensors").exists():
+        # Sesión nueva sin los checkpoints locales: se baja el adaptador que el entrenamiento copió a Hugging Face,
+        # en la revisión exacta que quedó anotada en el manifiesto.
+        copia = checkpoint.get("hf_adaptador")
+        if not copia:
+            raise SystemExit(f"no está el adaptador en {adaptador} ni hay copia en Hugging Face anotada en el manifiesto")
+        from huggingface_hub import snapshot_download
+
+        descarga = Path(tempfile.mkdtemp(prefix="adaptador-"))
+        snapshot_download(copia["repo"], revision=copia["revision"], token=token, local_dir=str(descarga),
+                          allow_patterns=[f"adaptadores/{nombre}/paso-{paso:05d}/*"])
+        adaptador = descarga / "adaptadores" / nombre / f"paso-{paso:05d}"
+        print(f"adaptador bajado de {copia['repo']} @ {copia['revision'][:10]}", flush=True)
+        if not (adaptador / "adapter_model.safetensors").exists():
+            raise SystemExit(f"la copia en Hugging Face no tiene el adaptador del paso {paso}")
 
     # Misma clase que el entrenamiento y que agente/modelo.py, así lo publicado se recarga igual.
     argumentos = dict(revision=modelo_base["revision"], token=token, dtype=getattr(torch, modelo_base["dtype"]),
