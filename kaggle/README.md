@@ -29,3 +29,10 @@ Si da `CUDA out of memory`, bajar `LOTE` (por ejemplo a 16) y volver a correr co
 - La T4 no tiene bf16 nativo: es más lenta y la generación en lote puede mover algún caso respecto de la A100.
 - Por eso cada corrida deja en `corridas/entornos/` las GPU, el driver, las versiones de torch y transformers, el
   commit, las variables y cuánto tardó. Los tiempos no sirven para la Parte 5, que pide la A100 de 40 GB.
+
+## Entrenar (issue #4)
+
+`entrenar.ipynb` es el mismo flujo que `correr.ipynb` con lo del entrenamiento: además de `HF_TOKEN` (con escritura sobre el
+repo privado del grupo) necesita el secreto `WANDB_API_KEY`. Primero con `ENSAYO = True`, después la corrida real; los pasos,
+la reanudación y la publicación están en [`entrenar/README.md`](../entrenar/README.md). Los checkpoints van a
+`/kaggle/working/checkpoints/<nombre>`, fuera de `corridas/`, para que no entren en el zip ni en Git.

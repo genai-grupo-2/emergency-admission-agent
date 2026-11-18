@@ -108,7 +108,7 @@ uv run python -m unittest discover -s tests -p "test_agente_*.py" -v
 | `corridas/eval/<etiqueta>/` | `python -m evaluacion.evaluar` o `evaluacion.matriz` | `condicion.json`: prompt, checkpoint, commit, comandos |
 | Tablas de `INFORME.md` | `python -m evaluacion.tablas` | sólo lee `corridas/` |
 | `historial_clasificado.csv`, `costumbres.md` y conversaciones | `datos/` de Cande (#1, rama `cande/datos-historial`) | ver `datos/README.md` |
-| Checkpoints y corridas de W&B | entrenamiento de Juli (#4) | pendiente |
+| Checkpoints, corridas de W&B y `corridas/entrenamiento/<nombre>/manifiesto.json` | `python -m entrenar.entrenar`, `entrenar.publicar` (Juli, #4) | ver `entrenar/README.md`; todavía sin corridas |
 
 ## Loom: sección de Juan (agente y prompt, unos 4 minutos)
 

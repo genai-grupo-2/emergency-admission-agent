@@ -1,0 +1,12 @@
+{
+  "repo": "genai-grupo-2/emergency-admission-agent",
+  "revision": "292c8137984283d426de735309d108459b5e51f9",
+  "paso": 80,
+  "corrida": "sft-catedra-01",
+  "privado": true,
+  "publicado": "2026-11-18T12:02:43+00:00",
+  "carga": {
+    "ADMISION_MODELO_REPO": "genai-grupo-2/emergency-admission-agent",
+    "ADMISION_MODELO_REVISION": "292c8137984283d426de735309d108459b5e51f9"
+  }
+}

@@ -219,3 +219,6 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Checkpoints de entrenamiento (adaptadores y estado del optimizador): pesan y se publican en Hugging Face
+checkpoints/

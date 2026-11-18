@@ -175,6 +175,43 @@ sin otra búsqueda. Una segunda búsqueda armada mirando los errores de validaci
 
 *Estrategia, corridas y checkpoints: a cargo de Juli (#4). Matriz comparativa: Juan (#3).*
 
+**Estrategia (Juli, #4).** Fine-tuning supervisado con LoRA sobre las conversaciones de Cande, con el prompt de la cátedra
+(no el optimizado, por la decisión de la Parte 3). Se calcula la pérdida sólo sobre las respuestas del asistente, es decir,
+la herramienta y sus argumentos, y no sobre el prompt ni sobre los resultados de las herramientas, que vienen del entorno. El
+modelo base es el mismo Gemma 4 E4B con la misma revisión que usa el agente; los adaptadores se fusionan en bf16 y esos pesos
+son los que se publican y los que evalúa Juan, para que cada número corresponda a lo que carga la cátedra. El checkpoint se
+elige por la pérdida en la partición de validación de Cande; el test secreto y los 50 casos de práctica no intervienen. Antes
+de entrenar se comprueba que el mensaje de sistema de cada conversación coincide byte a byte con el prompt, que
+entrenamiento y validación no comparten ids, grupos ni huellas, y que ninguna conversación reproduce un caso de práctica.
+
+Se entrena en Kaggle 2×T4, no en la A100 de 40 GB de la consigna, porque Modal no habilita GPU sin tarjeta. Por eso los tiempos,
+la VRAM y el costo de estas corridas no se usan en la Parte 5. Comandos, reanudación y qué queda registrado:
+[`entrenar/README.md`](entrenar/README.md). Todas las decisiones, con su motivo y su consecuencia:
+[`entrenar/DECISIONES.md`](entrenar/DECISIONES.md).
+
+**Corrida entregada: `sft-catedra-01`, paso 80.** Se entrenó con una **submuestra de 640 de las 2.176 conversaciones de
+train (elegidas al azar, semilla 42), una época, 8 conversaciones por paso = 80 pasos**, y no con las 2 épocas sobre todo el
+conjunto que se había planeado: en las 2×T4 se midieron ~72 tokens/s, el plan completo (~13 M de tokens) habría tardado ~50 h
+contra sesiones de 12 h y una cuota de 30 h por semana. La corrida duró 7 h 55 min (~8,5 h de cuota) y la pérdida de validación
+bajó de 0,031 (paso 20) a 0,0093 (40), 0,0053 (60) y **0,0042 (80, el elegido)**. Lo que se pierde por usar una submuestra lo
+dirá la matriz; no está medido.
+
+| | |
+|---|---|
+| W&B | [`sft-catedra-01`](https://forge.coreweave.com/wandb/gen-ai-grupo-2/emergency-admission-agent/runs/1y5xd2de) (run `1y5xd2de`) |
+| Datos | `datos/conversaciones/train.jsonl` sha256 `75a438fa384f…` (y `validacion.jsonl`), prompt `catedra`, semilla 42, commit `55f5e12` |
+| Manifiesto | `corridas/entrenamiento/sft-catedra-01/manifiesto.json`, entorno `corridas/entornos/kaggle-20261118-005300.json` |
+| Hugging Face (privado) | `genai-grupo-2/emergency-admission-agent` @ `292c8137984283d426de735309d108459b5e51f9` (pesos fusionados bf16, paso 80) |
+| Carga | `ADMISION_MODELO_REPO=genai-grupo-2/emergency-admission-agent ADMISION_MODELO_REVISION=292c8137984283d426de735309d108459b5e51f9` |
+
+Los pasos 20, 40 y 60 existen como adaptadores en el mismo repo (`adaptadores/sft-catedra-01/`) pero no se evaluaron ni se
+citan. Corridas que fallaron (dos ensayos por un error de dispositivos al repartir el modelo entre GPU) y el ensayo que
+sí pasó están en [`entrenar/DECISIONES.md`](entrenar/DECISIONES.md) y en W&B. **Pendiente al escribir esto:** la fila «solo
+entrenamiento» de la matriz (la corre Juan con la revisión de arriba), la fila «ambos» (necesita un segundo checkpoint con el prompt
+optimizado, que se descartó en la Parte 3).
+
+**Verificación de carga** (`python -m entrenar.verificar_carga`, sesión limpia de Kaggle 2×T4, sin reentrenar, `corridas/entrenamiento/verificacion-292c8137984.json`): `entrega.construir_agente()` con la revisión publicada carga el modelo **una sola vez** (116,8 s, pico de VRAM 8,71 y 6,37 GiB en las dos GPU) y la primera respuesta es el JSON de `leer_triage`. Falta correrlo en la A100 de 40 GB que pide la consigna, que no tenemos.
+
 Los 50 casos de práctica, resueltos por los 9 controles. «base» y «solo prompt» no se volvieron a jugar: se armaron
 con `python -m evaluacion.componer`, juntando los 30 casos de optimización que ya había jugado la búsqueda con los 20
 de validación de `prompt-antes` y `prompt-despues`, y puntuando de nuevo. El mismo prompt y el mismo modelo en las dos
@@ -239,5 +276,10 @@ Se documentan todos, no sólo el final.
 - **Prompt optimizado por bloques** (Parte 3). Ganaba en la partición de optimización (18/90 contra 10/90) y perdió en
   validación (4/60 contra 17/60). No se adoptó. Corridas: `corridas/prompt/busqueda-01/`,
   `corridas/eval/prompt-antes/` y `corridas/eval/prompt-despues/`.
+- **Entrenar 2 épocas sobre todo el conjunto** (Parte 4). Se descartó antes de lanzarlo: ~50 h de GPU contra 30 h de cuota
+  semanal y sesiones de 12 h. Se entrenó con 640 conversaciones y una época.
+- **Dos ensayos de entrenamiento fallidos** (`sft-catedra-01-ensayo`): `RuntimeError: indices should be either on cpu or on the
+  same device as the indexed tensor (cuda:1)`, por el índice de `logits_to_keep` al repartir el modelo en dos GPU. Detalle y
+  arreglo en [`entrenar/DECISIONES.md`](entrenar/DECISIONES.md).
 - **Correr en Modal** (A100 de 40 GB). Modal no habilita ninguna GPU, ni siquiera la T4, sin una tarjeta cargada. Se
   pasó a Kaggle 2×T4. `modal_app.py` queda para quien tenga la cuenta habilitada.

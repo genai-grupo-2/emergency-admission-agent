@@ -1,0 +1,13 @@
+{
+  "repo": "genai-grupo-2/emergency-admission-agent",
+  "revision": "292c8137984283d426de735309d108459b5e51f9",
+  "verificado": "2026-11-18T12:16:10+00:00",
+  "cargas_del_modelo": 1,
+  "una_sola_carga": true,
+  "primera_herramienta": "leer_triage",
+  "respuesta_es_json_de_herramienta": true,
+  "segundos_de_carga": 116.8,
+  "gpus": ["Tesla T4", "Tesla T4"],
+  "vram_pico_gib": [8.71, 6.37],
+  "respuesta": "{\"herramienta\": \"leer_triage\", \"argumentos\": {\"paciente_id\": \"P-0000\"}}"
+}
