@@ -61,9 +61,11 @@ def main():
                "PYTHONUTF8": "1"}
     if args.lote:
         entorno["ADMISION_LOTE"] = args.lote
+    # Lo que el notebook fijó por fuera (modelo, prompt, backend) también queda anotado, sin credenciales.
+    heredadas = {k: v for k, v in os.environ.items() if k.startswith("ADMISION_") and k not in entorno and v}
     inicio = datetime.now(timezone.utc)
     registro = {"comando": f"python -m {args.comando}", "inicio": inicio.isoformat(timespec="seconds"),
-                "variables": entorno, "maquina": entorno_de_la_maquina()}
+                "variables": {**heredadas, **entorno}, "maquina": entorno_de_la_maquina()}
     codigo = subprocess.run([sys.executable, "-m", *shlex.split(args.comando)], cwd=RAIZ,
                             env={**os.environ, **entorno}).returncode
     registro["codigo_de_salida"] = codigo
