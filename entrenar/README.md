@@ -1,5 +1,8 @@
 # Entrenamiento (issue #4)
 
+> Resultado y decisiones: [`DECISIONES.md`](DECISIONES.md). La corrida entregada es `sft-catedra-01` paso 80 (640 conversaciones,
+> 1 época), publicada en `genai-grupo-2/emergency-admission-agent` @ `292c8137984283d426de735309d108459b5e51f9`.
+
 SFT con LoRA de Gemma 4 E4B sobre las conversaciones de `datos/conversaciones/`, con el prompt de la cátedra
 (`prompts/catedra.txt`; el optimizado no se usa, ver `INFORME.md` Parte 3). Se corre en Kaggle 2×T4 con la misma
 infraestructura que Juan armó para las evaluaciones (`kaggle/`, `correr_kaggle.py`). Modal no habilita GPU sin tarjeta.
@@ -71,16 +74,12 @@ que retomar da los mismos lotes que seguir de largo (lo único que no es idénti
   Parte 5; hace falta una medición en A100 para eso. bf16 en T4 es emulado: es más lento y puede mover algún caso.
 - Las dependencias de entrenamiento (`peft==0.21.3`) se instalan en el notebook, igual que torch y transformers en el de
   Juan, y no están en `pyproject.toml`/`uv.lock` (cambiarlo rompería el `uv sync --locked` de los demás notebooks).
-- **Qué se probó y qué no.** Probado en CPU con un Gemma 4 diminuto de pesos al azar (la clase `Gemma4ForConditionalGeneration`
-  y el tokenizador reales, con `torch==2.14.1`, `transformers==5.20.2`, `peft==0.21.3`): LoRA se engancha a los módulos del
-  modelo de lenguaje con la expresión de `lora.modulos`, la pérdida con `logits_to_keep` y los `token_type_ids` en cero
-  funciona, la pausa por `max_horas` y `--reanudar` continúan con el mismo calendario, el manifiesto de una corrida fallida
-  queda escrito, y `entrenar.publicar` (con un cliente de Hugging Face falso) arma una carpeta que `agente/modelo.py`
-  recarga. **No se probó con el modelo de 4.000 millones de parámetros**: no se sabe si entra en 2×T4 con 4.192 tokens de
-  contexto (el máximo del conjunto). El ensayo con `--ensayo` en Kaggle lo comprueba; si da `CUDA out of memory`, usar
-  `"cuantizacion": "nf4"` (necesita `bitsandbytes`). Tampoco se subió nada a Hugging Face ni a W&B.
-- Arrancar tarda unos 7 minutos antes de la primera GPU: tokenizar las 2.400 conversaciones con la plantilla de chat
-  (dos tokenizaciones por turno del asistente, para fijar la máscara). Es CPU y se repite en cada sesión.
+- **Qué se probó.** Primero en CPU con un Gemma 4 diminuto de pesos al azar, y después en Kaggle 2×T4 con el modelo real:
+  un ensayo de 4 pasos y la corrida completa (80 pasos, 7 h 55 min, pico de VRAM 12,4 GiB por GPU, ~72 tokens/s). Los
+  pesos fusionados se publicaron en Hugging Face desde una sesión sin GPU (`kaggle/publicar.ipynb`). **No se ejecutó todavía**
+  `entrenar.verificar_carga` ni `entrega.py` con el checkpoint publicado; lo hace Juan en la matriz.
+- Arrancar tarda unos 2 minutos con la submuestra (unos 7 con las 2.400 conversaciones): tokenización en CPU con la plantilla de
+  chat, que se repite en cada sesión.
 - La plantilla de chat de Gemma 4 es prefijo-estable en las 2.400 conversaciones (se comprobó con el tokenizador real): los
   tokens supervisados son exactamente el JSON de cada respuesta más `<turn|>` y el salto de línea (11,7 % de los tokens).
 - La fila «ambos» de la matriz necesita un segundo checkpoint entrenado con el prompt optimizado. Juan dijo que se define

@@ -186,9 +186,29 @@ entrenamiento y validación no comparten ids, grupos ni huellas, y que ninguna c
 
 Se entrena en Kaggle 2×T4, no en la A100 de 40 GB de la consigna, porque Modal no habilita GPU sin tarjeta. Por eso los tiempos,
 la VRAM y el costo de estas corridas no se usan en la Parte 5. Comandos, reanudación y qué queda registrado:
-[`entrenar/README.md`](entrenar/README.md). **Estado: el código está listo y probado en CPU con un Gemma 4 diminuto de pesos al azar
-(arquitectura y tokenizador reales); todavía no hay corridas con el modelo real ni checkpoints**, así que las dos filas de
-entrenamiento de la matriz siguen bloqueadas.
+[`entrenar/README.md`](entrenar/README.md). Todas las decisiones, con su motivo y su consecuencia:
+[`entrenar/DECISIONES.md`](entrenar/DECISIONES.md).
+
+**Corrida entregada: `sft-catedra-01`, paso 80.** Se entrenó con una **submuestra de 640 de las 2.176 conversaciones de
+train (elegidas al azar, semilla 42), una época, 8 conversaciones por paso = 80 pasos**, y no con las 2 épocas sobre todo el
+conjunto que se había planeado: en las 2×T4 se midieron ~72 tokens/s, el plan completo (~13 M de tokens) habría tardado ~50 h
+contra sesiones de 12 h y una cuota de 30 h por semana. La corrida duró 7 h 55 min (~8,5 h de cuota) y la pérdida de validación
+bajó de 0,031 (paso 20) a 0,0093 (40), 0,0053 (60) y **0,0042 (80, el elegido)**. Lo que se pierde por usar una submuestra lo
+dirá la matriz; no está medido.
+
+| | |
+|---|---|
+| W&B | [`sft-catedra-01`](https://forge.coreweave.com/wandb/gen-ai-grupo-2/emergency-admission-agent/runs/1y5xd2de) (run `1y5xd2de`) |
+| Datos | `datos/conversaciones/train.jsonl` sha256 `75a438fa384f…` (y `validacion.jsonl`), prompt `catedra`, semilla 42, commit `55f5e12` |
+| Manifiesto | `corridas/entrenamiento/sft-catedra-01/manifiesto.json`, entorno `corridas/entornos/kaggle-20261118-005300.json` |
+| Hugging Face (privado) | `genai-grupo-2/emergency-admission-agent` @ `292c8137984283d426de735309d108459b5e51f9` (pesos fusionados bf16, paso 80) |
+| Carga | `ADMISION_MODELO_REPO=genai-grupo-2/emergency-admission-agent ADMISION_MODELO_REVISION=292c8137984283d426de735309d108459b5e51f9` |
+
+Los pasos 20, 40 y 60 existen como adaptadores en el mismo repo (`adaptadores/sft-catedra-01/`) pero no se evaluaron ni se
+citan. Corridas que fallaron (dos ensayos por un error de dispositivos al repartir el modelo entre GPU) y el ensayo que
+sí pasó están en [`entrenar/DECISIONES.md`](entrenar/DECISIONES.md) y en W&B. **Pendiente al escribir esto:** la fila «solo
+entrenamiento» de la matriz (la corre Juan con la revisión de arriba), la fila «ambos» (necesita un segundo checkpoint con el prompt
+optimizado, que se descartó en la Parte 3) y la verificación de carga desde un entorno limpio en GPU.
 
 Los 50 casos de práctica, resueltos por los 9 controles. «base» y «solo prompt» no se volvieron a jugar: se armaron
 con `python -m evaluacion.componer`, juntando los 30 casos de optimización que ya había jugado la búsqueda con los 20
@@ -254,5 +274,10 @@ Se documentan todos, no sólo el final.
 - **Prompt optimizado por bloques** (Parte 3). Ganaba en la partición de optimización (18/90 contra 10/90) y perdió en
   validación (4/60 contra 17/60). No se adoptó. Corridas: `corridas/prompt/busqueda-01/`,
   `corridas/eval/prompt-antes/` y `corridas/eval/prompt-despues/`.
+- **Entrenar 2 épocas sobre todo el conjunto** (Parte 4). Se descartó antes de lanzarlo: ~50 h de GPU contra 30 h de cuota
+  semanal y sesiones de 12 h. Se entrenó con 640 conversaciones y una época.
+- **Dos ensayos de entrenamiento fallidos** (`sft-catedra-01-ensayo`): `RuntimeError: indices should be either on cpu or on the
+  same device as the indexed tensor (cuda:1)`, por el índice de `logits_to_keep` al repartir el modelo en dos GPU. Detalle y
+  arreglo en [`entrenar/DECISIONES.md`](entrenar/DECISIONES.md).
 - **Correr en Modal** (A100 de 40 GB). Modal no habilita ninguna GPU, ni siquiera la T4, sin una tarjeta cargada. Se
   pasó a Kaggle 2×T4. `modal_app.py` queda para quien tenga la cuenta habilitada.
