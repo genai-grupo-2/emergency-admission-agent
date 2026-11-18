@@ -62,6 +62,6 @@ este texto. Las corridas de la entrega son sólo `sft-catedra-01`.
 - **Particiones de Cande:** `datos/manifiesto.json` las llama «provisionales». Hay que confirmarlas con ella.
 - **Repositorio público:** `mission.md` pide GitHub privado con acceso para la cátedra; se decidió dejarlo público. En él
   no hay credenciales ni pesos (los checkpoints están en `.gitignore`); Hugging Face y W&B sí son privados.
-- **Verificación de carga limpia** (`entrenar.verificar_carga`) y recorrido de `entrega.py` en una GPU: ver el estado en
-  la Parte 4 del informe.
+- **Verificación de carga limpia:** hecha en 2×T4 (una sola carga, JSON válido; `corridas/entrenamiento/verificacion-292c8137984.json`).
+  Falta en la A100 de 40 GB de la consigna, que el grupo no tiene.
 - **Parte 5 en A100:** requiere una medición aparte (Modal con tarjeta o la cátedra); estas corridas no la reemplazan.

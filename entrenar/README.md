@@ -76,8 +76,8 @@ que retomar da los mismos lotes que seguir de largo (lo único que no es idénti
   Juan, y no están en `pyproject.toml`/`uv.lock` (cambiarlo rompería el `uv sync --locked` de los demás notebooks).
 - **Qué se probó.** Primero en CPU con un Gemma 4 diminuto de pesos al azar, y después en Kaggle 2×T4 con el modelo real:
   un ensayo de 4 pasos y la corrida completa (80 pasos, 7 h 55 min, pico de VRAM 12,4 GiB por GPU, ~72 tokens/s). Los
-  pesos fusionados se publicaron en Hugging Face desde una sesión sin GPU (`kaggle/publicar.ipynb`). **No se ejecutó todavía**
-  `entrenar.verificar_carga` ni `entrega.py` con el checkpoint publicado; lo hace Juan en la matriz.
+  pesos fusionados se publicaron en Hugging Face desde una sesión sin GPU (`kaggle/publicar.ipynb`). `entrenar.verificar_carga` (notebook `kaggle/verificar.ipynb`) con el checkpoint publicado, desde una sesión limpia:
+  una sola carga, respuesta válida, resultado en `corridas/entrenamiento/verificacion-292c8137984.json`. La evaluación de la matriz la corre Juan.
 - Arrancar tarda unos 2 minutos con la submuestra (unos 7 con las 2.400 conversaciones): tokenización en CPU con la plantilla de
   chat, que se repite en cada sesión.
 - La plantilla de chat de Gemma 4 es prefijo-estable en las 2.400 conversaciones (se comprobó con el tokenizador real): los

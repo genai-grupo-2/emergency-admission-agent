@@ -208,7 +208,9 @@ Los pasos 20, 40 y 60 existen como adaptadores en el mismo repo (`adaptadores/sf
 citan. Corridas que fallaron (dos ensayos por un error de dispositivos al repartir el modelo entre GPU) y el ensayo que
 sí pasó están en [`entrenar/DECISIONES.md`](entrenar/DECISIONES.md) y en W&B. **Pendiente al escribir esto:** la fila «solo
 entrenamiento» de la matriz (la corre Juan con la revisión de arriba), la fila «ambos» (necesita un segundo checkpoint con el prompt
-optimizado, que se descartó en la Parte 3) y la verificación de carga desde un entorno limpio en GPU.
+optimizado, que se descartó en la Parte 3).
+
+**Verificación de carga** (`python -m entrenar.verificar_carga`, sesión limpia de Kaggle 2×T4, sin reentrenar, `corridas/entrenamiento/verificacion-292c8137984.json`): `entrega.construir_agente()` con la revisión publicada carga el modelo **una sola vez** (116,8 s, pico de VRAM 8,71 y 6,37 GiB en las dos GPU) y la primera respuesta es el JSON de `leer_triage`. Falta correrlo en la A100 de 40 GB que pide la consigna, que no tenemos.
 
 Los 50 casos de práctica, resueltos por los 9 controles. «base» y «solo prompt» no se volvieron a jugar: se armaron
 con `python -m evaluacion.componer`, juntando los 30 casos de optimización que ya había jugado la búsqueda con los 20
