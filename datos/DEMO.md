@@ -1,6 +1,7 @@
 # Demo de Cande — pendiente del modelo final
 
-La demo todavía no se ejecutó: requiere el checkpoint final de Juli (#4) fijado en `configuracion.json`. No hay
+La demo todavía no se ejecutó. Se puede ensayar con el checkpoint ya publicado de Juli (#4), pisando el modelo con
+variables de entorno (ver «Ensayo corto» más abajo). La versión final usa el que quede fijado en `configuracion.json`. No hay
 resultados de modelo entrenado ni nueve controles aprobados para reportar. Lo que sí está listo es la selección de
 candidatos, los comandos y el guion.
 
@@ -52,6 +53,37 @@ uv run --locked python -X utf8 -m admision.correr practica --entrega entrega.py 
 
 Para `c`, reemplazar por `practica/esperadas-c.jsonl`, `normas/c` y `corridas/demo-c`. Ejecutarlo sólo cuando exista
 la entrega y el grupo acuerde el ensayo en la GPU.
+
+### Ensayo corto con el checkpoint publicado (sin esperar el merge)
+
+Para no repetir la matriz, la demo juega sólo 14 casos: los tiempo-dependientes que llegan en ambulancia y los de
+costumbre sin circuito. Salen de `candidatos_demo.json` y no se mira ninguna respuesta esperada:
+
+```powershell
+uv run --locked python -X utf8 -m datos.casos_demo
+```
+
+Escribe `datos/demo/casos.jsonl` con `pev-007`, `pev-008`, `pev-011`, `pev-013`, `pev-015`, `pev-016`, `pev-021`,
+`pev-025`, `pev-026`, `pev-028`, `pev-041`, `pev-042`, `pev-043` y `pev-050`. El circuito completo ya se probó con el
+modelo falso (`ADMISION_BACKEND=falso`).
+
+En Kaggle (2×T4, ver [kaggle/README.md](../kaggle/README.md)), con `kaggle/correr.ipynb` y estos parámetros:
+
+```python
+RAMA = "cande/demo-y-diagrama"
+COMANDO = ("admision.correr practica --entrega entrega.py --casos datos/demo/casos.jsonl "
+           "--esperadas practica/esperadas-b.jsonl --normas normas/b --salida corridas/demo/b-sft-catedra-01")
+LOTE = ""
+import os
+os.environ["ADMISION_MODELO_REPO"] = "genai-grupo-2/emergency-admission-agent"
+os.environ["ADMISION_MODELO_REVISION"] = "292c8137984283d426de735309d108459b5e51f9"
+os.environ["ADMISION_DEVICE_MAP"] = "auto"
+```
+
+El secreto `HF_TOKEN` tiene que tener acceso al repo privado del grupo. Cargar el modelo tarda unos 2 minutos. Al
+terminar, bajar el zip de *Output*, descomprimirlo en la raíz y commitear `corridas/demo/` y su
+`corridas/entornos/kaggle-<fecha>.json`. Es una corrida en T4 con el checkpoint `sft-catedra-01` (submuestra de 640
+conversaciones). Si después cambia la entrega final, se repite con esa revisión.
 
 ## Qué guardar antes de grabar
 
