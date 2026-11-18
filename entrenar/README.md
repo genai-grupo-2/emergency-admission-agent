@@ -1,6 +1,6 @@
 # Entrenamiento (issue #4)
 
-> Resultado y decisiones: [`DECISIONES.md`](DECISIONES.md). La corrida entregada es `sft-catedra-01` paso 80 (640 conversaciones,
+> Resultado y decisiones: [`DECISIONES.md`](DECISIONES.md). Traspaso, pendientes y acceso de la cátedra: [`PENDIENTES.md`](PENDIENTES.md). La corrida entregada es `sft-catedra-01` paso 80 (640 conversaciones,
 > 1 época), publicada en `genai-grupo-2/emergency-admission-agent` @ `292c8137984283d426de735309d108459b5e51f9`.
 
 SFT con LoRA de Gemma 4 E4B sobre las conversaciones de `datos/conversaciones/`, con el prompt de la cátedra
