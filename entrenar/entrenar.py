@@ -363,10 +363,20 @@ def preparar_datos(config: dict):
     casos = [json.loads(linea) for linea in
              (RAIZ / "practica" / "casos.jsonl").read_text(encoding="utf-8").splitlines() if linea.strip()]
     resumen = datos_.validar(filas["train"], filas["validacion"], prompt, casos)
+    subconjunto = {}
+    rutas_filas = {k: list(v) for k, v in filas.items()}  # tamaños completos, antes de submuestrear
+    for clave, tope in (("train", config["datos"].get("max_train")), ("validacion", config["datos"].get("max_validacion"))):
+        if tope and tope < len(filas[clave]):
+            # submuestra al azar con la semilla (el archivo puede estar ordenado por categoría); queda en el manifiesto
+            azar = random.Random(f"{config['semilla']}-{clave}")
+            elegidas = sorted(azar.sample(range(len(filas[clave])), tope))
+            filas[clave] = [filas[clave][i] for i in elegidas]
+            subconjunto[clave] = {"usadas": tope, "de": len(rutas_filas[clave]), "indices": elegidas}
     if "ensayo" in config:
         filas["train"] = filas["train"][:config["ensayo"]["max_train"]]
         filas["validacion"] = filas["validacion"][:config["ensayo"]["max_validacion"]]
     descripcion = {
+        "subconjunto": subconjunto,
         "prompt": {"version": config["prompt"]["version"], "sha256": huella(prompt)},
         "train": {"archivo": config["datos"]["train"], "sha256": datos_.sha256_archivo(rutas["train"])},
         "validacion": {"archivo": config["datos"]["validacion"],

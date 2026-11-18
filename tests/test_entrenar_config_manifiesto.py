@@ -33,7 +33,7 @@ class TestConfig(unittest.TestCase):
         e = cfg.para_ensayo(base)
         self.assertNotEqual(e["nombre"], base["nombre"])
         self.assertIsNone(e["subir_checkpoints_a"])
-        self.assertEqual(base["epocas"], 2)  # no modifica el original
+        self.assertEqual(base["epocas"], 1)  # no modifica el original
 
 
 class TestManifiesto(unittest.TestCase):

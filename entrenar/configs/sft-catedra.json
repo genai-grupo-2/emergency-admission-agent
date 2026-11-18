@@ -11,7 +11,9 @@
   "datos": {
     "train": "datos/conversaciones/train.jsonl",
     "validacion": "datos/conversaciones/validacion.jsonl",
-    "max_tokens": 8192
+    "max_tokens": 8192,
+    "max_train": 640,
+    "max_validacion": 40
   },
   "lora": {
     "r": 16,
@@ -19,11 +21,11 @@
     "dropout": 0.05,
     "modulos": ".*language_model.*\\.(q_proj|k_proj|v_proj|o_proj|gate_proj|up_proj|down_proj)"
   },
-  "optimizador": {"lr": 0.0002, "weight_decay": 0.0, "warmup_pasos": 10, "acumulacion": 16, "max_norma_grad": 1.0},
-  "epocas": 2,
+  "optimizador": {"lr": 0.0002, "weight_decay": 0.0, "warmup_pasos": 5, "acumulacion": 8, "max_norma_grad": 1.0},
+  "epocas": 1,
   "semilla": 42,
-  "guardar_cada": 34,
-  "evaluar_cada": 68,
+  "guardar_cada": 20,
+  "evaluar_cada": 20,
   "max_horas": 10.5,
   "wandb": {"proyecto": "emergency-admission-agent", "entidad": "gen-ai-grupo-2"},
   "subir_checkpoints_a": "genai-grupo-2/emergency-admission-agent"

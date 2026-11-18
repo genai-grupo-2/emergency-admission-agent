@@ -10,9 +10,9 @@ infraestructura que Juan armó para las evaluaciones (`kaggle/`, `correr_kaggle.
 |---|---|
 | Modelo base | `google/gemma-4-E4B-it` @ `4ecc2ba63bca…` (el mismo que `configuracion.json`) |
 | Método | LoRA r=16, alpha=32, sólo en las proyecciones del modelo de lenguaje; pesos base en bf16 repartidos entre las 2 GPU |
-| Datos | `datos/conversaciones/train.jsonl` (2.176) y `validacion.jsonl` (224); su sha256 queda en el manifiesto |
+| Datos | `datos/conversaciones/train.jsonl` y `validacion.jsonl` (se usa una submuestra, ver Pasos); su sha256 y los índices elegidos quedan en el manifiesto |
 | Pérdida | sólo sobre las respuestas del asistente (herramienta + argumentos + cierre del turno) |
-| Pasos | 16 conversaciones por paso del optimizador, 2 épocas = 272 pasos; lr 2e-4 con calentamiento y coseno; semilla 42 |
+| Pasos | Submuestra con semilla de 640 conversaciones de train (de 2.176) y 40 de validación (de 224), 1 época, 8 conversaciones por paso = 80 pasos; lr 2e-4 con calentamiento y coseno; semilla 42. Motivo: en las 2×T4 se miden ~70 tokens/s, y las 2 épocas completas (~13 M de tokens) serían ~50 h contra 30 h de cuota semanal |
 | Selección | menor pérdida en **validación**. Nunca el test secreto ni los casos de práctica |
 | Salida | adaptador por checkpoint; se publican los pesos fusionados en bf16 (los que carga `entrega.py`) |
 
