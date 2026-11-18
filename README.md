@@ -37,6 +37,8 @@ flowchart LR
     P["prompts/&lt;versión&gt;.txt"] -.-> A
 ```
 
+Un caso paso a paso, con los límites del agente, está en [docs/arquitectura.md](docs/arquitectura.md).
+
 `entrega.py` es lo único que llama la cátedra:
 - `construir_buscador(ruta_normas)` arma el buscador con las normas que recibe.
 - `construir_agente()` carga el modelo una vez y devuelve el agente.
@@ -107,7 +109,7 @@ uv run python -m unittest discover -s tests -p "test_agente_*.py" -v
 | `corridas/prompt/<nombre>/` | `python -m optimizacion.optimizar` | `corrida.json`: commit, `uv.lock`, modelo, λ, partición |
 | `corridas/eval/<etiqueta>/` | `python -m evaluacion.evaluar` o `evaluacion.matriz` | `condicion.json`: prompt, checkpoint, commit, comandos |
 | Tablas de `INFORME.md` | `python -m evaluacion.tablas` | sólo lee `corridas/` |
-| `historial_clasificado.csv`, `costumbres.md` y conversaciones | `datos/` de Cande (#1, rama `cande/datos-historial`) | ver `datos/README.md` |
+| `historial_clasificado.csv`, `costumbres.md` y conversaciones | `datos/` de Cande (#1) | ver `datos/README.md` |
 | Checkpoints, corridas de W&B y `corridas/entrenamiento/<nombre>/manifiesto.json` | `python -m entrenar.entrenar`, `entrenar.publicar` (Juli, #4) | ver `entrenar/README.md`; corrida `sft-catedra-01` |
 
 ## Loom: sección de Juan (agente, prompt y matriz, unos 4 minutos)

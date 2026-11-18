@@ -143,7 +143,7 @@ Si un caso falla un control, se muestra el fallo o se corrige y se repite con ev
 
 ## Guion de la parte de datos en el Loom
 
-Unos tres minutos, con el repositorio abierto:
+Unos cuatro minutos, con el repositorio abierto:
 
 1. **Historial** (`historial_clasificado.csv`). Norma escrita primero y costumbre después: 1.600 correctas, 240 errores
    y 160 ruidos. Mostrar `H-0010` en `datos/clasificacion_detalle.jsonl`: 10 minutos de ECG cuando por ambulancia
@@ -152,4 +152,16 @@ Unos tres minutos, con el repositorio abierto:
    76 años) y prepaga ante doble credencial (163 de 172). Decir el límite: se infirieron del mismo historial.
 3. **Conversaciones** (`datos/manifiesto.json`). 2.400 conversaciones con el prompt de la cátedra, 2.176 y 224 sin
    pacientes compartidos; `python -m datos.verificar` las reproduce.
-4. **Demo.** Los dos casos elegidos, con herramientas, búsquedas, ficha y los nueve controles.
+4. **Demo (~1,5 min).** Abrir los archivos legibles de `datos/demo/` (los genera `python -m datos.ver_demo` desde la
+   corrida, sin volver a correr el modelo). Decir primero el contexto: checkpoint `sft-catedra-01`, normas `b`, 14
+   casos elegidos, 6 aprueban los 9 controles.
+   - [`pev-011.md`](demo/pev-011.md): dolor torácico en ambulancia. Señalar las dos búsquedas (`NOR-TDE-01` y
+     `NOR-TDE-04`) y el plazo de 12 minutos: 15 de `b` menos 3 por ambulancia. Con las originales serían 5, así que
+     no lo memorizó. Después la cobertura: pregunta, verifica Obra Social Fluvial y la notifica. 9/9.
+   - [`pev-050.md`](demo/pev-050.md): presenta obra social y prepaga. Las normas no dicen cuál verificar; la costumbre
+     del historial (163 de 172) dice la prepaga, y eso hace. Está inactiva, así que queda sin cobertura. 9/9.
+   - [`pev-015.md`](demo/pev-015.md), si hay tiempo: 82 años y sin acompañante. Correspondía avisar al voluntariado y
+     no lo hizo. Le pasó en los 6 casos con esa costumbre; sólo 53 de las 640 conversaciones de entrenamiento la
+     tenían.
+5. **Cierre (~15 s).** Lo que aprendió (circuitos, plazos de cada versión, doble credencial) y lo que no (el
+   voluntariado), con el dato de cuántos ejemplos había.
