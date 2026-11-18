@@ -4,7 +4,8 @@ al lado de la referencia de la cátedra.
 Las condiciones están en `evaluacion/matriz.json`. Para que la comparación sea válida, «solo entrenamiento» y «ambos»
 usan dos checkpoints con la misma configuración de entrenamiento (datos, semilla, épocas) que sólo difieren en el
 mensaje de sistema de las conversaciones: el de la cátedra y el optimizado. Esos dos checkpoints los publica Juli (#4);
-hasta entonces su `modelo_repo`/`modelo_revision` es null y la condición figura como bloqueada.
+hasta entonces su `modelo_repo`/`modelo_revision` es null y la condición figura como bloqueada. Una condición que se
+decidió no correr lleva `no_hecho` con el motivo, y la tabla muestra ese motivo.
 
     python -m evaluacion.matriz                       # sólo la tabla, con lo que ya está corrido
     python -m evaluacion.matriz --correr base "solo prompt"   # corre lo que falte (en Modal: modal_app.py)
@@ -32,6 +33,8 @@ def etiqueta(condicion: dict) -> str:
 
 def estado(condicion: dict) -> str | None:
     """None si se puede correr; si no, por qué no."""
+    if condicion.get("no_hecho"):
+        return condicion["no_hecho"]
     if not condicion["modelo_repo"] or not condicion["modelo_revision"]:
         return "bloqueado: falta el checkpoint de Juli (#4)"
     if not (CARPETA / f"{condicion['prompt']}.txt").exists():

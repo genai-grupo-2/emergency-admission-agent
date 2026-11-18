@@ -48,7 +48,15 @@ class TablasTest(unittest.TestCase):
     def test_sin_corridas_no_hay_numeros_inventados(self):
         from evaluacion.matriz import cargar_matriz, tabla
         filas = tabla(cargar_matriz()).splitlines()[2:6]
-        self.assertTrue(all("pendiente" in f or "bloqueado" in f or "/50" in f for f in filas))
+        self.assertTrue(all("pendiente" in f or "bloqueado" in f or "no hecho" in f or "/50" in f for f in filas))
+
+    def test_una_condicion_no_hecha_muestra_el_motivo_y_no_se_corre(self):
+        from evaluacion.matriz import estado
+        condicion = {"nombre": "ambos", "prompt": "optimizado", "modelo_repo": "r", "modelo_revision": "v",
+                     "no_hecho": "no hecho: sin segundo checkpoint"}
+        self.assertEqual(estado(condicion), "no hecho: sin segundo checkpoint")
+        del condicion["no_hecho"]
+        self.assertIsNone(estado({**condicion, "prompt": "catedra"}))
 
 
 if __name__ == "__main__":
