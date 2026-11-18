@@ -71,6 +71,7 @@ En Kaggle (2×T4, ver [kaggle/README.md](../kaggle/README.md)), con `kaggle/corr
 
 ```python
 RAMA = "cande/demo-y-diagrama"
+COMMIT = ""  # vacío: la punta de la rama
 COMANDO = ("admision.correr practica --entrega entrega.py --casos datos/demo/casos.jsonl "
            "--esperadas practica/esperadas-b.jsonl --normas normas/b --salida corridas/demo/b-sft-catedra-01")
 LOTE = ""
