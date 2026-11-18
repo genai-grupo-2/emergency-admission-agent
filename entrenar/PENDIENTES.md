@@ -35,7 +35,7 @@ ADMISION_MODELO_REVISION=292c8137984283d426de735309d108459b5e51f9
 | 4 | Fila «ambos» (checkpoint con el prompt optimizado) | Juan | **Hecho:** queda «no hecho» en la matriz (`no_hecho` en `evaluacion/matriz.json`) y en la Parte 4, con el motivo. |
 | 5 | Confirmar que las particiones de datos son las finales (`datos/manifiesto.json` dice «provisional») | Cande | Si cambian, el entrenamiento habría que repetirlo. |
 | 6 | Parte 5: medir VRAM, tiempo y costo en **A100 de 40 GB** | Pía | Las medidas de Kaggle T4 no sirven. Si no hay A100, decir la limitación en el informe. |
-| 7 | Llevar `juli/entrenamiento` a `main` (PR con revisión de Juan) | Juli + Juan | PR #10 revisado (28 pruebas sin GPU, sin credenciales, no toca `admision/`); falta el merge. |
+| 7 | Llevar `juli/entrenamiento` a `main` (PR con revisión de Juan) | Juli + Juan | **Hecho:** PR #10 revisado (28 pruebas sin GPU, sin credenciales, no toca `admision/`), aprobado y mergeado. |
 | 8 | Sección del Loom (15–20 min en total, ~3–4 min de Juli) | Juli | Guion en `DECISIONES.md`: prompt, Kaggle/T4, submuestra, selección por validación, fallas. |
 | 9 | Cerrar el issue #4 con el resumen (revisión, W&B, límites) | Juli | Después de 1 y 3. |
 
