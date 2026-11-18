@@ -1,8 +1,8 @@
-# Demo de Cande — pendiente del modelo final
+# Demo de Cande
 
-La demo todavía no se ejecutó: requiere el checkpoint final de Juli (#4) fijado en `configuracion.json`. No hay
-resultados de modelo entrenado ni nueve controles aprobados para reportar. Lo que sí está listo es la selección de
-candidatos, los comandos y el guion.
+La demo se corrió el 18/11/2026 con el checkpoint `sft-catedra-01` (`genai-grupo-2/emergency-admission-agent` @
+`292c8137984283d426de735309d108459b5e51f9`), el mismo que fija `configuracion.json` en `main`. Resultados y casos
+elegidos: «Resultado» más abajo.
 
 ## Qué vamos a mostrar
 
@@ -52,6 +52,85 @@ uv run --locked python -X utf8 -m admision.correr practica --entrega entrega.py 
 
 Para `c`, reemplazar por `practica/esperadas-c.jsonl`, `normas/c` y `corridas/demo-c`. Ejecutarlo sólo cuando exista
 la entrega y el grupo acuerde el ensayo en la GPU.
+
+### Ensayo corto con el checkpoint publicado (sin esperar el merge)
+
+Para no repetir la matriz, la demo juega sólo 14 casos: los tiempo-dependientes que llegan en ambulancia y los de
+costumbre sin circuito. Salen de `candidatos_demo.json` y no se mira ninguna respuesta esperada:
+
+```powershell
+uv run --locked python -X utf8 -m datos.casos_demo
+```
+
+Escribe `datos/demo/casos.jsonl` con `pev-007`, `pev-008`, `pev-011`, `pev-013`, `pev-015`, `pev-016`, `pev-021`,
+`pev-025`, `pev-026`, `pev-028`, `pev-041`, `pev-042`, `pev-043` y `pev-050`. El circuito completo ya se probó con el
+modelo falso (`ADMISION_BACKEND=falso`).
+
+En Kaggle (2×T4, ver [kaggle/README.md](../kaggle/README.md)), con `kaggle/correr.ipynb` y estos parámetros:
+
+```python
+RAMA = "cande/demo-y-diagrama"
+COMMIT = ""  # vacío: la punta de la rama
+COMANDO = ("admision.correr practica --entrega entrega.py --casos datos/demo/casos.jsonl "
+           "--esperadas practica/esperadas-b.jsonl --normas normas/b --salida corridas/demo/b-sft-catedra-01")
+LOTE = ""
+import os
+os.environ["ADMISION_MODELO_REPO"] = "genai-grupo-2/emergency-admission-agent"
+os.environ["ADMISION_MODELO_REVISION"] = "292c8137984283d426de735309d108459b5e51f9"
+os.environ["ADMISION_DEVICE_MAP"] = "auto"
+```
+
+El secreto `HF_TOKEN` tiene que tener acceso al repo privado del grupo. Cargar el modelo tarda unos 2 minutos. Al
+terminar, bajar el zip de *Output*, descomprimirlo en la raíz y commitear `corridas/demo/` y su
+`corridas/entornos/kaggle-<fecha>.json`. Es una corrida en T4 con el checkpoint `sft-catedra-01` (submuestra de 640
+conversaciones). Si después cambia la entrega final, se repite con esa revisión.
+
+## Resultado
+
+Corrida `corridas/demo/b-sft-catedra-01/`, normas `b`, Kaggle 2×T4, commit `dfa9e78`, sin cambios sin commitear
+(`corridas/entornos/kaggle-20261118-192810.json`). Cargar el modelo tardó 131 s y jugar los 14 casos, 1.266 s
+(90 s por caso, en un solo lote). Son tiempos de T4, no sirven para la Parte 5.
+
+**6 de 14 casos aprueban los 9 controles.** Por control: registro, documento, box, circuito, cobertura y verificación
+1,00; plazo 0,93; entidad a notificar 0,86; aviso al voluntariado 0,57. No quedó ningún caso sin ficha.
+
+| Caso | Tipo | Resultado | Qué falló (esperado / obtenido) |
+| --- | --- | --- | --- |
+| `pev-007` | Código ACV, ambulancia | 8/9 | entidad a notificar: ninguna / Obra Social Bermejo |
+| `pev-008` | Código Sepsis, ambulancia, voluntariado | 7/9 | entidad: ninguna / Obra Social Fluvial; aviso al voluntariado: sí / no |
+| `pev-011` | ECG, ambulancia | **9/9** | — |
+| `pev-013` | Código Sepsis, ambulancia | **9/9** | — |
+| `pev-015` | Voluntariado | 8/9 | aviso al voluntariado: sí / no |
+| `pev-016` | ECG, ambulancia | **9/9** | — |
+| `pev-021` | ECG, ambulancia | **9/9** | — |
+| `pev-025` | Voluntariado | 8/9 | aviso al voluntariado: sí / no |
+| `pev-026` | ECG, ambulancia | 8/9 | plazo: 12 / 15 (no restó la reducción por ambulancia) |
+| `pev-028` | Código Sepsis, ambulancia | **9/9** | — |
+| `pev-041` | Voluntariado | 8/9 | aviso al voluntariado: sí / no |
+| `pev-042` | Voluntariado | 8/9 | aviso al voluntariado: sí / no |
+| `pev-043` | Voluntariado | 8/9 | aviso al voluntariado: sí / no |
+| `pev-050` | Doble credencial | **9/9** | — |
+
+**Lo que muestra.** Los circuitos tiempo-dependientes salen bien: 5 de 8 completos, y el circuito es correcto en
+los 8. El modelo busca la sección del circuito y la de ambulancia y calcula el plazo con los valores de `b`. La
+costumbre de la doble credencial (verificar la prepaga) se aplicó. **La del voluntariado no se aplicó en ninguno de
+los 6 casos que la requieren**: el modelo nunca marcó el aviso. Es el hallazgo principal de esta corrida y hay que
+contarlo, no esconderlo.
+
+### Casos elegidos
+
+1. **Tiempo-dependiente: `pev-011`.** Dolor torácico, 74 años, llega en ambulancia y sin credencial. Busca
+   `NOR-TDE-01` (ECG) y `NOR-TDE-04` (ambulancia) y registra **12 minutos**: 15 de `b` menos 3 por ambulancia. Con
+   las normas originales serían 5. Pregunta la cobertura, revisa la terminación reservada (`NOR-COB-04`) y verifica
+   Obra Social Fluvial (activa). 9/9.
+2. **Costumbre: `pev-050`.** Palpitaciones, presenta Obra Social Fluvial y Prepaga Sierra, sin accidente laboral.
+   Las normas no dicen cuál verificar. Siguiendo la costumbre del historial, verifica la **prepaga**, que está
+   inactiva, y registra sin cobertura. 9/9.
+3. **Si hay tiempo, un fallo: `pev-015`.** 82 años y sin acompañante: correspondía avisar al voluntariado y no lo
+   hizo. Muestra el límite del modelo con la costumbre que menos aprendió.
+
+Las conversaciones completas están en `corridas/demo/b-sft-catedra-01/trazas.jsonl` y los controles en
+`resultados.jsonl`.
 
 ## Qué guardar antes de grabar
 
