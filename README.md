@@ -108,7 +108,7 @@ uv run python -m unittest discover -s tests -p "test_agente_*.py" -v
 | `corridas/eval/<etiqueta>/` | `python -m evaluacion.evaluar` o `evaluacion.matriz` | `condicion.json`: prompt, checkpoint, commit, comandos |
 | Tablas de `INFORME.md` | `python -m evaluacion.tablas` | sólo lee `corridas/` |
 | `historial_clasificado.csv`, `costumbres.md` y conversaciones | `datos/` de Cande (#1, rama `cande/datos-historial`) | ver `datos/README.md` |
-| Checkpoints, corridas de W&B y `corridas/entrenamiento/<nombre>/manifiesto.json` | `python -m entrenar.entrenar`, `entrenar.publicar` (Juli, #4) | ver `entrenar/README.md`; todavía sin corridas |
+| Checkpoints, corridas de W&B y `corridas/entrenamiento/<nombre>/manifiesto.json` | `python -m entrenar.entrenar`, `entrenar.publicar` (Juli, #4) | ver `entrenar/README.md`; corrida `sft-catedra-01` |
 
 ## Loom: sección de Juan (agente y prompt, unos 4 minutos)
 
@@ -121,10 +121,12 @@ uv run python -m unittest discover -s tests -p "test_agente_*.py" -v
 
 ## Checklist final de la entrega (con el grupo)
 
-- [ ] `prompts/optimizado.txt` congelado y entregado a Cande y Juli antes del entrenamiento.
-- [ ] `configuracion.json` apunta al checkpoint final de Hugging Face con su revisión exacta.
-- [ ] Dependencias de inferencia fijadas en `pyproject.toml`/`uv.lock` (hoy sólo están en la imagen de `modal_app.py`).
-- [ ] Las 12 evaluaciones de la matriz corridas y `python -m evaluacion.tablas` sin «pendiente».
+- [x] `prompts/optimizado.txt` congelado (Parte 3). Perdió en validación y se descartó: el entrenamiento usó el de la cátedra.
+- [x] `configuracion.json` apunta al checkpoint final de Hugging Face con su revisión exacta
+  (`genai-grupo-2/emergency-admission-agent` @ `292c8137`, privado: la cátedra necesita acceso de lectura).
+- [x] Dependencias de inferencia fijadas en `pyproject.toml`/`uv.lock` (las mismas versiones que `modal_app.py`).
+- [ ] Las evaluaciones de la matriz corridas y `python -m evaluacion.tablas` sin «pendiente»: base y solo prompt hechas,
+  falta «solo entrenamiento» (en Kaggle), y «ambos» queda «no hecho» con el motivo (Parte 4).
 - [ ] Secciones de los cuatro integradas en `INFORME.md`.
 - [ ] Repositorio, Hugging Face y W&B compartidos con la cátedra, y el commit entregado anotado en el mail.
 - [ ] Loom de 15 a 20 minutos con la demo en normas b o c.

@@ -180,7 +180,8 @@ sin otra búsqueda. Una segunda búsqueda armada mirando los errores de validaci
 la herramienta y sus argumentos, y no sobre el prompt ni sobre los resultados de las herramientas, que vienen del entorno. El
 modelo base es el mismo Gemma 4 E4B con la misma revisión que usa el agente; los adaptadores se fusionan en bf16 y esos pesos
 son los que se publican y los que evalúa Juan, para que cada número corresponda a lo que carga la cátedra. El checkpoint se
-elige por la pérdida en la partición de validación de Cande; el test secreto y los 50 casos de práctica no intervienen. Antes
+elige por la pérdida sobre 40 de las 224 conversaciones de la partición de validación de Cande (al azar, con la semilla; los
+índices están en el manifiesto); el test secreto y los 50 casos de práctica no intervienen. Antes
 de entrenar se comprueba que el mensaje de sistema de cada conversación coincide byte a byte con el prompt, que
 entrenamiento y validación no comparten ids, grupos ni huellas, y que ninguna conversación reproduce un caso de práctica.
 
@@ -206,9 +207,11 @@ dirá la matriz; no está medido.
 
 Los pasos 20, 40 y 60 existen como adaptadores en el mismo repo (`adaptadores/sft-catedra-01/`) pero no se evaluaron ni se
 citan. Corridas que fallaron (dos ensayos por un error de dispositivos al repartir el modelo entre GPU) y el ensayo que
-sí pasó están en [`entrenar/DECISIONES.md`](entrenar/DECISIONES.md) y en W&B. **Pendiente al escribir esto:** la fila «solo
-entrenamiento» de la matriz (la corre Juan con la revisión de arriba), la fila «ambos» (necesita un segundo checkpoint con el prompt
-optimizado, que se descartó en la Parte 3).
+sí pasó están en [`entrenar/DECISIONES.md`](entrenar/DECISIONES.md) y en W&B. La fila «solo
+entrenamiento» de la matriz es este checkpoint con el prompt de la cátedra (`evaluacion/matriz.json`). La fila «ambos» **no
+se hizo**: pedía un segundo checkpoint entrenado con el prompt optimizado, y ese prompt se descartó en la Parte 3 porque
+perdía en validación (4/60 contra 17/60). Entrenarlo igual habría costado otras ~8 h de cuota de Kaggle para una condición
+que ya sabíamos peor.
 
 **Verificación de carga** (`python -m entrenar.verificar_carga`, sesión limpia de Kaggle 2×T4, sin reentrenar, `corridas/entrenamiento/verificacion-292c8137984.json`): `entrega.construir_agente()` con la revisión publicada carga el modelo **una sola vez** (116,8 s, pico de VRAM 8,71 y 6,37 GiB en las dos GPU) y la primera respuesta es el JSON de `leer_triage`. Falta correrlo en la A100 de 40 GB que pide la consigna, que no tenemos.
 
@@ -224,8 +227,8 @@ de la cátedra.
 | --- | --- | --- | --- | --- |
 | base | 10/50 | 9/50 | 8/50 | `corridas/eval/matriz-base` |
 | solo prompt | 8/50 | 8/50 | 6/50 | `corridas/eval/matriz-solo-prompt` |
-| solo entrenamiento | bloqueado: falta el checkpoint de Juli (#4) | bloqueado: falta el checkpoint de Juli (#4) | bloqueado: falta el checkpoint de Juli (#4) | — |
-| ambos | bloqueado: falta el checkpoint de Juli (#4) | bloqueado: falta el checkpoint de Juli (#4) | bloqueado: falta el checkpoint de Juli (#4) | — |
+| solo entrenamiento | pendiente de correr | pendiente de correr | pendiente de correr | — |
+| ambos | no hecho: el prompt optimizado se descartó en la Parte 3 y no hay segundo checkpoint | no hecho: el prompt optimizado se descartó en la Parte 3 y no hay segundo checkpoint | no hecho: el prompt optimizado se descartó en la Parte 3 y no hay segundo checkpoint | — |
 | Referencia de la cátedra, sin entrenar | 12/50 | 15/50 | 12/50 | mission.md |
 | Referencia de la cátedra, fine-tuning supervisado | 25/50 | 24/50 | 25/50 | mission.md |
 <!-- /tabla:matriz -->

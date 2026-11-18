@@ -24,7 +24,7 @@ uv run --locked python -c "import admision, yaml; print('Kit de admision: OK')"
 
 En Windows, repetir `$env:PYTHONUTF8 = '1'` al abrir una terminal para trabajar en el proyecto. Esto permite imprimir los caracteres Unicode que usa el evaluador del kit. También se puede activar para un comando puntual con `python -X utf8`.
 
-El grupo `dev`, instalado por defecto por `uv sync`, incluye los clientes de Modal, Hugging Face y W&B. Las librerías de entrenamiento e inferencia se agregarán cuando se defina la estrategia.
+El grupo `dev`, instalado por defecto por `uv sync`, incluye los clientes de Modal, Hugging Face y W&B. Las de inferencia (`torch`, `transformers`, `accelerate`) están fijadas en las dependencias del proyecto, con las mismas versiones que `modal_app.py`; las de entrenamiento se instalan en los notebooks de `kaggle/`.
 
 Referencias oficiales: [instalación de uv](https://docs.astral.sh/uv/getting-started/installation/), [gestión de Python](https://docs.astral.sh/uv/guides/install-python/).
 

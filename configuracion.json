@@ -1,8 +1,8 @@
 {
   "modelo": {
     "backend": "hf",
-    "repo": "google/gemma-4-E4B-it",
-    "revision": "4ecc2ba63bcac23ba4a767fc87025b1450f84c9c",
+    "repo": "genai-grupo-2/emergency-admission-agent",
+    "revision": "292c8137984283d426de735309d108459b5e51f9",
     "dtype": "bfloat16",
     "max_new_tokens": 384,
     "lote": 50

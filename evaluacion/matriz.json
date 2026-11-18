@@ -23,15 +23,16 @@
       "nombre": "solo entrenamiento",
       "descripcion": "checkpoint entrenado con conversaciones armadas con el prompt de la cátedra, evaluado con ese prompt",
       "prompt": "catedra",
-      "modelo_repo": null,
-      "modelo_revision": null
+      "modelo_repo": "genai-grupo-2/emergency-admission-agent",
+      "modelo_revision": "292c8137984283d426de735309d108459b5e51f9"
     },
     {
       "nombre": "ambos",
       "descripcion": "checkpoint entrenado con conversaciones armadas con el prompt optimizado, evaluado con ese prompt",
       "prompt": "optimizado",
       "modelo_repo": null,
-      "modelo_revision": null
+      "modelo_revision": null,
+      "no_hecho": "no hecho: el prompt optimizado se descartó en la Parte 3 y no hay segundo checkpoint"
     }
   ]
 }
