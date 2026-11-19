@@ -1,15 +1,5 @@
 # Agente de admisión de guardia · grupo 2
 
-```text
-       .--.
-      |o_o |    El pingüino de guardia:
-      |:_/ |    lee el triage, pregunta,
-     //   \ \   verifica, busca la norma
-    (|     | )  y registra la ficha.
-   /'\_   _/`\
-   \___)=(___/
-```
-
 Este es el repositorio del grupo. Primero vienen cómo correr nuestro agente y de dónde sale cada archivo. Más abajo
 está el [manual del kit](#kit-del-tp-final-la-ficha-de-admisión-de-guardia) de la cátedra. El desarrollo y los
 resultados están en [INFORME.md](INFORME.md), y la preparación del entorno, en [SETUP.md](SETUP.md).
