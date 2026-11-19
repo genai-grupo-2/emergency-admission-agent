@@ -23,6 +23,8 @@ resultado y después cómo llegamos. Total previsto: unos 18 minutos.
 - Cada uno cierra pasándole la palabra al siguiente por su nombre.
 - Pantalla: editor con zoom al 125–150 % y una sola ventana. En Loom, *Screen + Cam* a 1080p.
 
+**Capturas:** debajo de cada «Pantalla» está lo que hay que mostrar, sacado de `main` en el commit `b444f7d` (en `docs/loom/`). Son una referencia: en el video se muestra el archivo real. Si cambia un número, vale el del archivo y no el de la captura.
+
 **Cómo se arma:** cada uno graba su parte en Loom y la descarga en MP4. Juan las une (por ejemplo en Clipchamp) y sube el
 video final a Loom: el mail lleva un solo link.
 
@@ -32,6 +34,8 @@ video final a Loom: el mail lleva un solo link.
 
 **Pantalla:** el README del repo, arriba.
 
+![README, arriba](docs/loom/s00-readme.png)
+
 > «Somos el grupo 2: Juan, Cande, Pía y Juli. Hicimos un agente que completa la ficha de admisión de una guardia: lee el
 > triage, le pregunta al paciente, verifica la cobertura, busca la norma que aplica y registra la ficha. Primero les
 > mostramos el resultado. Después Cande lo muestra corriendo y cuenta los datos, Pía el buscador, yo el prompt, Juli el
@@ -40,6 +44,8 @@ video final a Loom: el mail lleva un solo link.
 ## 1. El modelo final · Juan · 2:00
 
 **Pantalla:** `INFORME.md`, Parte 4, la tabla de la matriz. Después, el diagrama «Cómo se conecta» del README.
+
+![Tabla de la matriz](docs/loom/s01-matriz.png)
 
 > «El modelo final es Gemma 4 E4B con fine-tuning supervisado, publicado en Hugging Face con la revisión `292c8137`, y
 > el prompt de la cátedra. Sobre los 50 casos de práctica resuelve 27 con las normas originales, 25 con b y 21 con c. La
@@ -51,6 +57,8 @@ video final a Loom: el mail lleva un solo link.
 > final.»
 
 **Pantalla:** el diagrama.
+
+![Diagrama «Cómo se conecta»](docs/loom/s01-diagrama.png)
 
 > «Cómo funciona: el kit de la cátedra le pasa al agente el paciente y una función para dar pasos. El modelo responde
 > siempre un JSON con la herramienta y sus argumentos. Antes de gastar una llamada validamos el nombre y los argumentos.
@@ -64,6 +72,9 @@ video final a Loom: el mail lleva un solo link.
 **Pantalla:** `datos/demo/pev-011.md`, la tabla de controles y el recorrido, y después `datos/demo/pev-050.md`. Los
 archivos los genera `python -m datos.ver_demo` desde la corrida: no hace falta volver a correr el modelo. Guion
 detallado en [`datos/DEMO.md`](datos/DEMO.md).
+
+![pev-011: controles y recorrido](docs/loom/s02-pev-011.png)
+![pev-050: controles y recorrido](docs/loom/s02-pev-050.png)
 
 > «Contexto: es el checkpoint final con las normas b, no las originales. Elegimos 14 casos de práctica, y 6 aprueban
 > los 9 controles.»
@@ -84,6 +95,10 @@ detallado en [`datos/DEMO.md`](datos/DEMO.md).
 
 **Pantalla:** `historial_clasificado.csv`, `datos/clasificacion_detalle.jsonl` (fila `H-0010`), `costumbres.md` y
 `datos/manifiesto.json`.
+
+![Historial clasificado y la fila H-0010](docs/loom/s03-historial.png)
+![Costumbre del voluntariado](docs/loom/s03-costumbre-voluntariado.png)
+![Costumbre de la prepaga](docs/loom/s03-costumbre-prepaga.png)
 
 > «Clasificamos el historial mirando primero la norma escrita y después la costumbre. Quedan 1.600 correctas, 240
 > errores y 160 ruidos.»
@@ -106,6 +121,8 @@ detallado en [`datos/DEMO.md`](datos/DEMO.md).
 **Pantalla:** `buscador/bm25.py` y la tabla de la Parte 2 de `INFORME.md` (o
 [`resultados/rag/INFORME.md`](resultados/rag/INFORME.md)). Guion detallado en [`docs/loom-pia.md`](docs/loom-pia.md).
 
+![Tabla del buscador (Parte 2)](docs/loom/s04a-buscador.png)
+
 - **Qué es.** Un BM25 propio, sin dependencias y fuera de `admision/`. Lee las normas y los valores de la carpeta que
   recibe, y ningún número está en el código. Toma una sección por fragmento y devuelve las 2 mejores.
 - **Cómo rinde, antes del agente.** «Sobre 60 consultas: recall de 0,817, 48 de 60 consultas con toda la evidencia y 617
@@ -119,6 +136,8 @@ detallado en [`datos/DEMO.md`](datos/DEMO.md).
 ### 4b. Prompt · Juan · 1:30
 
 **Pantalla:** `INFORME.md`, Parte 3, la tabla del prompt.
+
+![Tabla del prompt (Parte 3)](docs/loom/s04b-prompt.png)
 
 > «Optimizamos el prompt con una búsqueda local por bloques: identidad, procedimiento, herramientas, formato, normas y
 > costumbres. El puntaje premia los casos resueltos y castiga los tokens. Partimos los casos en 30 y 20, y el
@@ -138,6 +157,9 @@ detallado en [`datos/DEMO.md`](datos/DEMO.md).
 
 **Pantalla:** `INFORME.md`, Parte 4. Después, el run [`1y5xd2de` en W&B](https://forge.coreweave.com/wandb/gen-ai-grupo-2/emergency-admission-agent/runs/1y5xd2de)
 (la curva de pérdida de validación), `entrenar/DECISIONES.md` y, al final, la tabla de la matriz.
+
+![Corrida entregada (Parte 4)](docs/loom/s05-entrenamiento.png)
+![Acierto por control](docs/loom/s05-controles.png)
 
 - **Estrategia.** Fine-tuning supervisado con LoRA sobre las conversaciones de Cande, con el prompt de la cátedra. La
   pérdida se calcula sólo sobre las respuestas del asistente, no sobre el prompt ni sobre lo que devuelven las
@@ -160,6 +182,10 @@ detallado en [`datos/DEMO.md`](datos/DEMO.md).
 
 **Pantalla:** `INFORME.md`, Parte 5: la tabla de lo medido, la de lo estimado para la A100 y la de escenarios. Guion
 detallado en [`docs/loom-pia.md`](docs/loom-pia.md).
+
+![Lo medido en 2×T4](docs/loom/s06-medido.png)
+![Lo estimado para la A100](docs/loom/s06-estimado.png)
+![Escenarios de producción](docs/loom/s06-escenarios.png)
 
 - **Primero el límite.** «No medimos en la A100: Modal pide tarjeta. Todo es Kaggle con dos T4, y lo de la A100 es una
   estimación con el precio de la consigna, 2,10 USD por hora.»
