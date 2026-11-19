@@ -103,15 +103,16 @@ detallado en [`datos/DEMO.md`](datos/DEMO.md).
 
 ### 4a. Buscador · Pía · 1:30
 
-**Pantalla:** `INFORME.md`, Parte 2, y la salida de `python -m admision.evaluar_rag`.
+**Pantalla:** `buscador/bm25.py` y la tabla de la Parte 2 de `INFORME.md` (o
+[`resultados/rag/INFORME.md`](resultados/rag/INFORME.md)). Guion detallado en [`docs/loom-pia.md`](docs/loom-pia.md).
 
-> «El buscador es un BM25 con una sección de las normas por fragmento. Sobre las 60 consultas de desarrollo tiene recall
-> de 0,817 y precisión de 0,467. Trae unos 617 tokens por consulta, y 48 de las 60 consultas tienen toda la evidencia
-> que hace falta. La referencia de la cátedra da 0,875, 0,492, 580 tokens y 51 de 60.»
-
-> «En los casos, el modelo final hace unas 3 búsquedas y junta unos 46 mil caracteres de contexto por caso.»
-
-*(Si entra el buscador final de #2, cambian estos números: los toma del informe.)*
+- **Qué es.** Un BM25 propio, sin dependencias y fuera de `admision/`. Lee las normas y los valores de la carpeta que
+  recibe, y ningún número está en el código. Toma una sección por fragmento y devuelve las 2 mejores.
+- **Cómo rinde, antes del agente.** «Sobre 60 consultas: recall de 0,817, 48 de 60 consultas con toda la evidencia y 617
+  tokens por búsqueda. La referencia de la cátedra da 0,875, 51 de 60 y 580.» Dónde falla: en las consultas coloquiales
+  (recall de 0,25), cuando no usan las palabras de la norma.
+- **Por qué k=2.** Con k=4 completa 57 de 60, pero duplica el contexto (1.269 tokens) y baja la precisión a 0,271.
+- **En el agente.** El modelo final hace unas 3 búsquedas por caso y junta unos 46 mil caracteres de contexto.
 
 > «Juan cuenta qué pasó con el prompt.»
 
@@ -157,20 +158,28 @@ detallado en [`datos/DEMO.md`](datos/DEMO.md).
 
 ## 6. Recursos, producción y cierre · Pía · 2:30
 
-**Pantalla:** `INFORME.md`, Parte 5.
+**Pantalla:** `INFORME.md`, Parte 5: la tabla de lo medido, la de lo estimado para la A100 y la de escenarios. Guion
+detallado en [`docs/loom-pia.md`](docs/loom-pia.md).
 
-*(Completar con la medición de la Parte 5. Si no hay A100, se dice así y se muestran las medidas de 2×T4 como
-referencia, no como resultado.)*
-
-- **VRAM.** Cuánto ocupa el modelo cargado y cuánto con N casos a la vez. Lo que se conoce de 2×T4
-  (`corridas/entrenamiento/verificacion-292c8137984.json`): carga en 117 s, pico de 8,71 y 6,37 GiB en las dos GPU.
-- **Casos a la vez.** En 2×T4, 15 casos por lote se quedaron sin memoria en la 7.ª llamada, y 10 entraron.
-- **Producción.** Cuántos casos simultáneos tolera, el costo proyectado por caso y por mes, y cómo se escala si sube la
-  demanda.
-- **Trabajos futuros.**
-  - Entrenar con todo el conjunto y 2 épocas.
-  - Más ejemplos de la costumbre del voluntariado, que el modelo no aprendió.
-  - Probar el prompt optimizado con el modelo ya entrenado (la condición «ambos»).
+- **Primero el límite.** «No medimos en la A100: Modal pide tarjeta. Todo es Kaggle con dos T4, y lo de la A100 es una
+  estimación con el precio de la consigna, 2,10 USD por hora.»
+- **Lo medido.**
+  - Entrenamiento: 7 h 55 min y 12,4 GiB por GPU.
+  - Inferencia con el modelo entrenado: 84 s por caso, con 10 casos a la vez (15 no entran en memoria). El modelo ocupa
+    15,1 GiB.
+  - Tarda casi el doble que el base porque busca casi tres veces más, y resuelve 27 casos en lugar de 10.
+  - El desarrollo usó 25,4 h de GPU y costó 0 USD.
+- **Lo estimado para la A100.** Como máximo 0,049 USD por caso, al menos 43 casos por hora y unos 15–17 casos a la vez.
+- **Producción** (tabla de escenarios).
+  - Con 100 admisiones por día conviene pagar por uso: unos 150 USD por mes.
+  - Cerca de 1.000 por día, una A100 prendida todo el mes cuesta lo mismo (unos 1.530 USD). Más allá, réplicas con una
+    cola delante.
+  - Salvedad: con poca demanda, cada caso corre casi solo y cuesta más.
+- **Trabajos futuros (~30 s).**
   - Medir en la A100.
+  - Servir con lotes continuos y caché de prefijos.
+  - Achicar el contexto (fragmentos por párrafo) o cuantizar, para que entren más casos a la vez.
+  - Entrenar con todo el conjunto, que podría mejorar el aviso al voluntariado.
+  - Mejorar las búsquedas coloquiales.
 
 > «Gracias. Todo lo que mostramos está en el repo, con el commit y la corrida de cada número.»
