@@ -93,13 +93,49 @@ probó. Para el Loom se muestran `pev-011` (dolor torácico en ambulancia: 15
 
 ## Parte 2 · Buscador (RAG)
 
-*A cargo de Pía (#2).* Incluye `admision.evaluar_rag` al lado de la referencia BM25 de la cátedra (recall 0,875,
-precisión 0,492, 580 tokens por consulta y 51 de 60 consultas completas).
+*A cargo de Pía (#2).*
 
-Mientras tanto, `entrega.py` usa un BM25 provisorio con una sección por fragmento (`buscador/bm25.py`), sólo para que el
-agente funcione. Con `python -m admision.evaluar_rag --entrega entrega.py --normas normas/original --consultas
-rag/consultas_dev.jsonl` da recall 0,817, precisión 0,467, 617 tokens por consulta y 48 de 60 consultas completas
-(commit `b2eb6c1`). No es el buscador del grupo: lo reemplaza el de Pía.
+**Qué buscador usa el agente.** `buscador/bm25.py`: BM25 propio, sin dependencias, fuera de `admision/`. Parte del BM25
+inicial de Juan y Pía le agregó validaciones (consultas vacías o sin coincidencias devuelven `[]`, argumentos inválidos
+fallan), normalización de tildes y un modo opcional de fragmentos por párrafo. Lee las 20 secciones y los valores de
+`parametros.yaml` sólo desde la carpeta que recibe, distractoras incluidas; ningún número normativo queda en el código.
+Las pruebas (`tests/test_buscador*.py`, sin GPU ni credenciales) lo comprueban en `original`, `b`, `c` y en una carpeta
+temporal con un parámetro cambiado. `entrega.py` lo construye con el bloque `buscador` de `configuracion.json`: una
+sección por fragmento, `k_entorno=2`, `k1=1,5`, `b=0,75`. Es el mismo código con que se corrieron las tres filas de la
+matriz (Parte 4).
+
+**Evaluación, antes del agente.** 60 consultas de `rag/consultas_dev.jsonl` sobre `normas/original`, con las funciones
+del evaluador oficial (`python -m buscador.evaluar --salida resultados/rag`). La fila sección/k=2 coincide con
+`python -m admision.evaluar_rag --entrega buscador/entrega_rag.py --normas normas/original --consultas
+rag/consultas_dev.jsonl`. Los tokens son la estimación del kit (cuatro caracteres por token), no los del tokenizador.
+
+| Configuración | Recall | Precisión | Tokens/consulta | Consultas completas |
+|---|---:|---:|---:|---:|
+| Referencia BM25 de la cátedra (k=2) | 0,875 | 0,492 | 580 | 51/60 |
+| **Sección, k=2 (la que usa el agente)** | **0,817** | **0,467** | **617** | **48/60** |
+| Sección, k=4 | 0,950 | 0,271 | 1.269 | 57/60 |
+| Párrafo, k=4 | 0,783 | 0,300 | 383 | 45/60 |
+
+Con sección/k=2 recupera toda la evidencia en las consultas directas (recall 1,0) y distractoras (1,0), casi toda en
+las numéricas (0,917) y las de dos secciones (0,875), y falla en las coloquiales (0,25): cuando la consulta no usa las
+palabras de la norma, BM25 no la encuentra. Queda por debajo de la referencia de la cátedra (3 consultas completas
+menos); no tenemos su implementación para explicar la diferencia.
+
+Con presupuestos fijos de 256 y 512 tokens, los párrafos recuperan más que las secciones (recall 0,708 contra 0,600 y
+0,767 contra 0,692), pero el entorno no aplica presupuestos: el agente ve los primeros k. Las ocho configuraciones
+(sección y párrafo, k de 1 a 4) y los tres presupuestos están en [resultados/rag/INFORME.md](resultados/rag/INFORME.md);
+el ranking con texto y la evidencia cubierta por consulta, en `resultados/rag/recuperaciones.jsonl`, y los hashes de
+entradas y código, en `resultados/rag/manifiesto.json`.
+
+**Decisión.** Se quedó sección/k=2: es la más cercana a la referencia con un contexto parecido (617 tokens). Sección/k=4
+completa 57 de 60, pero duplica el contexto y baja la precisión a 0,271; párrafo/k=4 achica el contexto pero completa
+menos. Ninguna de las dos se probó con el agente, así que no sabemos si cambiarían los casos resueltos.
+
+**Límites.** No hay métricas formales en `b` y `c`: algunas esperadas de las consultas tienen números de `original`
+(por ejemplo, d033 espera 67 años), y el script registra esas consultas en el manifiesto sin puntuarlas ni cambiarlas.
+Que `b` y `c` carguen sus propios valores lo cubren las pruebas. Todo se eligió sobre las consultas de desarrollo, no
+sobre el test secreto. Detalle en [resultados/rag/ANALISIS.md](resultados/rag/ANALISIS.md) y
+[buscador/README.md](buscador/README.md).
 
 ## Parte 3 · Optimización del prompt, antes de entrenar
 
