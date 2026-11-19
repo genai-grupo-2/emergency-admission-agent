@@ -25,8 +25,8 @@ resultado y después cómo llegamos. Total previsto: unos 18 minutos.
 
 **Capturas:** debajo de cada «Pantalla» está lo que hay que mostrar, sacado de `main` en el commit `b444f7d` (en `docs/loom/`). Son una referencia: en el video se muestra el archivo real. Si cambia un número, vale el del archivo y no el de la captura.
 
-**Cómo se arma:** cada uno graba su parte en Loom y la descarga en MP4. Juan las une (por ejemplo en Clipchamp) y sube el
-video final a Loom: el mail lleva un solo link.
+**Cómo se arma:** cada uno graba su parte en Loom, la descarga en MP4 y se la pasa a Cande. Cande las une en el orden de la
+tabla y sube el video final a Loom: el mail lleva un solo link.
 
 ---
 
