@@ -74,7 +74,12 @@ def main(argv=None) -> int:
                 codigo = codigo or (1 if motivo else 0)
                 continue
             extra = entorno_de_la_condicion(c["prompt"], c["modelo_repo"], c["modelo_revision"], None)
-            evaluar(etiqueta(c), seleccionar_casos(matriz["casos"]), NORMAS, extra, matriz["casos"])
+            hecha = evaluar(etiqueta(c), seleccionar_casos(matriz["casos"]), NORMAS, extra, matriz["casos"])
+            fallas = [n for n, cod in hecha["codigos_de_salida"].items() if cod["jugar"] or cod["puntuar"]]
+            if fallas:
+                print(f"{c['nombre']}: fallaron las normas {', '.join(fallas)} (ver condicion.json y el log)",
+                      file=sys.stderr)
+                codigo = 1
     print(tabla(matriz))
     return codigo
 

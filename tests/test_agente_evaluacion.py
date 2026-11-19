@@ -58,6 +58,18 @@ class TablasTest(unittest.TestCase):
         del condicion["no_hecho"]
         self.assertIsNone(estado({**condicion, "prompt": "catedra"}))
 
+    def test_la_matriz_sale_con_error_si_falla_una_norma(self):
+        from contextlib import redirect_stderr, redirect_stdout
+        from io import StringIO
+        from unittest import mock
+
+        from evaluacion import matriz
+        fallida = {"codigos_de_salida": {"original": {"jugar": 1, "puntuar": None}}}
+        with mock.patch.object(matriz, "evaluar", return_value=fallida) as evaluar,                 redirect_stdout(StringIO()), redirect_stderr(StringIO()) as err:
+            self.assertEqual(matriz.main(["--correr", "solo entrenamiento"]), 1)
+        evaluar.assert_called_once()
+        self.assertIn("fallaron las normas original", err.getvalue())
+
 
 if __name__ == "__main__":
     unittest.main()
