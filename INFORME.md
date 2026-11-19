@@ -193,7 +193,7 @@ Antes y después, con el modelo sin entrenar, en los 20 casos de validación:
 <!-- /tabla:prompt -->
 
 **Dónde se corrió.** En Kaggle, con 2×T4 de 16 GB (`kaggle/correr.ipynb` y `correr_kaggle.py`), porque Modal no
-habilita ninguna GPU sin una tarjeta cargada. Gemma 4 E4B en bf16 no entra en una T4, así que los pesos se reparten
+habilita ninguna GPU sin una tarjeta cargada y en Lightning no pudimos crear la cuenta. Gemma 4 E4B en bf16 no entra en una T4, así que los pesos se reparten
 entre las dos (`ADMISION_DEVICE_MAP=auto`). La T4 no tiene bf16 nativo: es más lenta que la A100 y generar en lote
 puede mover algún caso. Cada corrida guarda en `corridas/entornos/` las GPU, el driver, las versiones de torch y
 transformers, el commit, las variables y cuánto tardó. La Parte 5 usa esos tiempos como medición en T4, no como de la A100.
@@ -232,7 +232,7 @@ elige por la pérdida sobre 40 de las 224 conversaciones de la partición de val
 de entrenar se comprueba que el mensaje de sistema de cada conversación coincide byte a byte con el prompt, que
 entrenamiento y validación no comparten ids, grupos ni huellas, y que ninguna conversación reproduce un caso de práctica.
 
-Se entrena en Kaggle 2×T4, no en la A100 de 40 GB de la consigna, porque Modal no habilita GPU sin tarjeta. Por eso los tiempos,
+Se entrena en Kaggle 2×T4, no en la A100 de 40 GB de la consigna, porque Modal no habilita GPU sin tarjeta y en Lightning no pudimos crear la cuenta. Por eso los tiempos,
 la VRAM y el costo de estas corridas figuran en la Parte 5 como medidos en T4, no como de la A100. Comandos, reanudación y qué queda registrado:
 [`entrenar/README.md`](entrenar/README.md). Todas las decisiones, con su motivo y su consecuencia:
 [`entrenar/DECISIONES.md`](entrenar/DECISIONES.md).
@@ -325,7 +325,7 @@ piden. Regresiones frente a la base hay pocas, y pev-017 cae en las tres normas.
 
 *A cargo de Pía (#2).*
 
-**Límite principal: no medimos en la A100 de 40 GB.** Modal no habilita GPU sin tarjeta cargada (Parte 4), así que todo
+**Límite principal: no medimos en la A100 de 40 GB.** Modal no habilita GPU sin tarjeta cargada y en Lightning no pudimos crear la cuenta (Parte 4), así que todo
 se corrió en Kaggle con 2×T4 (15 GiB cada una, sin bf16 nativo). En esta parte se separan dos cosas: lo **medido** en
 T4, con el archivo que lo respalda, y lo **estimado** para la A100, con sus supuestos. El único precio que se usa es el de
 `mission.md`: una A100 de 40 GB cuesta unos **2,10 USD por hora** en Modal.
@@ -438,3 +438,4 @@ Se documentan todos, no sólo el final.
   arreglo en [`entrenar/DECISIONES.md`](entrenar/DECISIONES.md).
 - **Correr en Modal** (A100 de 40 GB). Modal no habilita ninguna GPU, ni siquiera la T4, sin una tarjeta cargada. Se
   pasó a Kaggle 2×T4. `modal_app.py` queda para quien tenga la cuenta habilitada.
+- **Correr en Lightning.** No pudimos crear la cuenta, así que tampoco hubo A100 por ese lado.
