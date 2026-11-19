@@ -6,10 +6,13 @@ En cada vuelta hay una sola llamada al modelo con todas las partidas activas. El
 Qué agrega sobre `admision.ejemplo.AgenteJSON`:
 - valida el nombre de la herramienta y que los argumentos sean un objeto antes de gastar una llamada del caso;
 - avisa cuántas llamadas quedan cuando faltan pocas y, con una sola, sólo acepta `registrar_decision`;
-- un error del modelo o del entorno en un caso cierra ese caso, no el lote (queda en `informe`);
+- un error del modelo o del entorno en un caso cierra ese caso, no el lote (queda en `informe`; los del modelo, también
+  en stderr);
 - devuelve siempre las conversaciones completas, en el orden de `entornos`.
 
 No importa torch ni transformers: el modelo es cualquier función `modelo_lote(conversaciones) -> respuestas`."""
+
+import sys
 
 from admision.ejemplo import extraer_json, primer_mensaje
 
@@ -91,17 +94,24 @@ class Agente:
             respuestas = self.modelo_lote([p.mensajes for p in activas])
             if len(respuestas) != len(activas):
                 raise ValueError(f"el modelo devolvió {len(respuestas)} respuestas para {len(activas)} conversaciones")
-        except Exception:  # el lote falló: se reintenta caso por caso para aislar el que lo rompe
-            for p in activas:
-                try:
-                    (respuesta,) = self.modelo_lote([p.mensajes])
-                except Exception as e:
-                    p.terminar("error_modelo", f"{type(e).__name__}: {e}")
-                else:
-                    p.recibir(respuesta)
+        except Exception as e:
+            print(f"el lote de {len(activas)} falló ({type(e).__name__}: {e}); se reintenta caso por caso",
+                  file=sys.stderr, flush=True)
+            respuestas = None
+        if respuestas is not None:
+            for p, respuesta in zip(activas, respuestas, strict=True):
+                p.recibir(respuesta)
             return
-        for p, respuesta in zip(activas, respuestas, strict=True):
-            p.recibir(respuesta)
+        # El reintento va fuera del `except`: adentro, la excepción retiene los tensores del lote que falló (en GPU,
+        # un CUDA out of memory hacía fallar también cada caso suelto).
+        for p in activas:
+            try:
+                (respuesta,) = self.modelo_lote([p.mensajes])
+            except Exception as e:
+                p.terminar("error_modelo", f"{type(e).__name__}: {e}")
+                print(f"{p.entorno.paciente_id}: error_modelo {p.error}", file=sys.stderr, flush=True)
+            else:
+                p.recibir(respuesta)
 
     def jugar_lote(self, entornos: list) -> list[list[dict]]:
         partidas = [_Partida(e, self.sistema, self) for e in entornos]
