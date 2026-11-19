@@ -16,8 +16,8 @@ resultados están en [INFORME.md](INFORME.md), y la preparación del entorno, en
 
 > **Estado (19/11/2026).** El checkpoint entrenado está publicado (`genai-grupo-2/emergency-admission-agent` @ `292c8137`,
 > #4) y `configuracion.json` lo usa. La matriz de la Parte 4 está corrida en Kaggle 2×T4: base 10/9/8, solo prompt
-> 8/8/6 y solo entrenamiento 27/25/21 sobre 50 (original/b/c); «ambos» no se hizo. Falta la Parte 5 en A100 y el buscador
-> sigue siendo el BM25 provisorio hasta el de Pía (#2).
+> 8/8/6 y solo entrenamiento 27/25/21 sobre 50 (original/b/c); «ambos» no se hizo. El buscador es el BM25 de Pía (#2, sección
+> por fragmento y k=2), evaluado en la Parte 2. Falta la Parte 5 en A100.
 
 ## Cómo se conecta
 
