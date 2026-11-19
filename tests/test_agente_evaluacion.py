@@ -61,11 +61,16 @@ class TablasTest(unittest.TestCase):
     def test_la_matriz_sale_con_error_si_falla_una_norma(self):
         from contextlib import redirect_stderr, redirect_stdout
         from io import StringIO
+        from pathlib import Path
+        from tempfile import TemporaryDirectory
         from unittest import mock
 
         from evaluacion import matriz
         fallida = {"codigos_de_salida": {"original": {"jugar": 1, "puntuar": None}}}
-        with mock.patch.object(matriz, "evaluar", return_value=fallida) as evaluar,                 redirect_stdout(StringIO()), redirect_stderr(StringIO()) as err:
+        # RAIZ vacía: si no, una condición ya corrida en corridas/eval se saltea y evaluar no se llama.
+        with (TemporaryDirectory() as vacia, mock.patch.object(matriz, "RAIZ", Path(vacia)),
+              mock.patch.object(matriz, "evaluar", return_value=fallida) as evaluar,
+              redirect_stdout(StringIO()), redirect_stderr(StringIO()) as err):
             self.assertEqual(matriz.main(["--correr", "solo entrenamiento"]), 1)
         evaluar.assert_called_once()
         self.assertIn("fallaron las normas original", err.getvalue())
