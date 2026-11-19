@@ -323,8 +323,94 @@ piden. Regresiones frente a la base hay pocas, y pev-017 cae en las tres normas.
 
 ## Parte 5 · Recursos y producción
 
-*A cargo de Pía (#2).* VRAM, tiempo y costo por caso en la A100 de 40 GB, paralelismo, casos simultáneos en producción,
-proyección de consumo, escalado y trabajos futuros.
+*A cargo de Pía (#2).*
+
+**Límite principal: no medimos en la A100 de 40 GB.** Modal no habilita GPU sin tarjeta cargada (Parte 4), así que todo
+se corrió en Kaggle con 2×T4 (15 GiB cada una, sin bf16 nativo). En esta parte se separan dos cosas: lo **medido** en
+T4, con el archivo que lo respalda, y lo **estimado** para la A100, con sus supuestos. El único precio que se usa es el de
+`mission.md`: una A100 de 40 GB cuesta unos **2,10 USD por hora** en Modal.
+
+### Medido en Kaggle 2×T4
+
+**Entrenamiento** (`sft-catedra-01`, `corridas/entrenamiento/sft-catedra-01/manifiesto.json` y
+[entrenar/DECISIONES.md](entrenar/DECISIONES.md)): 7 h 55 min (28.518 s) para 80 pasos de 8 conversaciones (acumulación
+de gradiente de 8), 72–74 tokens/s. Pico de VRAM de 12,4 GiB por GPU, con el modelo en bf16 repartido entre las dos y
+contextos de hasta 4.192 tokens. Las dos T4 trabajan una después de la otra, así que la velocidad es la de una sola.
+
+**Evaluación e inferencia.** `jugar_lote` abre todos los casos a la vez y, en cada turno, el modelo genera en tandas de
+`lote` conversaciones (`agente/modelo.py`). El tiempo por caso es el tiempo total dividido por los casos.
+
+| Corrida | Modelo | Lote | Carga | Tiempo total | Por caso | Llamadas | Búsquedas | Contexto (caracteres) |
+|---|---|---:|---:|---:|---:|---:|---:|---:|
+| `prompt-antes` (original, 20 casos) | Gemma 4 E4B sin entrenar | 50 | 131,8 s | 898 s | 44,9 s | 4,8 | 1,2 | 18.159 |
+| `matriz-solo-entrenamiento` (original) | checkpoint `292c8137` | 10 | 131,4 s | 4.136 s | 82,7 s | 6,7 | 3,22 | 45.964 |
+| `matriz-solo-entrenamiento` (b) | checkpoint `292c8137` | 10 | 13,6 s | 4.207 s | 84,1 s | 6,7 | 3,24 | 46.299 |
+| `matriz-solo-entrenamiento` (c) | checkpoint `292c8137` | 10 | 12,8 s | 4.202 s | 84,0 s | 6,8 | 3,26 | 46.523 |
+
+Las cifras salen del `resumen.json` de cada carpeta en `corridas/eval/`. La carga de b y c es más corta porque el modelo
+ya estaba en el disco de la sesión. El modelo entrenado tarda casi el doble por caso que el base porque trabaja más:
+hace más llamadas, busca casi tres veces más en las normas y arrastra 2,5 veces más contexto. Con ese trabajo resuelve
+27/25/21 casos en lugar de 10/9/8.
+
+**VRAM en inferencia.** Cargar el checkpoint ocupa 8,71 + 6,37 = 15,1 GiB entre las dos GPU
+(`corridas/entrenamiento/verificacion-292c8137984.json`). Con el modelo entrenado, **10 conversaciones a la vez entran y
+15 no**: el primer intento con lote 15 se quedó sin memoria en la 7.ª llamada (Parte 4). El modelo base, con un tercio
+del contexto, corrió 20 a la vez sin problemas (`prompt-antes`).
+
+**Horas de GPU del desarrollo.** Las sesiones registradas en `corridas/entornos/` suman **25,4 h** de 2×T4: optimización
+del prompt (11,9 h), entrenamiento (7,9 h), matriz con el modelo entrenado (3,5 h), evaluaciones del prompt (1,6 h) y
+demo (0,4 h). Faltan los dos ensayos de entrenamiento fallidos, que sólo quedaron en W&B. **Costo en dinero: 0 USD**,
+porque Kaggle es gratis (30 h de GPU por semana).
+
+### Estimado para la A100 de 40 GB
+
+Estas cifras **no son mediciones**. Suponen que la A100 tarda por caso, como mucho, lo mismo que las 2×T4. Es un
+supuesto conservador: la A100 tiene bf16 nativo y el modelo entra en una sola GPU, pero no lo comprobamos.
+
+| Concepto | Cálculo | Estimación |
+|---|---|---:|
+| Costo por caso (modelo entrenado) | 84 s × 2,10 USD/h | **≈ 0,049 USD** como máximo |
+| Capacidad de una A100 | 3.600 s / 84 s por caso | **≥ 43 casos/h** (≈ 1.000 por día) |
+| Casos a la vez en GPU | quedan ~24 GiB libres tras cargar 15,1 GiB, contra ~14 GiB en 2×T4, donde entraron 10 | **unos 15–17**, a verificar |
+| Desarrollo, si se hubiera pagado | 25,4 h × 2,10 USD/h | **≤ 53 USD** |
+| Mantenimiento, por actualización | reentrenar (~1 h en A100, estimación de [DECISIONES.md](entrenar/DECISIONES.md)) + matriz de 150 casos (≤ 3,5 h) | **≈ 10 USD** |
+
+### Producción: simultaneidad, consumo y escalado
+
+**Casos simultáneos.** Medido: 10 casos a la vez en 2×T4, con unos 43 casos por hora. En una A100 estimamos unos 15–17
+a la vez. Pasado ese número, los casos esperan su turno: no se pierden, pero tardan más.
+
+**Proyección de consumo.** No tenemos datos de demanda del hospital, así que usamos tres escenarios **hipotéticos** y el
+costo máximo de 0,049 USD por caso (30,4 días por mes):
+
+| Admisiones por día | Pagando por uso (GPU que se apaga sola) | A100 prendida todo el mes (730 h) |
+|---:|---:|---:|
+| 100 | ≈ 150 USD/mes | ≈ 1.530 USD/mes |
+| 300 | ≈ 450 USD/mes | ≈ 1.530 USD/mes |
+| 1.000 | ≈ 1.490 USD/mes | ≈ 1.530 USD/mes |
+
+Cerca de 1.000 admisiones por día, las dos formas cuestan casi lo mismo y una A100 está cerca de su capacidad. Por debajo,
+conviene pagar por uso. **Salvedad:** los 0,049 USD por caso salen de correr muchos casos juntos. Con poca demanda, cada
+caso corre casi solo y ocupa la GPU todo el tiempo de su conversación, y ese tiempo no lo medimos. Con 100 admisiones por
+día el costo real por caso va a ser mayor.
+
+**Escalado.** Hasta ~1.000 casos por día, una A100 con lote de 15 aproximadamente. Más allá, una réplica más por cada
+~1.000 casos diarios, con una cola delante que reparta los casos. Las réplicas no comparten estado: cada caso es
+independiente, y cada una carga el modelo y las normas por su cuenta (unos 2 min de carga en T4).
+
+### Trabajos futuros
+
+- **Medir en una A100 de 40 GB** con `modal_app.py`, que ya está preparado: tiempo por caso con el lote más grande que
+  entre, tiempo de un caso solo y VRAM durante la corrida, no sólo al cargar.
+- **Servir con un motor de inferencia con lotes continuos y caché de prefijos** (por ejemplo vLLM): todos los casos
+  comparten el prompt de sistema y suelen buscar las mismas secciones.
+- **Achicar el contexto**, que es lo que limita los casos a la vez: probar los fragmentos por párrafo (Parte 2: 383
+  tokens por búsqueda contra 617) y medir si se pierden casos resueltos.
+- **Cuantizar el modelo** (8 o 4 bits) para que entren más casos por GPU, midiendo cuántos casos se pierden.
+- **Entrenar con todo el conjunto** (2.176 conversaciones, 2 épocas): en A100 serían horas y no días, y podría mejorar el
+  aviso al voluntariado, que no se mueve de 0,72.
+- **Mejorar las búsquedas coloquiales** (recall 0,25 en la Parte 2) con un buscador híbrido o con reformulación de la
+  consulta.
 
 ## Trazabilidad de las corridas
 
