@@ -52,8 +52,12 @@ tabla y sube el video final a Loom: el mail lleva un solo link.
 > referencia de la cátedra con fine-tuning da 25, 24 y 25. Quedamos arriba en original y b, y abajo en c. Con 50 casos,
 > uno o dos de diferencia es ruido.»
 
+> «Un aviso antes de seguir: la consigna pide una A100 de 40 GB, que en Modal necesita una tarjeta cargada. No la
+> usamos. Todo, entrenamiento y evaluación, corrió gratis en Kaggle, en una máquina con dos GPU T4 de 15 GB, con el
+> modelo repartido entre las dos.»
+
 > «Cada caso usa unas 7 llamadas a herramientas, 3 de ellas búsquedas, y junta unos 46 mil caracteres de contexto. En
-> Kaggle, con dos T4 y 10 casos a la vez, sale cerca de 83 segundos por caso. El costo en la A100 lo muestra Pía al
+> esas dos T4, con 10 casos a la vez, sale cerca de 83 segundos por caso. Lo que costaría en una A100 lo estima Pía al
 > final.»
 
 **Pantalla:** el diagrama.
