@@ -143,6 +143,8 @@ Si un caso falla un control, se muestra el fallo o se corrige y se repite con ev
 
 ## Guion de la parte de datos en el Loom
 
+El orden del video está en [`LOOM.md`](../LOOM.md): ahí la demo (sección 2) va antes que el historial (sección 3). Acá queda el detalle.
+
 Unos cuatro minutos, con el repositorio abierto:
 
 1. **Historial** (`historial_clasificado.csv`). Norma escrita primero y costumbre después: 1.600 correctas, 240 errores

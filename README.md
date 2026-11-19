@@ -114,28 +114,9 @@ uv run python -m unittest discover -s tests -p "test_agente_*.py" -v
 | `historial_clasificado.csv`, `costumbres.md` y conversaciones | `datos/` de Cande (#1) | ver `datos/README.md` |
 | Checkpoints, corridas de W&B y `corridas/entrenamiento/<nombre>/manifiesto.json` | `python -m entrenar.entrenar`, `entrenar.publicar` (Juli, #4) | ver `entrenar/README.md`; corrida `sft-catedra-01` |
 
-## Loom: sección de Juan (agente, prompt y matriz, unos 4 minutos)
+## Loom
 
-Con el repo abierto. Los números salen de `INFORME.md`: si cambian, se regeneran con `python -m evaluacion.tablas`, no se
-copian a mano.
-
-1. **El agente (~1 min).** El diagrama de arriba y el protocolo JSON (`{"herramienta": …, "argumentos": …}`). Antes de
-   gastar una llamada se valida el nombre de la herramienta y que los argumentos sean un objeto. Con 3 respuestas sin
-   JSON se cierra el caso. Tope de 40 llamadas: a las 5 restantes se avisa, y con la última sólo se acepta
-   `registrar_decision`. Si un caso falla, el lote sigue. Mostrar `tests/test_agente_ciclo.py` (15 pruebas con el
-   entorno real del kit).
-2. **El prompt (~1,5 min).** Búsqueda local por bloques (identidad, procedimiento, herramientas, formato, normas,
-   costumbres). Puntaje `resueltos / episodios − 0,05 · tokens / 1000`. Partición 30/20 por caso: el optimizador nunca ve
-   los 20 de validación. 8 evaluaciones en 11,9 h de Kaggle. En optimización ganó el compacto sin identidad (18/90 con
-   485 tokens, contra 10/90 con 624). En validación perdió: 4/60 contra 17/60. **No generaliza y se descartó.** Lo que
-   cae es el circuito tiempo-dependiente, su plazo y el box antes del registro. La ventaja era ruido de 30 casos con el
-   modelo sin entrenar. Por qué no DSPy/GEPA: el agente es multi-turno con herramientas y GEPA necesita un modelo que
-   reflexione, sin servicios externos.
-3. **La matriz (~1,5 min).** Tabla de la Parte 4, en los 50 casos y las tres normas, al lado de la referencia de la
-   cátedra (12/15/12 sin entrenar, 25/24/25 con fine-tuning). Base 10/9/8, solo prompt 8/8/6, solo entrenamiento
-   (`sft-catedra-01`) 27/25/21: arriba de la referencia en original y b, abajo en c. **«Ambos» no se hizo:** pedía entrenar con el prompt optimizado, que ya se había
-   descartado, y costaba otras ~8 h de cuota. Cerrar con las regresiones por control y dos límites: todo corrió en 2×T4,
-   no en la A100, y base y solo prompt se armaron juntando corridas ya hechas (`evaluacion.componer`).
+El guion de los cuatro, por sección, con qué se dice y qué se muestra en pantalla, está en [LOOM.md](LOOM.md).
 
 ## Checklist final de la entrega (con el grupo)
 
