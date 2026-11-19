@@ -14,9 +14,10 @@ Este es el repositorio del grupo. Primero vienen cómo correr nuestro agente y d
 está el [manual del kit](#kit-del-tp-final-la-ficha-de-admisión-de-guardia) de la cátedra. El desarrollo y los
 resultados están en [INFORME.md](INFORME.md), y la preparación del entorno, en [SETUP.md](SETUP.md).
 
-> **Estado (5/11/2026).** El agente, la optimización del prompt y la evaluación están implementados y probados sin GPU.
-> Todavía no hay corridas con el modelo real, así que las tablas del informe dicen «pendiente de correr». El buscador es
-> provisorio hasta el de Pía (#2), y el checkpoint entrenado lo publica Juli (#4).
+> **Estado (19/11/2026).** El checkpoint entrenado está publicado (`genai-grupo-2/emergency-admission-agent` @ `292c8137`,
+> #4) y `configuracion.json` lo usa. La matriz de la Parte 4 está corrida en Kaggle 2×T4: base 10/9/8, solo prompt
+> 8/8/6 y solo entrenamiento 27/25/21 sobre 50 (original/b/c); «ambos» no se hizo. Falta la Parte 5 en A100 y el buscador
+> sigue siendo el BM25 provisorio hasta el de Pía (#2).
 
 ## Cómo se conecta
 
