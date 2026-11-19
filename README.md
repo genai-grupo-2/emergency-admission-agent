@@ -130,8 +130,8 @@ copian a mano.
    modelo sin entrenar. Por qué no DSPy/GEPA: el agente es multi-turno con herramientas y GEPA necesita un modelo que
    reflexione, sin servicios externos.
 3. **La matriz (~1,5 min).** Tabla de la Parte 4, en los 50 casos y las tres normas, al lado de la referencia de la
-   cátedra (12/15/12 sin entrenar, 25/24/25 con fine-tuning). Base 10/9/8, solo prompt 8/8/6, solo entrenamiento con
-   el checkpoint `sft-catedra-01`. **«Ambos» no se hizo:** pedía entrenar con el prompt optimizado, que ya se había
+   cátedra (12/15/12 sin entrenar, 25/24/25 con fine-tuning). Base 10/9/8, solo prompt 8/8/6, solo entrenamiento
+   (`sft-catedra-01`) 27/25/21: arriba de la referencia en original y b, abajo en c. **«Ambos» no se hizo:** pedía entrenar con el prompt optimizado, que ya se había
    descartado, y costaba otras ~8 h de cuota. Cerrar con las regresiones por control y dos límites: todo corrió en 2×T4,
    no en la A100, y base y solo prompt se armaron juntando corridas ya hechas (`evaluacion.componer`).
 
@@ -141,8 +141,8 @@ copian a mano.
 - [x] `configuracion.json` apunta al checkpoint final de Hugging Face con su revisión exacta
   (`genai-grupo-2/emergency-admission-agent` @ `292c8137`, privado: la cátedra necesita acceso de lectura).
 - [x] Dependencias de inferencia fijadas en `pyproject.toml`/`uv.lock` (las mismas versiones que `modal_app.py`).
-- [ ] Las evaluaciones de la matriz corridas y `python -m evaluacion.tablas` sin «pendiente»: base y solo prompt hechas,
-  falta «solo entrenamiento» (en Kaggle), y «ambos» queda «no hecho» con el motivo (Parte 4).
+- [x] Las evaluaciones de la matriz corridas y `python -m evaluacion.tablas` sin «pendiente»: base 10/9/8, solo prompt
+  8/8/6, solo entrenamiento 27/25/21, y «ambos» queda «no hecho» con el motivo (Parte 4).
 - [ ] Secciones de los cuatro integradas en `INFORME.md`.
 - [ ] Repositorio, Hugging Face y W&B compartidos con la cátedra, y el commit entregado anotado en el mail.
 - [ ] Loom de 15 a 20 minutos con la demo en normas b o c.
