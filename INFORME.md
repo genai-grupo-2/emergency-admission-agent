@@ -196,7 +196,7 @@ Antes y después, con el modelo sin entrenar, en los 20 casos de validación:
 habilita ninguna GPU sin una tarjeta cargada. Gemma 4 E4B en bf16 no entra en una T4, así que los pesos se reparten
 entre las dos (`ADMISION_DEVICE_MAP=auto`). La T4 no tiene bf16 nativo: es más lenta que la A100 y generar en lote
 puede mover algún caso. Cada corrida guarda en `corridas/entornos/` las GPU, el driver, las versiones de torch y
-transformers, el commit, las variables y cuánto tardó. Esos tiempos no sirven para la Parte 5, que pide la A100.
+transformers, el commit, las variables y cuánto tardó. La Parte 5 usa esos tiempos como medición en T4, no como de la A100.
 
 **Cómo fue la búsqueda** (`corridas/prompt/busqueda-01/`, commit `03743a8`, lote 15):
 - **Presupuesto.** Corrió 8 evaluaciones de 90 episodios, no las 24 previstas. En 2×T4 cada evaluación tardó entre 77 y
@@ -233,7 +233,7 @@ de entrenar se comprueba que el mensaje de sistema de cada conversación coincid
 entrenamiento y validación no comparten ids, grupos ni huellas, y que ninguna conversación reproduce un caso de práctica.
 
 Se entrena en Kaggle 2×T4, no en la A100 de 40 GB de la consigna, porque Modal no habilita GPU sin tarjeta. Por eso los tiempos,
-la VRAM y el costo de estas corridas no se usan en la Parte 5. Comandos, reanudación y qué queda registrado:
+la VRAM y el costo de estas corridas figuran en la Parte 5 como medidos en T4, no como de la A100. Comandos, reanudación y qué queda registrado:
 [`entrenar/README.md`](entrenar/README.md). Todas las decisiones, con su motivo y su consecuencia:
 [`entrenar/DECISIONES.md`](entrenar/DECISIONES.md).
 

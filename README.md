@@ -17,7 +17,8 @@ resultados están en [INFORME.md](INFORME.md), y la preparación del entorno, en
 > **Estado (19/11/2026).** El checkpoint entrenado está publicado (`genai-grupo-2/emergency-admission-agent` @ `292c8137`,
 > #4) y `configuracion.json` lo usa. La matriz de la Parte 4 está corrida en Kaggle 2×T4: base 10/9/8, solo prompt
 > 8/8/6 y solo entrenamiento 27/25/21 sobre 50 (original/b/c); «ambos» no se hizo. El buscador es el BM25 de Pía (#2, sección
-> por fragmento y k=2), evaluado en la Parte 2. Falta la Parte 5 en A100.
+> por fragmento y k=2), evaluado en la Parte 2. La Parte 5 (recursos) está medida en
+> 2×T4 y estimada para la A100: no hubo A100 para medir.
 
 ## Cómo se conecta
 
@@ -32,7 +33,7 @@ flowchart LR
     E --- T3[verificar_afiliacion]
     E --- T4[buscar_normativa]
     E --- T5[registrar_decision]
-    T4 -->|"recuperar(consulta, k_entorno)"| B["Buscador<br/>buscador/bm25.py (provisorio)"]
+    T4 -->|"recuperar(consulta, k_entorno)"| B["Buscador<br/>buscador/bm25.py"]
     B --- N[("normas/&lt;versión&gt;")]
     C["configuracion.json<br/>modelo · prompt · buscador"] -.-> A
     P["prompts/&lt;versión&gt;.txt"] -.-> A
