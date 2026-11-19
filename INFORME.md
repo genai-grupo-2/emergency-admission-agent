@@ -205,8 +205,9 @@ la VRAM y el costo de estas corridas no se usan en la Parte 5. Comandos, reanuda
 train (elegidas al azar, semilla 42), una época, 8 conversaciones por paso = 80 pasos**, y no con las 2 épocas sobre todo el
 conjunto que se había planeado: en las 2×T4 se midieron ~72 tokens/s, el plan completo (~13 M de tokens) habría tardado ~50 h
 contra sesiones de 12 h y una cuota de 30 h por semana. La corrida duró 7 h 55 min (~8,5 h de cuota) y la pérdida de validación
-bajó de 0,031 (paso 20) a 0,0093 (40), 0,0053 (60) y **0,0042 (80, el elegido)**. Lo que se pierde por usar una submuestra lo
-dirá la matriz; no está medido.
+bajó de 0,031 (paso 20) a 0,0093 (40), 0,0053 (60) y **0,0042 (80, el elegido)**. En la matriz (Parte 4) da 27/25/21
+contra 25/24/25 de la referencia de la cátedra. Lo que se pierde por usar una submuestra no está medido: no hay corrida con
+todo el conjunto.
 
 | | |
 |---|---|
@@ -230,15 +231,18 @@ Los 50 casos de práctica, resueltos por los 9 controles. «base» y «solo prom
 con `python -m evaluacion.componer`, juntando los 30 casos de optimización que ya había jugado la búsqueda con los 20
 de validación de `prompt-antes` y `prompt-despues`, y puntuando de nuevo. El mismo prompt y el mismo modelo en las dos
 partes. Difieren en el lote (15 y 50) y en el commit, pero entre esos commits sólo cambiaron `corridas/` y `prompts/`.
-La tabla de trazabilidad dice de dónde sale cada parte. Son corridas en Kaggle 2×T4, no en la A100 de la referencia
-de la cátedra.
+La tabla de trazabilidad dice de dónde sale cada parte. «solo entrenamiento» sí se jugó entera en una corrida
+(`evaluacion.matriz --correr 'solo entrenamiento'`, lote 10, commit `15558ca`, entorno
+`corridas/entornos/kaggle-20261119-014649.json`). Un primer intento con lote 15 dejó 33 de los 50 casos sin decisión: el
+lote se quedó sin memoria en la 7.ª llamada y el reintento caso por caso no la liberaba. Se arregló en `agente/ciclo.py` y
+esa corrida no se usa. Son corridas en Kaggle 2×T4, no en la A100 de la referencia de la cátedra.
 
 <!-- tabla:matriz -->
 | Condición | Normas original | Normas b | Normas c | Corrida |
 | --- | --- | --- | --- | --- |
 | base | 10/50 | 9/50 | 8/50 | `corridas/eval/matriz-base` |
 | solo prompt | 8/50 | 8/50 | 6/50 | `corridas/eval/matriz-solo-prompt` |
-| solo entrenamiento | pendiente de correr | pendiente de correr | pendiente de correr | — |
+| solo entrenamiento | 27/50 | 25/50 | 21/50 | `corridas/eval/matriz-solo-entrenamiento` |
 | ambos | no hecho: el prompt optimizado se descartó en la Parte 3 y no hay segundo checkpoint | no hecho: el prompt optimizado se descartó en la Parte 3 y no hay segundo checkpoint | no hecho: el prompt optimizado se descartó en la Parte 3 y no hay segundo checkpoint | — |
 | Referencia de la cátedra, sin entrenar | 12/50 | 15/50 | 12/50 | mission.md |
 | Referencia de la cátedra, fine-tuning supervisado | 25/50 | 24/50 | 25/50 | mission.md |
@@ -255,6 +259,9 @@ Acierto por control:
 | solo prompt | original | 0.76 | 1.00 | 0.52 | 0.80 | 0.56 | 0.90 | 0.92 | 0.76 | 0.96 |
 | solo prompt | b | 0.74 | 1.00 | 0.52 | 0.80 | 0.54 | 0.90 | 0.88 | 0.76 | 0.96 |
 | solo prompt | c | 0.66 | 1.00 | 0.50 | 0.80 | 0.58 | 0.86 | 0.96 | 0.78 | 0.96 |
+| solo entrenamiento | original | 0.96 | 1.00 | 1.00 | 1.00 | 0.98 | 0.94 | 0.86 | 0.72 | 1.00 |
+| solo entrenamiento | b | 0.94 | 1.00 | 1.00 | 1.00 | 0.98 | 0.94 | 0.84 | 0.72 | 1.00 |
+| solo entrenamiento | c | 0.98 | 1.00 | 0.94 | 1.00 | 0.98 | 0.90 | 0.80 | 0.72 | 1.00 |
 <!-- /tabla:controles -->
 
 Regresiones frente a la base:
@@ -265,7 +272,18 @@ Regresiones frente a la base:
 | solo prompt | original | pev-010, pev-011, pev-017, pev-021, pev-024, pev-027, pev-030, pev-049, pev-050 | pev-012, pev-015, pev-028, pev-034, pev-037, pev-038, pev-042 |
 | solo prompt | b | pev-011, pev-017, pev-021, pev-027, pev-030, pev-035, pev-049, pev-050 | pev-009, pev-015, pev-034, pev-037, pev-038, pev-041, pev-042 |
 | solo prompt | c | pev-001, pev-012, pev-017, pev-021, pev-027, pev-049, pev-050 | pev-028, pev-034, pev-038, pev-041, pev-042 |
+| solo entrenamiento | original | pev-011, pev-017 | pev-001, pev-002, pev-009, pev-012, pev-014, pev-020, pev-022, pev-028, pev-029, pev-034, pev-035, pev-036, pev-037, pev-038, pev-039, pev-040, pev-044, pev-045, pev-048 |
+| solo entrenamiento | b | pev-017 | pev-002, pev-003, pev-012, pev-013, pev-014, pev-016, pev-019, pev-022, pev-024, pev-028, pev-034, pev-037, pev-038, pev-039, pev-040, pev-044, pev-045 |
+| solo entrenamiento | c | pev-012, pev-017, pev-050 | pev-002, pev-003, pev-010, pev-013, pev-022, pev-024, pev-028, pev-029, pev-034, pev-035, pev-036, pev-037, pev-038, pev-039, pev-044, pev-045 |
 <!-- /tabla:regresiones -->
+
+**Lectura.** El entrenamiento es lo que mueve la matriz: 27/25/21 contra 10/9/8 de la base, con el mismo prompt. La
+referencia de la cátedra con fine-tuning da 25/24/25. Quedamos arriba en original y en b, y abajo en c. Con 50 casos, una
+diferencia de uno o dos es ruido. La caída de 27 a 21 entre original y c no aparece en la referencia, y puede venir de la
+submuestra (640 de 2.176 conversaciones), pero no lo medimos. Lo que más sube es el box antes del registro (0,72 → 1,00 en
+original), el registro (0,76 → 0,96) y la verificación (0,82 → 1,00). El aviso al voluntariado no se mueve: 0,72, igual que
+la base, en las tres normas. La demo (Parte 1) ya mostraba que el modelo no da el aviso en ninguno de los casos que lo
+piden. Regresiones frente a la base hay pocas, y pev-017 cae en las tres normas.
 
 ## Parte 5 · Recursos y producción
 
@@ -278,6 +296,7 @@ proyección de consumo, escalado y trabajos futuros.
 | Corrida | Casos | Prompt (versión · sha256) | Modelo · revisión | Commit | Comando |
 | --- | --- | --- | --- | --- | --- |
 | `matriz-base` | todos | catedra · `f23f5921894f` | google/gemma-4-E4B-it · `4ecc2ba63bca` | `dfb9622` | `python -m evaluacion.componer --etiqueta matriz-base --partes corridas/prompt/busqueda-01/f23f5921894f corridas/eval/prompt-antes` (partes: `corridas/prompt/busqueda-01/f23f5921894f` @ `03743a8`, lote 15; `corridas/eval/prompt-antes` @ `7efb31e`, lote 50) |
+| `matriz-solo-entrenamiento` | todos | catedra · `f23f5921894f` | genai-grupo-2/emergency-admission-agent · `292c81379842` | `15558ca` | `ADMISION_PROMPT=catedra ADMISION_MODELO_REPO=genai-grupo-2/emergency-admission-agent ADMISION_MODELO_REVISION=292c8137984283d426de735309d108459b5e51f9 python -m evaluacion.evaluar --etiqueta matriz-solo-entrenamiento --casos todos` |
 | `matriz-solo-prompt` | todos | optimizado · `f7e6674cd484` | google/gemma-4-E4B-it · `4ecc2ba63bca` | `5c7d30d` | `python -m evaluacion.componer --etiqueta matriz-solo-prompt --partes corridas/prompt/busqueda-01/f7e6674cd484 corridas/eval/prompt-despues` (partes: `corridas/prompt/busqueda-01/f7e6674cd484` @ `03743a8`, lote 15; `corridas/eval/prompt-despues` @ `2d0b182`, lote 50) |
 | `prompt-antes` | validacion | catedra · `f23f5921894f` | google/gemma-4-E4B-it · `4ecc2ba63bca` | `7efb31e` | `ADMISION_PROMPT=catedra python -m evaluacion.evaluar --etiqueta prompt-antes --casos validacion` |
 | `prompt-despues` | validacion | optimizado · `f7e6674cd484` | google/gemma-4-E4B-it · `4ecc2ba63bca` | `2d0b182` | `ADMISION_PROMPT=optimizado python -m evaluacion.evaluar --etiqueta prompt-despues --casos validacion` |

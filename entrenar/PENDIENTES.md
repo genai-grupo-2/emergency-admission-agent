@@ -22,7 +22,7 @@ ADMISION_MODELO_REVISION=292c8137984283d426de735309d108459b5e51f9
   `emergency-admission-agent`, run `1y5xd2de`.
 - En 2×T4 hay que repartir el modelo: `ADMISION_DEVICE_MAP=auto`. Cargarlo cuesta unos 2 minutos y ~15 GiB entre las dos GPU.
 - Fila «solo entrenamiento» de la matriz:
-  `ADMISION_MODELO_REPO=... ADMISION_MODELO_REVISION=... python -m evaluacion.evaluar --etiqueta solo-entrenamiento --prompt catedra`.
+  `python -m evaluacion.matriz --correr 'solo entrenamiento'` (la condición ya fija el repo y la revisión).
 - Dos advertencias que tienen que figurar donde se usen los números: entrenó con una **submuestra** (640 de 2.176, una época,
   por la cuota de Kaggle) y en **T4, no en la A100 de 40 GB** de la consigna.
 
@@ -30,7 +30,7 @@ ADMISION_MODELO_REVISION=292c8137984283d426de735309d108459b5e51f9
 | # | Qué | Quién | Notas |
 |---|---|---|---|
 | 1 | Avisar al grupo con el repo, la revisión y el run de W&B (texto arriba) | Juli | Juan, Pía y Cande dependen de esto. Hecho cuando respondan. |
-| 2 | Matriz: correr la fila «solo entrenamiento» con esta revisión y regenerar `INFORME.md` con `python -m evaluacion.tablas` | Juan | **En curso.** La revisión ya está en `evaluacion/matriz.json`; se corre en Kaggle con `evaluacion.matriz --correr 'solo entrenamiento'` (rama `juan/cierre-matriz`), que escribe `corridas/eval/matriz-solo-entrenamiento`. |
+| 2 | Matriz: correr la fila «solo entrenamiento» con esta revisión y regenerar `INFORME.md` con `python -m evaluacion.tablas` | Juan | **Hecho:** 27/25/21 sobre 50 (original/b/c) en `corridas/eval/matriz-solo-entrenamiento`, Kaggle 2×T4, lote 10, commit `15558ca`; tablas regeneradas (PR #20). |
 | 3 | Revisar `entrega.py` y `configuracion.json` con la revisión publicada y corregir incompatibilidades | Juli + Juan | **Hecho** (rama `juan/cierre-matriz`): `configuracion.json` apunta a esta revisión; `entrega.py` no necesitó cambios (la verificación de carga ya usa `construir_agente()`). Las condiciones de la matriz fijan su modelo, así que base y solo prompt siguen usando Gemma sin entrenar. |
 | 4 | Fila «ambos» (checkpoint con el prompt optimizado) | Juan | **Hecho:** queda «no hecho» en la matriz (`no_hecho` en `evaluacion/matriz.json`) y en la Parte 4, con el motivo. |
 | 5 | Confirmar que las particiones de datos son las finales (`datos/manifiesto.json` dice «provisional») | Cande | **Hecho:** confirmado en el PR #10 (mismas huellas de `train.jsonl` y `validacion.jsonl`) y `estado` pasado a «final». El manifiesto de `sft-catedra-01` cita la versión anterior (`f948927287c1…`), que sólo difería en `estado`, `pendientes` y huellas de código. |

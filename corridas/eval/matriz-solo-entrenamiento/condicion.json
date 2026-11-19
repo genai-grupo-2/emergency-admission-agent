@@ -1,0 +1,124 @@
+{
+  "etiqueta": "matriz-solo-entrenamiento",
+  "casos": "todos",
+  "ids": [
+    "pev-001",
+    "pev-002",
+    "pev-003",
+    "pev-004",
+    "pev-005",
+    "pev-006",
+    "pev-007",
+    "pev-008",
+    "pev-009",
+    "pev-010",
+    "pev-011",
+    "pev-012",
+    "pev-013",
+    "pev-014",
+    "pev-015",
+    "pev-016",
+    "pev-017",
+    "pev-018",
+    "pev-019",
+    "pev-020",
+    "pev-021",
+    "pev-022",
+    "pev-023",
+    "pev-024",
+    "pev-025",
+    "pev-026",
+    "pev-027",
+    "pev-028",
+    "pev-029",
+    "pev-030",
+    "pev-031",
+    "pev-032",
+    "pev-033",
+    "pev-034",
+    "pev-035",
+    "pev-036",
+    "pev-037",
+    "pev-038",
+    "pev-039",
+    "pev-040",
+    "pev-041",
+    "pev-042",
+    "pev-043",
+    "pev-044",
+    "pev-045",
+    "pev-046",
+    "pev-047",
+    "pev-048",
+    "pev-049",
+    "pev-050"
+  ],
+  "normas": [
+    "original",
+    "b",
+    "c"
+  ],
+  "prompt": {
+    "version": "catedra",
+    "archivo": "prompts/catedra.txt",
+    "sha256": "f23f5921894f8843408ad46ddf1a0538ed8dd96ac9546dfd0aff80b8a4cba659",
+    "tokens_aprox": 558
+  },
+  "modelo": {
+    "backend": "hf",
+    "repo": "genai-grupo-2/emergency-admission-agent",
+    "revision": "292c8137984283d426de735309d108459b5e51f9",
+    "dtype": "bfloat16",
+    "max_new_tokens": 384,
+    "lote": 10,
+    "device_map": "auto"
+  },
+  "agente": {
+    "max_llamadas": 40,
+    "max_sin_json": 3,
+    "aviso_restantes": 5,
+    "max_turnos": 60
+  },
+  "buscador": {
+    "k_entorno": 2,
+    "fragmentacion": "seccion",
+    "k1": 1.5,
+    "b": 0.75
+  },
+  "commit": "15558cac13de0dbd39a5b0853449f48f37c1ffd0",
+  "cambios_sin_commit": false,
+  "variables": {
+    "ADMISION_PROMPT": "catedra",
+    "ADMISION_MODELO_REPO": "genai-grupo-2/emergency-admission-agent",
+    "ADMISION_MODELO_REVISION": "292c8137984283d426de735309d108459b5e51f9"
+  },
+  "comandos": {
+    "original": {
+      "jugar": "python -m admision.correr jugar --entrega entrega.py --casos entradas/casos.jsonl --normas entradas/normas/original --salida corridas/eval/matriz-solo-entrenamiento/original",
+      "puntuar": "python -m admision.correr puntuar --trazas corridas/eval/matriz-solo-entrenamiento/original/trazas.jsonl --esperadas practica/esperadas-original.jsonl --salida corridas/eval/matriz-solo-entrenamiento/original"
+    },
+    "b": {
+      "jugar": "python -m admision.correr jugar --entrega entrega.py --casos entradas/casos.jsonl --normas entradas/normas/b --salida corridas/eval/matriz-solo-entrenamiento/b",
+      "puntuar": "python -m admision.correr puntuar --trazas corridas/eval/matriz-solo-entrenamiento/b/trazas.jsonl --esperadas practica/esperadas-b.jsonl --salida corridas/eval/matriz-solo-entrenamiento/b"
+    },
+    "c": {
+      "jugar": "python -m admision.correr jugar --entrega entrega.py --casos entradas/casos.jsonl --normas entradas/normas/c --salida corridas/eval/matriz-solo-entrenamiento/c",
+      "puntuar": "python -m admision.correr puntuar --trazas corridas/eval/matriz-solo-entrenamiento/c/trazas.jsonl --esperadas practica/esperadas-c.jsonl --salida corridas/eval/matriz-solo-entrenamiento/c"
+    }
+  },
+  "codigos_de_salida": {
+    "original": {
+      "jugar": 0,
+      "puntuar": 0
+    },
+    "b": {
+      "jugar": 0,
+      "puntuar": 0
+    },
+    "c": {
+      "jugar": 0,
+      "puntuar": 0
+    }
+  },
+  "casos_sha256": "a3ff92450e18682327b84ee416957891fc46c0e099a79eae991547745fbed0f2"
+}

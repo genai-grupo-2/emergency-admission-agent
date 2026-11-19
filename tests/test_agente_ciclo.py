@@ -3,6 +3,8 @@
     python -m unittest discover -s tests -p "test_agente_*.py" -v
 """
 
+import contextlib
+import io
 import json
 import subprocess
 import sys
@@ -153,6 +155,25 @@ class CicloTest(unittest.TestCase):
         self.assertIn("sin memoria", agente.informe[0]["error"])
         self.assertEqual(len(ca), 2)
         self.assertIsNotNone(eb.decision)
+
+    def test_el_reintento_caso_por_caso_corre_fuera_del_except(self):
+        # En GPU, la excepción viva retiene los tensores del lote: si el reintento corre adentro del `except`, cada
+        # caso suelto vuelve a quedarse sin memoria. Corrida matriz-solo-entrenamiento del 18/11.
+        vistos = []
+
+        def modelo(conversaciones):
+            if len(conversaciones) > 1:
+                raise RuntimeError("CUDA out of memory")
+            vistos.append(sys.exc_info()[0])
+            return [ficha()]
+
+        _, vistas = entornos(A, B)
+        agente = Agente(modelo, "S.")
+        with contextlib.redirect_stderr(io.StringIO()) as err:
+            agente.jugar_lote(vistas)
+        self.assertEqual(vistos, [None, None])
+        self.assertEqual([x["fin"] for x in agente.informe], ["registrada", "registrada"])
+        self.assertIn("CUDA out of memory", err.getvalue())
 
     def test_falla_del_entorno_en_un_caso_no_corta_el_lote(self):
         def roto(h, a):
