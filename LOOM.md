@@ -52,9 +52,9 @@ tabla y sube el video final a Loom: el mail lleva un solo link.
 > referencia de la cátedra con fine-tuning da 25, 24 y 25. Quedamos arriba en original y b, y abajo en c. Con 50 casos,
 > uno o dos de diferencia es ruido.»
 
-> «Un aviso antes de seguir: la consigna pide una A100 de 40 GB, que en Modal necesita una tarjeta cargada. No la
-> usamos. Todo, entrenamiento y evaluación, corrió gratis en Kaggle, en una máquina con dos GPU T4 de 15 GB, con el
-> modelo repartido entre las dos.»
+> «Un aviso antes de seguir: la consigna pide una A100 de 40 GB. En Modal hace falta una tarjeta cargada, y en Lightning
+> no pudimos crear la cuenta. Así que todo, entrenamiento y evaluación, corrió gratis en Kaggle, en una máquina con dos
+> GPU T4 de 15 GB, con el modelo repartido entre las dos.»
 
 > «Cada caso usa unas 7 llamadas a herramientas, 3 de ellas búsquedas, y junta unos 46 mil caracteres de contexto. En
 > esas dos T4, con 10 casos a la vez, sale cerca de 83 segundos por caso. Lo que costaría en una A100 lo estima Pía al
@@ -171,7 +171,7 @@ detallado en [`datos/DEMO.md`](datos/DEMO.md).
 - **Selección.** Por pérdida sobre 40 conversaciones de validación: bajó de 0,031 en el paso 20 a 0,0042 en el 80, que es
   el que se eligió. Los 50 casos de práctica no intervienen.
 - **Lo que no funcionó.**
-  - Modal no habilita GPU sin tarjeta, así que se pasó a Kaggle con dos T4.
+  - Modal no habilita GPU sin tarjeta y en Lightning no pudimos crear la cuenta, así que se pasó a Kaggle con dos T4.
   - El plan de 2 épocas sobre todo el conjunto eran unas 50 horas, contra 30 de cuota por semana. Se entrenó con 640 de
     2.176 conversaciones y una época: 7 h 55 min.
   - Dos ensayos fallaron por `logits_to_keep` al repartir el modelo entre las dos GPU (detalle en `DECISIONES.md`).
@@ -191,7 +191,7 @@ detallado en [`docs/loom-pia.md`](docs/loom-pia.md).
 ![Lo estimado para la A100](docs/loom/s06-estimado.png)
 ![Escenarios de producción](docs/loom/s06-escenarios.png)
 
-- **Primero el límite.** «No medimos en la A100: Modal pide tarjeta. Todo es Kaggle con dos T4, y lo de la A100 es una
+- **Primero el límite.** «No medimos en la A100: Modal pide tarjeta y en Lightning no pudimos crear la cuenta. Todo es Kaggle con dos T4, y lo de la A100 es una
   estimación con el precio de la consigna, 2,10 USD por hora.»
 - **Lo medido.**
   - Entrenamiento: 7 h 55 min y 12,4 GiB por GPU.
